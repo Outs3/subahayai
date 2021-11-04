@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="text"
+            type="int" />
+
+        <variable
+            name="img"
+            type="int" />
+
+        <variable
+            name="isChecked"
+            type="boolean" />
+
+    </data>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.AppCompatCheckedTextView
+            android:layout_width="@dimen/dp_24"
+            android:layout_height="@dimen/dp_24"
+            android:layout_marginTop="@dimen/dp_11"
+            android:layout_marginBottom="@dimen/dp_3"
+            android:background="@{img}"
+            android:checked="@{isChecked}" />
+
+        <androidx.appcompat.widget.AppCompatCheckedTextView
+            android:id="@+id/text_home"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_3"
+            android:layout_marginBottom="@dimen/dp_5"
+            android:checked="@{isChecked}"
+            android:text="@{text}"
+            android:textColor="@drawable/text_check_primary"
+            android:textSize="@dimen/sp_10" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</layout>

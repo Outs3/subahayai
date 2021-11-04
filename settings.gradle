@@ -1,0 +1,16 @@
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+        jcenter() // Warning: this repository is going to shut down soon
+    }
+}
+rootProject.name = PROJECT_NAME
+include ':'+MODULE_KTS
+include ':'+MODULE_AKTS
+include ':'+MODULE_ACORE
+include ':'+MODULE_DBIND
+include ':'+MODULE_COMPOSE
+include ':demo-compose'
+include ':demo-databinding'

@@ -1,0 +1,39 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+buildscript {
+    ext {
+        compileSdk = 31
+        buildTools = "30.0.3"
+        applicationId = "com.outs.subahayai"
+        minSdk = 21
+        targetSdk = 30
+        versionCode = 1
+        versionName = "1.0"
+
+        kotlin_version = '1.5.31'
+        compose_version = '1.0.4'
+
+        compileSdkVersion = compileSdk
+        buildToolsVersion = buildTools
+        minSdkVersion = minSdk
+        targetSdkVersion = targetSdk
+    }
+    repositories {
+        google()
+        mavenCentral()
+        maven { url 'https://maven.aliyun.com/repository/public' }
+        maven { url 'https://maven.aliyun.com/repository/google' }
+        maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
+        maven { url 'https://jitpack.io' }
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:7.0.3'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}

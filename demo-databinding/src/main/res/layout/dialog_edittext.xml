@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="onClick"
+            type="android.view.View.OnClickListener" />
+
+        <variable
+            name="viewModel"
+            type="com.outs.demo_databinding.dialog.EditTextModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_55"
+        android:layout_marginEnd="@dimen/dp_55"
+        android:background="@drawable/bg_text_while_radius_5">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_20"
+            android:text="修改昵称"
+            android:textColor="#070707"
+            android:textSize="@dimen/sp_12"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/edit_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_15"
+            android:layout_marginTop="@dimen/dp_21"
+            android:layout_marginEnd="@dimen/dp_15"
+            android:background="@drawable/bg_edit_dialog_edit"
+            android:gravity="start"
+            android:hint="请输入修改昵称"
+            android:maxLength="20"
+            android:maxLines="1"
+            android:paddingStart="@dimen/dp_10"
+            android:paddingTop="@dimen/dp_11"
+            android:paddingEnd="@dimen/dp_10"
+            android:paddingBottom="@dimen/dp_11"
+            android:singleLine="true"
+            android:textSize="@dimen/dp_10"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/title" />
+
+        <View
+            android:id="@+id/line"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/dp_22"
+            android:background="@color/gray_ee"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/edit_text" />
+
+        <TextView
+            android:id="@+id/cancel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:onClick="@{onClick}"
+            android:paddingTop="@dimen/sp_12"
+            android:paddingBottom="@dimen/sp_16"
+            android:text="取消"
+            android:textColor="@color/black_666"
+            android:textSize="@dimen/sp_12"
+            android:visibleOrNot="@{!viewModel.isMust}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/line"
+            app:layout_constraintWidth_percent="0.5" />
+
+        <View
+            android:id="@+id/v_line"
+            android:layout_width="1dp"
+            android:layout_height="0dp"
+            android:background="@color/gray_ee"
+            android:visibleOrNot="@{!viewModel.isMust}"
+            app:layout_constraintBottom_toBottomOf="@id/cancel"
+            app:layout_constraintStart_toEndOf="@id/cancel"
+            app:layout_constraintTop_toBottomOf="@id/line" />
+
+        <TextView
+            android:id="@+id/ok"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:onClick="@{onClick}"
+            android:paddingTop="@dimen/sp_12"
+            android:paddingBottom="@dimen/sp_16"
+            android:text="确定"
+            android:textColor="#20AA59"
+            android:textSize="@dimen/sp_12"
+            android:visibleOrNot="@{!viewModel.isMust}"
+            app:layout_constraintStart_toEndOf="@id/v_line"
+            app:layout_constraintTop_toBottomOf="@id/line"
+            app:layout_constraintWidth_percent="0.5" />
+
+        <TextView
+            android:id="@+id/ok2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:onClick="@{onClick}"
+            android:paddingTop="@dimen/sp_12"
+            android:paddingBottom="@dimen/sp_16"
+            android:text="确定"
+            android:textColor="#20AA59"
+            android:textSize="@dimen/sp_12"
+            android:visibleOrNot="@{viewModel.isMust}"
+            app:layout_constraintStart_toEndOf="@id/v_line"
+            app:layout_constraintTop_toBottomOf="@id/line"
+            app:layout_constraintWidth_percent="1" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

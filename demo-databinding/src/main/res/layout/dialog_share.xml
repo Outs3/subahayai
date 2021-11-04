@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="onClick"
+            type="android.view.View.OnClickListener" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_white_top_10">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/text_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp_20"
+            android:text="分享至"
+            android:textColor="@color/black_333"
+            android:textSize="@dimen/sp_15"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/btn_close"
+            android:layout_width="@dimen/dp_50"
+            android:layout_height="@dimen/dp_50"
+            android:onClick="@{onClick}"
+            android:padding="@dimen/dp_20"
+            android:src="@drawable/icon_close"
+            app:layout_constraintBottom_toBottomOf="@id/text_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/text_title"
+            app:tint="@color/black_333" />
+
+        <View
+            android:id="@+id/divider_top"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_1"
+            android:background="@color/gray_f2"
+            app:layout_constraintBottom_toBottomOf="@id/text_title" />
+
+        <androidx.constraintlayout.helper.widget.Flow
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/dp_33"
+            android:layout_marginTop="@dimen/dp_20"
+            app:constraint_referenced_ids="image_wechat, image_moments"
+            app:flow_horizontalStyle="spread"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_title" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/image_wechat"
+            android:layout_width="@dimen/dp_50"
+            android:layout_height="@dimen/dp_50"
+            android:src="@drawable/icon_wx" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/image_moments"
+            android:layout_width="@dimen/dp_50"
+            android:layout_height="@dimen/dp_50"
+            android:src="@drawable/icon_share_pyq"
+            tools:ignore="MissingConstraints" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/text_wechat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/dp_9"
+            android:paddingBottom="@dimen/dp_24"
+            android:text="微信"
+            android:textColor="@color/black_333"
+            android:textSize="@dimen/sp_12"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/image_wechat"
+            app:layout_constraintStart_toStartOf="@id/image_wechat"
+            app:layout_constraintTop_toBottomOf="@+id/image_wechat" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/text_moments"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/dp_9"
+            android:paddingBottom="@dimen/dp_24"
+            android:text="朋友圈"
+            android:textColor="@color/black_333"
+            android:textSize="@dimen/sp_12"
+            app:layout_constraintBottom_toBottomOf="@id/text_wechat"
+            app:layout_constraintEnd_toEndOf="@id/image_moments"
+            app:layout_constraintStart_toStartOf="@id/image_moments"
+            app:layout_constraintTop_toTopOf="@id/text_wechat" />
+
+        <androidx.constraintlayout.helper.widget.Layer
+            android:id="@+id/layer_wechat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{onClick}"
+            android:paddingHorizontal="@dimen/dp_20"
+            android:paddingTop="@dimen/dp_20"
+            app:constraint_referenced_ids="image_wechat, text_wechat"
+            tools:ignore="MissingConstraints" />
+
+        <androidx.constraintlayout.helper.widget.Layer
+            android:id="@+id/layer_moments"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{onClick}"
+            android:paddingHorizontal="@dimen/dp_20"
+            android:paddingTop="@dimen/dp_20"
+            app:constraint_referenced_ids="image_moments, text_moments"
+            tools:ignore="MissingConstraints" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

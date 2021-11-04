@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="onClick"
+            type="android.view.View.OnClickListener" />
+
+        <variable
+            name="viewModel"
+            type="com.outs.core.android.databinding.debug.DebugLogViewModel" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:listitem="@layout/item_log_msg" />
+
+        <androidx.constraintlayout.helper.widget.Flow
+            android:id="@+id/flow_recycler_controller"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dp_20"
+            android:layout_marginBottom="@dimen/dp_20"
+            android:orientation="vertical"
+            app:constraint_referenced_ids="image_ctrl_up, image_ctrl_down"
+            app:flow_verticalGap="@dimen/dp_10"
+            app:layout_constraintBottom_toBottomOf="@id/recycler"
+            app:layout_constraintEnd_toEndOf="@id/recycler" />
+
+        <androidx.constraintlayout.utils.widget.ImageFilterButton
+            android:id="@+id/image_ctrl_up"
+            android:layout_width="@dimen/dp_40"
+            android:layout_height="@dimen/dp_40"
+            android:background="@color/purple_4e48b2"
+            android:onClick="@{onClick}"
+            android:padding="@dimen/dp_10"
+            app:roundPercent="1"
+            app:srcCompat="@android:drawable/arrow_up_float"
+            app:tint="@color/white"
+            tools:ignore="MissingConstraints" />
+
+        <androidx.constraintlayout.utils.widget.ImageFilterButton
+            android:id="@+id/image_ctrl_down"
+            android:layout_width="@dimen/dp_40"
+            android:layout_height="@dimen/dp_40"
+            android:background="@color/purple_4e48b2"
+            android:onClick="@{onClick}"
+            android:padding="@dimen/dp_10"
+            app:roundPercent="1"
+            app:srcCompat="@android:drawable/arrow_down_float"
+            app:tint="@color/white"
+            tools:ignore="MissingConstraints" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -1,0 +1,40 @@
+plugins {
+    id 'kotlin'
+    id 'java-library'
+    id 'maven-publish'
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+dependencies {
+    //kotlin
+    api 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2'
+    api 'org.jetbrains.kotlin:kotlin-reflect:1.5.31'
+    //json
+    api 'com.google.code.gson:gson:2.8.8'
+    //OkHttp
+    api 'com.squareup.okhttp3:okhttp:4.9.2'
+    //Retrofit
+    api 'com.squareup.retrofit2:retrofit:2.9.0'
+    api 'com.squareup.retrofit2:converter-gson:2.9.0'
+}
+
+group = GROUP_NAME
+version = MODULE_KTS_VERSION
+
+afterEvaluate {
+    publishing {
+        publications {
+            // Creates a Maven publication called "release".
+            release(MavenPublication) {
+                from components.java
+                groupId = GROUP_NAME
+                artifactId = MODULE_KTS
+                version = MODULE_KTS_VERSION
+            }
+        }
+    }
+}

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_white_10"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/rv_topbar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_52">
+
+            <Button
+                android:id="@+id/btnCancel"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent"
+                android:gravity="center"
+                android:paddingHorizontal="@dimen/dp_32"
+                android:text="@string/pickerview_cancel"
+                android:textColor="@color/black_999"
+                android:textAllCaps="false"
+                android:textSize="@dimen/sp_18"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/btnSubmit"
+                android:layout_toRightOf="@+id/btnCancel"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:textColor="@color/pickerview_topbar_title"
+                android:textSize="@dimen/pickerview_topbar_title_textsize" />
+
+            <Button
+                android:id="@id/btnSubmit"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:background="@android:color/transparent"
+                android:gravity="center"
+                android:paddingHorizontal="@dimen/dp_32"
+                android:text="@string/pickerview_submit"
+                android:textAllCaps="false"
+                android:textColor="@color/gray_3f"
+                android:textSize="@dimen/sp_18"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_1"
+                android:layout_alignParentBottom="true"
+                android:background="@color/gray_f2" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/timepicker"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/white"
+            android:gravity="center"
+            android:minHeight="@dimen/dp_250"
+            android:orientation="horizontal">
+
+            <com.contrarywind.view.WheelView
+                android:id="@+id/year"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.96" />
+
+            <com.contrarywind.view.WheelView
+                android:id="@+id/month"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+            <com.contrarywind.view.WheelView
+                android:id="@+id/day"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+            <com.contrarywind.view.WheelView
+                android:id="@+id/hour"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+            <com.contrarywind.view.WheelView
+                android:id="@+id/min"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+            <com.contrarywind.view.WheelView
+                android:id="@+id/second"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+</layout>
