@@ -40,6 +40,8 @@ abstract class PageDataSource<T> : ListDataSource<T>() {
             } else {
                 notifyAdapters { it.notifyItemRangeInserted(position, count) }
             }
+        } else if (needClear) {
+            notifyAdapters()
         }
     }
 
