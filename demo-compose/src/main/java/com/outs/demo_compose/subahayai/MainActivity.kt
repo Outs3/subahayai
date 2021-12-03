@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.outs.demo_compose.subahayai.compose.CConversation
 import com.outs.demo_compose.subahayai.compose.randomMessage
@@ -45,7 +46,8 @@ fun AppointPage(title: String, subTitle: String? = null, menus: List<String>? = 
             TopAppBar(
                 navigationIcon = {
                     Image(
-                        modifier = Modifier.size(width = 40.dp, height = 38.dp)
+                        modifier = Modifier
+                            .size(width = 40.dp, height = 38.dp)
                             .padding(vertical = 10.dp, horizontal = 15.dp),
                         painter = painterResource(com.outs.demo_compose.R.drawable.icon_back),
                         contentDescription = "back button",
@@ -88,15 +90,15 @@ fun AppointPreview() {
     }
 }
 
-//@Composable
-//fun Greeting(name: String) {
-//    Text(text = "Compose $name!")
-//}
+@Composable
+fun Greeting(name: String) {
+    Text(text = "Compose $name!")
+}
 
-//@Preview(showBackground = true)
-//@Composable
-//fun DefaultPreview() {
-//    TComposeTheme {
-//        Greeting("Android")
-//    }
-//}
+@Preview(showBackground = true, widthDp = 375, heightDp = 675)
+@Composable
+fun DefaultPreview() {
+    TComposeTheme {
+        Greeting("Android")
+    }
+}

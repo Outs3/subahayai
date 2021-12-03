@@ -39,12 +39,12 @@ open class BaseApplication : MultiDexApplication() {
         })
         setLogger(object : ILogger {
             override fun d(tag: String?, msg: String) {
-                Logger.log(0, tag, msg, null)
+                Logger.log(Logger.DEBUG, tag, msg, null)
             }
 
             override fun e(tag: String?, msg: String) {
                 msg.toast()
-                Logger.log(0, tag, msg, null)
+                Logger.log(Logger.ERROR, tag, msg, null)
             }
 
         })

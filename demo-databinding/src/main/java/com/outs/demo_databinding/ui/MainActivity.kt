@@ -4,6 +4,7 @@ import com.outs.core.android.databinding.activity.BaseActivity
 import com.outs.demo_databinding.R
 import com.outs.demo_databinding.databinding.ActivityMainBinding
 import com.outs.utils.android.viewModel
+import kotlinx.coroutines.delay
 
 /**
  * author: Outs3
@@ -18,5 +19,16 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
 
     override val getLayoutId: Int
         get() = R.layout.activity_main
+
+    override fun onDebug() {
+        super.onDebug()
+        addDebugOpt(
+            "3s Loading" to {
+                mViewModel.launchOnUI(true) {
+                    delay(3000)
+                }
+            }
+        )
+    }
 
 }
