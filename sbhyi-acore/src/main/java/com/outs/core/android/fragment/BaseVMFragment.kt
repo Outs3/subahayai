@@ -37,6 +37,7 @@ abstract class BaseVMFragment<VM : BaseViewModel> : AbsFragment() {
         observe(mViewModel)
     }
 
-    abstract fun observe(vm: VM)
+    open fun observe(vm: VM) {
+    }
 
 }

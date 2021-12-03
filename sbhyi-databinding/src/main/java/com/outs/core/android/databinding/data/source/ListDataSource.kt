@@ -1,7 +1,9 @@
 package com.outs.core.android.databinding.data.source
 
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import com.outs.utils.android.e
+import com.outs.utils.android.postOnNot
 import com.outs.utils.kotlin.emptyAction
 import com.outs.utils.kotlin.launchOnIO
 import com.outs.utils.kotlin.reset
@@ -20,10 +22,24 @@ abstract class ListDataSource<T> : DataSource<T>() {
 
     val error = MutableLiveData<Throwable>()
 
+    //是否展示暂无数据框
+    val showEmptyView by lazy {
+        MediatorLiveData<Boolean>().apply {
+            val onChange: (Boolean) -> Unit = {
+                val isEmpty = isEmpty.value ?: true
+                val isLoading = isLoading.value ?: false
+                postOnNot(isEmpty && !isLoading)
+            }
+            addSource(isEmpty, onChange)
+            addSource(isLoading, onChange)
+        }
+    }
+
     abstract suspend fun requestData(): MutableList<T>
 
     protected fun getList(onComplete: () -> Unit) {
         launchOnIO {
+            isEmpty.postValue(false)
             isLoading.postValue(true)
             try {
                 requestData().let(::loadList)

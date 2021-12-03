@@ -4,6 +4,7 @@ import androidx.lifecycle.*
 import androidx.recyclerview.widget.RecyclerView
 import com.blankj.utilcode.util.ViewUtils
 import com.outs.utils.android.doOnDestroy
+import com.outs.utils.android.postOnNot
 import com.outs.utils.kotlin.launchOnIO
 import com.outs.utils.kotlin.reset
 import java.lang.ref.WeakReference
@@ -95,9 +96,9 @@ open class DataSource<T> {
     }
 
     open fun calcEmptyAndPosition() {
-        isEmpty.postValue(this.data.isEmpty())
+        isEmpty.postOnNot(this.data.isEmpty())
         if (position.value!! >= data.size) {
-            position.postValue(data.size - 1)
+            position.postOnNot(data.size - 1)
         }
     }
 
