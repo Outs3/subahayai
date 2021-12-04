@@ -11,7 +11,6 @@ import com.outs.utils.kotlin.getFieldValue
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlin.math.absoluteValue
-import kotlin.random.Random
 
 /**
  * author: Outs3
@@ -142,7 +141,8 @@ fun Int.asDividerItemDecoration(
     ContextCompat.getDrawable(context, this)?.let(it::setDrawable)
 }
 
-private val tagLastClick = Random.nextInt()
+//The key must be an application-specific resource id.
+private val tagLastClick = View.generateViewId()
 
 fun View.clickOrRepeat(duration: Long = 300): View? {
     val cur = System.currentTimeMillis()

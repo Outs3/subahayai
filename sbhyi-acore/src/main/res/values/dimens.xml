@@ -154,6 +154,7 @@
     <dimen name="dp_99">99dp</dimen>
     <dimen name="dp_100">100dp</dimen>
     <dimen name="dp_103">103dp</dimen>
+    <dimen name="dp_104">104dp</dimen>
     <dimen name="dp_105">105dp</dimen>
     <dimen name="dp_106">106dp</dimen>
     <dimen name="dp_110">110dp</dimen>
@@ -227,5 +228,6 @@
     <dimen name="dp_444">444dp</dimen>
     <dimen name="dp_500">500dp</dimen>
     <dimen name="dp_667">667dp</dimen>
+    <dimen name="dp_812">812dp</dimen>
 
 </resources>
