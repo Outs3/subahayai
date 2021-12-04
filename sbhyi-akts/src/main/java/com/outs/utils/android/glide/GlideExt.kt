@@ -17,7 +17,6 @@ import com.outs.utils.android.appInstance
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
-import kotlin.random.Random
 
 /**
  * author: Outs3
@@ -48,7 +47,7 @@ suspend fun String.asBitmapByGlide(requestManager: RequestManager = sManager) =
             })
     }
 
-val tagGlide = Random.nextInt()
+val tagGlide = R.id.glide
 
 fun ImageView.loadUri(uri: Uri?) {
     sManager.load(uri)

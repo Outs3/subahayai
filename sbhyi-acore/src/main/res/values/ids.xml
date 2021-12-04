@@ -1,7 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <item name="url" type="id" />
-    <item name="path" type="id" />
-    <item name="uri" type="id" />
-    <item name="glide" type="id" />
-</resources>
+<resources></resources>
