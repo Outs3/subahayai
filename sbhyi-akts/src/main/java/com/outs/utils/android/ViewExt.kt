@@ -141,8 +141,7 @@ fun Int.asDividerItemDecoration(
     ContextCompat.getDrawable(context, this)?.let(it::setDrawable)
 }
 
-//The key must be an application-specific resource id.
-private val tagLastClick = View.generateViewId()
+private val tagLastClick = R.id.tag_last_click
 
 fun View.clickOrRepeat(duration: Long = 300): View? {
     val cur = System.currentTimeMillis()

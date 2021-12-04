@@ -4,5 +4,4 @@
     <item name="path" type="id" />
     <item name="uri" type="id" />
     <item name="glide" type="id" />
-    <item name="tag_last_click" type="id" />
 </resources>
