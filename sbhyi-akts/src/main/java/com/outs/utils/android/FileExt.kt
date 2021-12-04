@@ -85,6 +85,10 @@ fun Uri.asFile(context: Context): File? {
     return newFile(context.cacheDir, file.name, data)
 }
 
+@Deprecated(
+    "由于没有处理相册图片旋转角度问题，这个方法已经被废弃了，请使用Uri.readImageAsFile等相关方法",
+    replaceWith = ReplaceWith("Uri.readImageAsFile()", "com.outs.utils.android")
+)
 fun Uri.asImageFile(context: Context): File? {
     if (scheme.isNullOrEmpty())
         return File(toString())

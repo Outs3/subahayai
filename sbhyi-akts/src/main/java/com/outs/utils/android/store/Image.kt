@@ -21,6 +21,8 @@ data class Image(
     val mimeType: String? = null,
     @Column(name = MediaStore.Images.ImageColumns.SIZE)
     val size: Int? = null,
+    @Column(name = MediaStore.Images.ImageColumns.ORIENTATION)
+    val orientation: Int? = null,
 ) : IRow {
 
     val CONTENT_URI = MediaStore.Images.Media.EXTERNAL_CONTENT_URI

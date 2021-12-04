@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Canvas
+import android.graphics.Matrix
 import android.media.FaceDetector
 import androidx.core.content.ContextCompat
 import java.io.ByteArrayOutputStream
@@ -70,6 +71,13 @@ fun Bitmap.compressToTempFile(context: Context): File {
 fun Bitmap.insertImage(context: Context) {
     compressToTempFile(context).saveToThumb(context)
 }
+
+/**
+ * 旋转图片
+ *  @param degrees 角度
+ */
+fun Bitmap.rotate(degrees: Float): Bitmap =
+    Bitmap.createBitmap(this, 0, 0, width, height, Matrix().apply { setRotate(degrees) }, true)
 
 inline fun <reified R> Bitmap.use(block: (Bitmap) -> R): R {
     val ret = block(this)
