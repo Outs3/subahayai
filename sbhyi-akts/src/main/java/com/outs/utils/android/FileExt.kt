@@ -3,6 +3,8 @@ package com.outs.utils.android
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.graphics.BitmapFactory
+import android.media.ExifInterface
 import android.net.Uri
 import android.webkit.MimeTypeMap
 import androidx.core.content.FileProvider
@@ -134,3 +136,30 @@ fun File.viewIntent(
         }
     }
     .let { Intent.createChooser(it, chooserTitle) }
+
+fun File.orientationByExif() = ExifInterface(path).getAttributeInt(
+    ExifInterface.TAG_ORIENTATION,
+    ExifInterface.ORIENTATION_NORMAL
+).let {
+    when (it) {
+        ExifInterface.ORIENTATION_NORMAL -> 0
+        ExifInterface.ORIENTATION_ROTATE_90 -> 90
+        ExifInterface.ORIENTATION_ROTATE_180 -> 180
+        ExifInterface.ORIENTATION_ROTATE_270 -> 270
+        else -> 0
+    }
+}
+
+/**
+ * 图片如果有角度 则自动将图片旋转到角度0的位置
+ */
+fun File.rotationTo0(context: Context): File {
+    val orientation = orientationByExif()
+    return if (0 == orientation) this else {
+        val data = readBytes()
+        val source = BitmapFactory.decodeByteArray(data, 0, data.size)
+        val target = source.use { bitmap -> bitmap.rotate(orientation.toFloat()) }
+        val out = target.toByteArray()
+        newFile(context.cacheDir, name, out)
+    }
+}

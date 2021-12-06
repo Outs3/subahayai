@@ -5,7 +5,10 @@ import android.graphics.BitmapFactory
 import android.net.Uri
 import com.outs.utils.android.store.Image
 import com.outs.utils.android.store.readRows
+import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import java.io.File
+import java.util.*
 
 
 /**
@@ -25,21 +28,7 @@ fun Uri.read(context: Context): ByteArray? = context.contentResolver.read(this)
  *  @param context 上下文
  *  @return 图片内容
  */
-fun Uri.readImageAsBytes(context: Context): ByteArray? {
-    val data = context.contentResolver.read(this) ?: return null
-    val image =
-        context.contentResolver.query(this, null, null, null, null)?.use { it.readRows<Image>() }
-            ?.firstOrNull() ?: return null
-    val orientation = image.orientation
-    //如果该图片有旋转角度 将该角度生效到图片
-    if (null == orientation || 0 == orientation) {
-        return data
-    } else {
-        val source = BitmapFactory.decodeByteArray(data, 0, data.size)
-        val target = source.use { bitmap -> bitmap.rotate(orientation.toFloat()) }
-        return target.toByteArray()
-    }
-}
+fun Uri.readImageAsBytes(context: Context): ByteArray? = asFileByInputStream(context)?.readBytes()
 
 fun Uri.asFileByPathOrNull(): File? =
     if (scheme.isNullOrEmpty()) File(toString()) else path?.let(::File)
@@ -49,22 +38,32 @@ fun Uri.asFileByPathOrNull(): File? =
  *  @param context 上下文
  *  @return 图片文件
  */
-fun Uri.readImageAsFile(context: Context): File? = asFileByPathOrNull()?.let { file ->
-    if (file.canRead()) file else {
-        val data = context.contentResolver.read(this) ?: return null
-        val image = context.contentResolver.query(this, null, null, null, null)
-            ?.use { it.readRows<Image>() }
-            ?.firstOrNull()
-            ?: return null
-        val orientation = image.orientation
-        //如果该图片有旋转角度 将该角度生效到图片
-        if (null == orientation || 0 == orientation) {
-            return newFile(context.cacheDir, image.displayName ?: image.title ?: file.name, data)
-        } else {
-            val source = BitmapFactory.decodeByteArray(data, 0, data.size)
-            val target = source.use { bitmap -> bitmap.rotate(orientation.toFloat()) }
-            val out = target.toByteArray()
-            return newFile(context.cacheDir, image.displayName ?: image.title ?: file.name, out)
-        }
+fun Uri.readImageAsFile(context: Context): File? = asFileByPathOrNull()
+    ?.takeIf(File::canRead)
+    ?.rotationTo0(context)
+    ?: asFileByInputStream(context)
+
+private fun Uri.asFileByInputStream(context: Context): File? {
+    val data = context.contentResolver.read(this) ?: return null
+    val image = context.contentResolver.query(this, null, null, null, null)
+        ?.use { it.readRows<Image>() }
+        ?.firstOrNull()
+        ?: return null
+    val cacheFile = data.asTempFile(context, name = image.getFileName())
+    val orientation = image.orientation ?: cacheFile.orientationByExif()
+    //如果该图片有旋转角度 将该角度生效到图片
+    return if (0 == orientation) cacheFile else {
+        val source = BitmapFactory.decodeByteArray(data, 0, data.size)
+        val target = source.use { bitmap -> bitmap.rotate(orientation.toFloat()) }
+        val out = target.toByteArray()
+        newFile(context.cacheDir, cacheFile.name, out)
     }
 }
+
+private fun Image.getFileName(file: File? = null): String = displayName
+    ?: title
+    ?: file?.name
+    ?: mimeType?.toMediaTypeOrNull()?.generateFileName()
+    ?: UUID.randomUUID().toString()
+
+private fun MediaType.generateFileName() = "${UUID.randomUUID()}.${subtype}"

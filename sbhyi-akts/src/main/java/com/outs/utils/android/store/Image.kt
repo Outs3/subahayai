@@ -13,6 +13,8 @@ import android.provider.MediaStore
 data class Image(
     @Column(name = MediaStore.Images.ImageColumns._ID)
     val id: Long? = null,
+    @Column(name = MediaStore.Images.ImageColumns.DATA)
+    val data: String? = null,
     @Column(name = MediaStore.Images.ImageColumns.TITLE)
     val title: String? = null,
     @Column(name = MediaStore.Images.ImageColumns.DISPLAY_NAME)
