@@ -18,18 +18,22 @@ fun <T> Continuation<T>.resumeOrException(ret: T?) {
 fun launchOn(
     scope: CoroutineScope,
     onError: suspend CoroutineScope.(Throwable) -> Unit = { e -> e.e() },
+    onFinally: () -> Unit = {},
     block: suspend CoroutineScope.() -> Unit
 ): Job = scope.launch {
     try {
         block()
     } catch (e: Throwable) {
         onError(e)
+    } finally {
+        onFinally()
     }
 }
 
 fun launchOnMain(
     delay: Long = 0,
     onError: suspend CoroutineScope.(Throwable) -> Unit = { e -> e.e() },
+    onFinally: () -> Unit = {},
     block: suspend CoroutineScope.() -> Unit
 ): Job = CoroutineScope(Dispatchers.Main).launch {
     try {
@@ -37,16 +41,21 @@ fun launchOnMain(
         block()
     } catch (e: Throwable) {
         onError(e)
+    } finally {
+        onFinally()
     }
 }
 
 fun launchOnIO(
     onError: suspend CoroutineScope.(Throwable) -> Unit = { e -> e.e() },
+    onFinally: () -> Unit = {},
     block: suspend CoroutineScope.() -> Unit
 ): Job = CoroutineScope(Dispatchers.IO).launch {
     try {
         block()
     } catch (e: Throwable) {
         onError(e)
+    } finally {
+        onFinally()
     }
 }

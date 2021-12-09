@@ -2,6 +2,7 @@ package com.outs.core.android.databinding
 
 import android.content.res.ColorStateList
 import android.graphics.Bitmap
+import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Typeface
 import android.graphics.drawable.ColorDrawable
@@ -14,10 +15,8 @@ import android.view.KeyEvent
 import android.view.View
 import android.webkit.WebView
 import android.widget.*
-import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.LayoutRes
-import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
@@ -34,6 +33,7 @@ import com.outs.utils.kotlin.typeOfOrNull
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.math.absoluteValue
 import kotlin.random.Random
 
 /**
@@ -254,29 +254,20 @@ fun TextView.dateFormat(dateValue: Long, dateFormat: String = "yyyy-MM-dd") {
 }
 
 @BindingAdapter(
-    value = ["android:money", "android:positiveColor", "android:negativeColor"],
-    requireAll = true
+    value = ["android:money", "android:positiveColor", "android:negativeColor", "android:isPositive", "android:sign"],
+    requireAll = false
 )
 fun TextView.moneyFormat(
     money: Number,
-    @ColorRes positiveColor: Int,
-    @ColorRes negativeColor: Int
+    positiveColor: Int = Color.GREEN,
+    negativeColor: Int = Color.RED,
+    isPositive: Boolean = money.toDouble() >= 0,
+    sign: String? = null
 ) {
-    val num = when (money) {
-        is Double -> money
-        is Float -> money.toDouble()
-        is Long -> money.toDouble().div(100)
-        is Int -> money.toDouble().div(100)
-        is Short -> money.toDouble().div(100)
-        else -> money.toDouble()
-    }
-//    val positiveColor =
-//        if (0 == positiveColor) context.attrColor(R.attr.colorPrimary) else positiveColor
-//    val negativeColor = if (0 == negativeColor) Color.RED else negativeColor
-    val isPositive: Boolean = num >= 0
-    val sign = if (isPositive) "+" else ""
-    setTextColor(ContextCompat.getColor(context, if (isPositive) positiveColor else negativeColor))
-    text = "$sign$num"
+    val num = money.toDouble().absoluteValue
+    setTextColor(if (isPositive) positiveColor else negativeColor)
+    val signText = sign ?: if (isPositive) "+" else "-"
+    text = "$signText$num"
 }
 
 @BindingAdapter("android:focus")

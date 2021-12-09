@@ -78,6 +78,7 @@ fun <I, O> LiveData<I>.trans(mapper: MediatorLiveData<O>.(I?) -> Unit): Mediator
 fun <I, O> LiveData<I>.transWithSet(
     setOnInputNull: Boolean = true,
     setOnOutputNull: Boolean = true,
+    setOrPost: Boolean = true,
     mapper: (I?) -> O?
 ): MediatorLiveData<O> =
     MediatorLiveData<O>().apply {
@@ -85,7 +86,8 @@ fun <I, O> LiveData<I>.transWithSet(
             if (null != input || setOnInputNull) {
                 val output = mapper(input)
                 if (null != output || setOnOutputNull) {
-                    value = output
+                    val callApi = if (setOrPost) ::setValue else ::postValue
+                    callApi.invoke(output)
                 }
             }
         }
@@ -94,6 +96,7 @@ fun <I, O> LiveData<I>.transWithSet(
 fun <I, O> LiveData<I>.mapTo(
     setOnInputNull: Boolean = true,
     setOnOutputNull: Boolean = true,
+    setOrPost: Boolean = true,
     mapper: (I?) -> O?
 ): MediatorLiveData<O> =
     MediatorLiveData<O>().apply {
@@ -101,7 +104,8 @@ fun <I, O> LiveData<I>.mapTo(
             if (null != input || setOnInputNull) {
                 val output = mapper(input)
                 if (null != output || setOnOutputNull) {
-                    value = output
+                    val callApi = if (setOrPost) ::setValue else ::postValue
+                    callApi.invoke(output)
                 }
             }
         }
@@ -111,6 +115,7 @@ fun <I, O> LiveData<I>.suspendMapTo(
     setOnInputNull: Boolean = true,
     setOnOutputNull: Boolean = true,
     context: CoroutineContext = Dispatchers.IO,
+    setOrPost: Boolean = false,
     mapper: suspend (I?) -> O?
 ): MediatorLiveData<O> =
     MediatorLiveData<O>().apply {
@@ -119,7 +124,8 @@ fun <I, O> LiveData<I>.suspendMapTo(
                 launchOn(CoroutineScope(context)) {
                     val output = mapper(input)
                     if (null != output || setOnOutputNull) {
-                        value = output
+                        val callApi = if (setOrPost) ::setValue else ::postValue
+                        callApi.invoke(output)
                     }
                 }
             }

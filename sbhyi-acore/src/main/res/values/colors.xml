@@ -42,6 +42,7 @@
     <color name="gray_f1">#F1F1F1</color>
     <color name="gray_f2">#F2F2F2</color>
     <color name="gray_f3">#F3F3F3</color>
+    <color name="gray_f5">#F5F5F5</color>
     <color name="gray_f6">#F6F6F6</color>
     <color name="gray_f7">#F7F7F7</color>
     <color name="gray_f8">#F8F8F8</color>
@@ -210,6 +211,7 @@
 
     <color name="yellow_ecf6d4">#ECF6D4</color>
     <color name="yellow_edb151">#EDB151</color>
+    <color name="yellow_fa64df">#FFA64D</color>
     <color name="yellow_fed000">#FED000</color>
     <color name="yellow_ffd800">#FFD800</color>
 
