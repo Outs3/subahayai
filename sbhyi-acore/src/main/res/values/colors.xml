@@ -108,6 +108,7 @@
     <color name="red_ff3537">#FF3537</color>
     <color name="red_ff3e3e">#FF3E3E</color>
     <color name="red_ff3857">#FF3857</color>
+    <color name="red_ff4019">#ff4019</color>
     <color name="red_ff4773">#FF4773</color>
     <color name="red_ff6166">#FF6166</color>
     <color name="red_ff8080">#FF8080</color>
@@ -280,8 +281,9 @@
     <color name="green_A400">#00E676</color>
     <color name="green_A700">#00C853</color>
 
-    <color name="green_5bed8e">#5BED8E</color>
     <color name="green_0dc75c">#0DC75C</color>
+    <color name="green_22cd00">#22CD00</color>
+    <color name="green_5bed8e">#5BED8E</color>
 
     <color name="aqua">#00FFFF</color>
     <color name="aqua_3eeeff">#3EEEFF</color>

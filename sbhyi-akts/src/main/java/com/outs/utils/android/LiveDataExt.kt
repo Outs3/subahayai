@@ -86,7 +86,7 @@ fun <I, O> LiveData<I>.transWithSet(
             if (null != input || setOnInputNull) {
                 val output = mapper(input)
                 if (null != output || setOnOutputNull) {
-                    val callApi = if (setOrPost) ::setValue else ::postValue
+                    val callApi = if (setOrPost) ::setOnNot else ::postOnNot
                     callApi.invoke(output)
                 }
             }
@@ -104,7 +104,7 @@ fun <I, O> LiveData<I>.mapTo(
             if (null != input || setOnInputNull) {
                 val output = mapper(input)
                 if (null != output || setOnOutputNull) {
-                    val callApi = if (setOrPost) ::setValue else ::postValue
+                    val callApi = if (setOrPost) ::setOnNot else ::postOnNot
                     callApi.invoke(output)
                 }
             }
@@ -124,7 +124,7 @@ fun <I, O> LiveData<I>.suspendMapTo(
                 launchOn(CoroutineScope(context)) {
                     val output = mapper(input)
                     if (null != output || setOnOutputNull) {
-                        val callApi = if (setOrPost) ::setValue else ::postValue
+                        val callApi = if (setOrPost) ::setOnNot else ::postOnNot
                         callApi.invoke(output)
                     }
                 }
