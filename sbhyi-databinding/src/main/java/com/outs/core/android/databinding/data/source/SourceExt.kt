@@ -6,6 +6,9 @@ package com.outs.core.android.databinding.data.source
  * date: 2021/7/8 13:42
  * desc:
  */
+//DataSource如果在加载中抛出这个异常则认为在等待其他参数 不算加载失败
+class LazyDataSourceException : RuntimeException()
+
 fun <T> newListDataSource(get: suspend () -> MutableList<T>): ListDataSource<T> =
     object : ListDataSource<T>() {
         override suspend fun requestData(): MutableList<T> = get()
