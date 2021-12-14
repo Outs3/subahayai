@@ -9,15 +9,12 @@ package com.outs.utils.kotlin
 inline fun <K, V> MutableMap<K, V>.getOrPut(
     key: K,
     defaultValue: () -> V,
-    onPut: (MutableMap<K, V>) -> Unit
-): V {
-    val value = get(key)
-    return if (value == null) {
-        val answer = defaultValue()
-        put(key, answer)
-        onPut(this)
-        answer
-    } else {
-        value
-    }
-}
+    onPut: (MutableMap<K, V>) -> Unit = {}
+): V = get(key)
+    ?: defaultValue()
+        .also { value ->
+            put(key, value)
+            onPut(this)
+        }
+
+

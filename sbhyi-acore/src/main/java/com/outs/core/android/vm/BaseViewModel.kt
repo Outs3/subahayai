@@ -33,38 +33,22 @@ abstract class BaseViewModel : ViewModel(), DefaultLifecycleObserver {
 
     }
 
-    override fun onStart(owner: LifecycleOwner) {
-        super.onStart(owner)
-    }
-
-    override fun onResume(owner: LifecycleOwner) {
-        super.onResume(owner)
-    }
-
-    override fun onPause(owner: LifecycleOwner) {
-        super.onPause(owner)
-    }
-
-    override fun onStop(owner: LifecycleOwner) {
-        super.onStop(owner)
-    }
-
     override fun onDestroy(owner: LifecycleOwner) {
         super.onDestroy(owner)
         onClick = null
     }
 
-    fun showProgress() {
+    open fun showProgress() {
         val count = progressCount.incrementAndGet()
         if (0 < count) progressStatus.postValue(ProgressStatus.SHOW_PROGRESS)
     }
 
-    fun cancelProgress() {
+    open fun cancelProgress() {
         val count = progressCount.decrementAndGet()
         if (0 >= count) progressStatus.postValue(ProgressStatus.CANCEL_PROGRESS)
     }
 
-    fun launchOnUI(
+    open fun launchOnUI(
         withProgress: Boolean = false,
         ignoreCancel: Boolean = true,
         onError: (Throwable) -> Unit = this::launchErrorHandle,
@@ -85,6 +69,15 @@ abstract class BaseViewModel : ViewModel(), DefaultLifecycleObserver {
             onFinally()
             if (withProgress)
                 cancelProgress()
+        }
+    }
+
+    open suspend fun <T> withProgress(block: suspend () -> T): T {
+        showProgress()
+        return try {
+            block()
+        } finally {
+            cancelProgress()
         }
     }
 

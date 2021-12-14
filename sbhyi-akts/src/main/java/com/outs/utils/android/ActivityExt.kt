@@ -70,13 +70,16 @@ fun ComponentActivity.regReceiver(receiver: BroadcastReceiver, intentFilter: Int
     lifecycle.regReceiver(this, receiver, intentFilter)
 }
 
-inline fun <reified T : Activity> Fragment.startActivity(vararg data: Pair<String, Any>) =
+inline fun <reified T : Activity> Fragment.startActivity(vararg data: Pair<String, Any>) {
     activity?.startActivity<T>(*data)
+}
 
 inline fun <reified T : Activity> Fragment.startActivity(
     extras: Bundle? = null,
     withFlags: Int? = null
-) = activity?.startActivity<T>(extras, withFlags)
+) {
+    activity?.startActivity<T>(extras, withFlags)
+}
 
 inline fun <reified T : Activity> Context.startActivity(vararg data: Pair<String, Any>) =
     startActivity<T>(bundleOf(*data))
