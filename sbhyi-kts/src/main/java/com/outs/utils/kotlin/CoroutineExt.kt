@@ -11,6 +11,8 @@ import kotlin.coroutines.resumeWithException
  * date: 2021/4/8 15:25
  * desc:
  */
+suspend inline fun <T, R> T.suspendLet(block: suspend (T) -> R): R = block(this)
+
 fun <T> Continuation<T>.resumeOrException(ret: T?) {
     ret?.also { resume(it) } ?: resumeWithException(RuntimeException("Error: resume obj is empty!"))
 }
@@ -24,7 +26,11 @@ fun launchOn(
     try {
         block()
     } catch (e: Throwable) {
-        onError(e)
+        if (e !is CancellationException) {
+            onError(e)
+        } else {
+            "Job is cancel!".d()
+        }
     } finally {
         onFinally()
     }
@@ -40,7 +46,11 @@ fun launchOnMain(
         if (0 < delay) delay(delay)
         block()
     } catch (e: Throwable) {
-        onError(e)
+        if (e !is CancellationException) {
+            onError(e)
+        } else {
+            "Job is cancel!".d()
+        }
     } finally {
         onFinally()
     }
@@ -54,7 +64,11 @@ fun launchOnIO(
     try {
         block()
     } catch (e: Throwable) {
-        onError(e)
+        if (e !is CancellationException) {
+            onError(e)
+        } else {
+            "Job is cancel!".d()
+        }
     } finally {
         onFinally()
     }

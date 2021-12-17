@@ -23,7 +23,10 @@ import com.outs.utils.kotlin.typeOfOrNull
  * date: 2021/4/9 15:17
  * desc:
  */
-val topActivity: AppCompatActivity?
+val topActivity: Activity?
+    get() = ActivityUtils.getTopActivity()?.typeOfOrNull<Activity>()
+
+val topAppCompatActivity: AppCompatActivity?
     get() = ActivityUtils.getTopActivity()?.typeOfOrNull<AppCompatActivity>()
 
 val topLaunchOwner: ILaunchOwner?

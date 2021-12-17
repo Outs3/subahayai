@@ -8,6 +8,8 @@ package com.outs.utils.kotlin
  */
 inline fun <reified T> T.let(predicate: Boolean, ret: T): T = if (predicate) ret else this
 
+inline fun <reified T> Any?.typeOf(): T = this as T
+
 inline fun <reified T> Any?.typeOfOrNull(): T? = if (this is T) this else null
 
 inline fun <reified T, R : Throwable> T?.throwNull(asThrowable: () -> R): T =
