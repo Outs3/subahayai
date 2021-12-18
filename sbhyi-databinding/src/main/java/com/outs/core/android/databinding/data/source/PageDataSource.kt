@@ -1,7 +1,6 @@
 package com.outs.core.android.databinding.data.source
 
 import androidx.lifecycle.MutableLiveData
-import androidx.recyclerview.widget.RecyclerView
 import com.outs.utils.kotlin.emptyAction
 
 /**
@@ -12,9 +11,16 @@ import com.outs.utils.kotlin.emptyAction
  */
 abstract class PageDataSource<T> : ListDataSource<T>() {
 
+    //当前页码
     protected var mPage: Int = 1
+
+    //每页数据量
     protected var mPageSize: Int = 20
 
+    //每次加载新数据都清除旧数据（翻页）
+    var clearOnLoad: Boolean = false
+
+    //没有更多数据
     val isNoMore = MutableLiveData<Boolean>()
 
     override fun refresh(onComplete: () -> Unit) {
@@ -28,12 +34,13 @@ abstract class PageDataSource<T> : ListDataSource<T>() {
     }
 
     override fun loadList(data: MutableList<T>) {
-        val needClear = 1 == mPage
+        val needClear = clearOnLoad || 1 == mPage
         if (needClear)
             this.data.clear()
+        val count = data.size
+        isNoMore.postValue(count < mPageSize)
         if (data.isNotEmpty()) {
             val position = this.data.size
-            val count = data.size
             this.data.addAll(data)
             if (needClear) {
                 notifyAdapters()
@@ -43,11 +50,6 @@ abstract class PageDataSource<T> : ListDataSource<T>() {
         } else if (needClear) {
             notifyAdapters()
         }
-    }
-
-    override fun notifyAdapters(action: (RecyclerView.Adapter<*>) -> Unit) {
-        isNoMore.postValue(this.data.size < mPage * mPageSize)
-        super.notifyAdapters(action)
     }
 
 }
