@@ -28,9 +28,9 @@ object LoggingInterceptor : Interceptor {
     @Throws(IOException::class)
     override fun intercept(chain: Interceptor.Chain): Response {
         val request: Request = chain.request()
-        request.convToString().d(tag = "LogByOu-Http")
+        request.convToString().d(tag = "Http")
         val response: Response = chain.proceed(request)
-        response.convToString().d(tag = "LogByOu-Http")
+        response.convToString().d(tag = "Http")
         return response
     }
 

@@ -37,7 +37,7 @@ open class AudioPlayer(lifecycle: Lifecycle? = null) : IAudioPlayer {
         }
 
         override fun push(item: String?): String {
-            LogUtils.d("LogByOu-Player", item)
+            LogUtils.d("Player", item)
             return super.push(item)
         }
     }

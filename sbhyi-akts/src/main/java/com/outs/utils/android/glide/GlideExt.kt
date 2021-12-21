@@ -62,44 +62,47 @@ fun ImageView.loadUrl(url: String?) {
 }
 
 fun ImageView.loadUrlWithoutError(url: String?) {
-    sManager.load(url).transform(CenterCrop()).into(this)
+    sManager.load(url)
+        .transform(CenterCrop())
+        .into(this)
     setTag(tagGlide, url)
 }
 
 fun ImageView.loadUrl(url: String?, @DrawableRes placeHolder: Int) {
-    sManager.load(url).transform(CenterCrop()).placeholder(placeHolder)
-        .error(R.drawable.ic_placeholder).into(this)
+    sManager.load(url)
+        .placeholder(placeHolder)
+        .error(R.drawable.ic_placeholder)
+        .into(this)
     setTag(tagGlide, url)
 }
 
 fun ImageView.loadUrl(url: String?, placeHolder: Drawable? = null) {
-    sManager.load(url).transform(CenterCrop()).placeholder(placeHolder)
+    sManager.load(url)
+        .placeholder(placeHolder)
         .error(placeHolder).into(this)
     setTag(tagGlide, url)
 }
 
 fun ImageView.loadUrlSkipMemory(url: String?) {
-    sManager.load(url).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE)
-        .transform(CenterCrop()).placeholder(R.drawable.ic_placeholder)
+    sManager.load(url)
+        .skipMemoryCache(true)
+        .diskCacheStrategy(DiskCacheStrategy.NONE)
+        .placeholder(R.drawable.ic_placeholder)
         .error(R.drawable.ic_placeholder)
         .into(this)
     setTag(tagGlide, url)
 }
 
 fun ImageView.fitCenter(url: String?) {
-    sManager.load(url).transform(FitCenter()).error(R.drawable.ic_placeholder).into(this)
+    sManager.load(url)
+        .transform(FitCenter())
+        .error(R.drawable.ic_placeholder)
+        .into(this)
     setTag(tagGlide, url)
 }
 
 fun ImageView.imageNoPlace(url: String?) {
-    sManager.load(url).transform(CenterCrop()).into(this)
+    sManager.load(url).into(this)
     setTag(tagGlide, url)
 }
-
-fun ImageView.circleBack(url: String?) {
-    sManager.load(url).transform(CenterCrop()).placeholder(R.drawable.ic_placeholder)
-        .error(R.drawable.ic_placeholder).into(this)
-    setTag(tagGlide, url)
-}
-
 

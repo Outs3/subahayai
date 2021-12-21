@@ -2,6 +2,7 @@ package com.outs.utils.kotlin
 
 import java.io.ByteArrayOutputStream
 import java.io.InputStream
+import java.io.OutputStream
 
 /**
  * author: Outs3
@@ -23,4 +24,21 @@ fun InputStream.toByteArray(): ByteArray? {
         e.printStackTrace()
     }
     return null
+}
+
+fun InputStream.copyTo(
+    output: OutputStream,
+    bufferSize: Int = DEFAULT_BUFFER_SIZE,
+    onProgress: ((Float) -> Unit)? = null
+) {
+    val total = available()
+    var bytesCopied: Long = 0
+    val buffer = ByteArray(bufferSize)
+    var bytes = read(buffer)
+    while (bytes >= 0) {
+        output.write(buffer, 0, bytes)
+        bytesCopied += bytes
+        onProgress?.invoke(bytesCopied.toFloat().div(total))
+        bytes = read(buffer)
+    }
 }
