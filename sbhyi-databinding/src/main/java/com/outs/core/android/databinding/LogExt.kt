@@ -1,6 +1,7 @@
 package com.outs.core.android
 
 import com.outs.core.android.databinding.data.source.DataSource
+import com.outs.core.android.databinding.data.source.DataSourceFactory
 import com.outs.utils.kotlin.ILogger
 import com.outs.utils.kotlin.addLogger
 
@@ -23,11 +24,11 @@ val logs: DataSource<String> by lazy {
         }
 
     })
-    DataSource.empty()
+    DataSourceFactory.empty()
 }
 
-val netLogs by lazy { DataSource.empty<String>() }
+val netLogs by lazy { DataSourceFactory.empty<String>() }
 
-val lifecycleLogs by lazy { DataSource.empty<String>() }
+val lifecycleLogs by lazy { DataSourceFactory.empty<String>() }
 
 fun String.addToLog() = logs.addOnIO(this)

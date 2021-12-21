@@ -4,6 +4,8 @@ import android.content.Context
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
+import com.outs.core.android.databinding.data.source.DataSource
+import com.outs.core.android.databinding.data.source.DataSourceFactory
 import com.outs.core.android.databinding.holder.CheckableViewHolder
 import com.outs.core.android.databinding.holder.CheckedAutoItem
 import com.outs.core.android.databinding.holder.DataBindingViewHolder
@@ -18,7 +20,7 @@ import com.outs.utils.android.setOnNot
  */
 open class SingleChoiceDataAdapter<T : Any>(
     context: Context,
-    data: com.outs.core.android.databinding.data.source.DataSource<T> = com.outs.core.android.databinding.data.source.DataSource.empty(),
+    data: DataSource<T> = DataSourceFactory.empty(),
     var onCheckChanged: ((T?, Int) -> Unit)? = null,
     var checked: T? = null,
     createHolder: (viewType: Int) -> DataBindingViewHolder<T, out ViewDataBinding>
@@ -26,7 +28,7 @@ open class SingleChoiceDataAdapter<T : Any>(
 
     constructor(
         context: Context,
-        data: com.outs.core.android.databinding.data.source.DataSource<T> = com.outs.core.android.databinding.data.source.DataSource.empty(),
+        data: DataSource<T> = DataSourceFactory.empty(),
         onCheckChanged: ((T?, Int) -> Unit)? = null,
         checked: T? = null,
         itemLayoutId: Int
@@ -45,14 +47,14 @@ open class SingleChoiceDataAdapter<T : Any>(
         itemLayoutId: Int
     ) : this(
         context,
-        com.outs.core.android.databinding.data.source.DataSource.fromIterable(data),
+        DataSourceFactory.fromIterable(data),
         onCheckChanged,
         checked,
         createHolder = { CheckedAutoItem(itemLayoutId) })
 
     constructor(
         context: Context,
-        data: com.outs.core.android.databinding.data.source.DataSource<T> = com.outs.core.android.databinding.data.source.DataSource.empty(),
+        data: DataSource<T> = DataSourceFactory.empty(),
         lifecycleOwner: LifecycleOwner,
         liveChecked: MutableLiveData<T>,
         itemLayoutId: Int

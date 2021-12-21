@@ -2,6 +2,8 @@ package com.outs.core.android.databinding.data.adapter
 
 import android.content.Context
 import androidx.databinding.ViewDataBinding
+import com.outs.core.android.databinding.data.source.DataSource
+import com.outs.core.android.databinding.data.source.DataSourceFactory
 import com.outs.core.android.databinding.holder.CheckableViewHolder
 import com.outs.core.android.databinding.holder.CheckedAutoItem
 import com.outs.core.android.databinding.holder.DataBindingViewHolder
@@ -16,7 +18,7 @@ import com.outs.utils.kotlin.toggle
  */
 open class MultipleChoiceDataAdapter<T : Any>(
     context: Context,
-    data: com.outs.core.android.databinding.data.source.DataSource<T> = com.outs.core.android.databinding.data.source.DataSource.empty(),
+    data: DataSource<T> = DataSourceFactory.empty(),
     var onCheckChanged: ((T?, Int, Boolean) -> Unit)? = null,
     val checked: HashSet<T> = HashSet(),
     createHolder: (viewType: Int) -> DataBindingViewHolder<T, out ViewDataBinding>
@@ -24,7 +26,7 @@ open class MultipleChoiceDataAdapter<T : Any>(
 
     constructor(
         context: Context,
-        data: com.outs.core.android.databinding.data.source.DataSource<T> = com.outs.core.android.databinding.data.source.DataSource.empty(),
+        data: DataSource<T> = DataSourceFactory.empty(),
         onCheckChanged: ((T?, Int, Boolean) -> Unit)? = null,
         checked: HashSet<T> = HashSet(),
         itemLayoutId: Int

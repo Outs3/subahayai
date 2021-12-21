@@ -1,6 +1,7 @@
 package com.outs.utils.android
 
 import androidx.lifecycle.MutableLiveData
+import com.outs.utils.kotlin.IGetTotal
 import com.outs.utils.kotlin.copyTo
 import java.io.InputStream
 import java.io.OutputStream
@@ -14,5 +15,6 @@ import java.io.OutputStream
 fun InputStream.copyTo(
     output: OutputStream,
     bufferSize: Int = DEFAULT_BUFFER_SIZE,
+    onGetTotal: IGetTotal? = null,
     onProgress: MutableLiveData<Float>? = null
-) = copyTo(output, bufferSize) { onProgress?.postOnNot(it) }
+) = copyTo(output, bufferSize, onGetTotal) { onProgress?.postOnNot(it) }

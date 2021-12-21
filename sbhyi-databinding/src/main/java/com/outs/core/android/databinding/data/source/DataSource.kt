@@ -118,16 +118,4 @@ open class DataSource<T> {
         this.position.value = position
     }
 
-    companion object {
-        fun <T> empty(): DataSource<T> = object : DataSource<T>() {}
-
-        fun <T> fromArray(data: Array<T>): DataSource<T> = object : DataSource<T>() {}.also {
-            it.data.addAll(data)
-        }
-
-        fun <T> fromIterable(data: Iterable<T>): DataSource<T> = object : DataSource<T>() {}.also {
-            it.data.addAll(data)
-        }
-    }
-
 }

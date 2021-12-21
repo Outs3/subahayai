@@ -29,16 +29,24 @@ fun InputStream.toByteArray(): ByteArray? {
 fun InputStream.copyTo(
     output: OutputStream,
     bufferSize: Int = DEFAULT_BUFFER_SIZE,
+    onGetTotal: IGetTotal? = null,
     onProgress: ((Float) -> Unit)? = null
 ) {
-    val total = available()
+    val getTotal = onGetTotal ?: TotalFactory.totalByInputStreamAvailable(this)
     var bytesCopied: Long = 0
     val buffer = ByteArray(bufferSize)
     var bytes = read(buffer)
     while (bytes >= 0) {
         output.write(buffer, 0, bytes)
         bytesCopied += bytes
-        onProgress?.invoke(bytesCopied.toFloat().div(total))
+        onProgress?.invoke(bytesCopied.toFloat().div(getTotal()))
         bytes = read(buffer)
     }
+}
+
+typealias IGetTotal = () -> Int
+
+object TotalFactory {
+    fun totalByInt(total: Int): IGetTotal = { total }
+    fun totalByInputStreamAvailable(input: InputStream): IGetTotal = input::available
 }

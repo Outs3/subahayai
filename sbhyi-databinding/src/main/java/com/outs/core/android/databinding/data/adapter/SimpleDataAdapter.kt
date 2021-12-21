@@ -4,7 +4,8 @@ import android.content.Context
 import android.view.ViewGroup
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
-import com.outs.core.android.databinding.holder.AutoItem
+import com.outs.core.android.databinding.data.source.DataSource
+import com.outs.core.android.databinding.data.source.DataSourceFactory
 import com.outs.core.android.databinding.holder.DataBindingViewHolder
 import com.outs.core.android.databinding.holder.OnModelClickListener
 import java.lang.ref.WeakReference
@@ -17,8 +18,8 @@ import java.lang.ref.WeakReference
  */
 open class SimpleDataAdapter<T : Any>(
     val context: Context,
-    data: com.outs.core.android.databinding.data.source.DataSource<T> = com.outs.core.android.databinding.data.source.DataSource.empty(),
-    val createHolder: (viewType: Int) -> DataBindingViewHolder<T, out ViewDataBinding>
+    data: DataSource<T> = DataSourceFactory.empty(),
+    val createHolder: ICreateHolder<T>
 ) : DataAdapter<T, SimpleDataAdapter.AbsViewHolder<T>>(data) {
 
     constructor(
@@ -27,23 +28,23 @@ open class SimpleDataAdapter<T : Any>(
         createHolder: (viewType: Int) -> DataBindingViewHolder<T, out ViewDataBinding>
     ) : this(
         context,
-        com.outs.core.android.databinding.data.source.DataSource.fromIterable(data),
+        DataSourceFactory.fromIterable(data),
         createHolder
     )
 
     constructor(
         context: Context,
-        data: com.outs.core.android.databinding.data.source.DataSource<T> = com.outs.core.android.databinding.data.source.DataSource.empty(),
+        data: DataSource<T> = DataSourceFactory.empty(),
         itemLayoutId: Int,
         onModelClick: OnModelClickListener<T>? = null
-    ) : this(context, data, createHolder = { AutoItem(itemLayoutId, onModelClick) })
+    ) : this(context, data, CreateHolderFactory.auto(itemLayoutId, onModelClick))
 
     constructor(
         context: Context,
         data: Iterable<T>,
         itemLayoutId: Int,
         onModelClick: OnModelClickListener<T>? = null
-    ) : this(context, data, createHolder = { AutoItem(itemLayoutId, onModelClick) })
+    ) : this(context, data, CreateHolderFactory.auto(itemLayoutId, onModelClick))
 
     open fun onCreatedViewHolder(
         holder: AbsViewHolder<T>,

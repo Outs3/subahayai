@@ -1,10 +1,12 @@
 package com.outs.core.android.databinding.data.adapter
 
+import android.annotation.SuppressLint
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.outs.core.android.databinding.adapter.BaseAdapter
+import com.outs.core.android.databinding.data.source.DataSource
 import com.outs.core.android.vm.BaseViewModel
 import com.outs.utils.android.lifecycle.AutoCloseLifecycleObserver
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
@@ -15,10 +17,8 @@ import com.scwang.smart.refresh.layout.SmartRefreshLayout
  * date: 2021/6/13 16:36
  * desc:
  */
-abstract class DataAdapter<T, VH : RecyclerView.ViewHolder>(
-    val data: com.outs.core.android.databinding.data.source.DataSource<T>
-) :
-    com.outs.core.android.databinding.adapter.BaseAdapter<VH>() {
+abstract class DataAdapter<T, VH : RecyclerView.ViewHolder>(val data: DataSource<T>) :
+    BaseAdapter<VH>() {
 
     private val refreshObserver = RefreshObserver()
 
@@ -137,6 +137,7 @@ abstract class DataAdapter<T, VH : RecyclerView.ViewHolder>(
         }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     open fun onDataSetChanged() {
         notifyDataSetChanged()
     }
