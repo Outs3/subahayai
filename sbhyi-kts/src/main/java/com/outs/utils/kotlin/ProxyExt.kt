@@ -10,22 +10,42 @@ import java.lang.reflect.Proxy
  * date: 2021/12/17 10:42
  * desc: 代理
  */
-inline fun <reified T> proxyOfList(list: List<T>) =
-    SimpleProxy(T::class.java).also { it.addAll(list) }.proxy.typeOf<T>()
+private inline fun <reified T : Any> proxyOfOne(one: T): T = ProxyOne(T::class.java, one).proxy
 
-inline fun <reified T> simpleProxy(): SimpleProxy<T> = SimpleProxy(T::class.java)
+class ProxyOne<T : Any>(interfaceCls: Class<T>, val one: T) : InvocationHandler {
+
+    val proxy: T = Proxy.newProxyInstance(
+        one.javaClass.classLoader,
+        arrayOf(interfaceCls),
+        this
+    ) as T
+
+    override fun invoke(proxy: Any?, method: Method?, args: Array<out Any?>): Any? {
+        return method?.invoke(one, *args)
+    }
+
+}
+
+inline fun <reified T : Any> proxyOfList(list: List<T>) =
+    SimpleProxy(
+        list.first().javaClass.classLoader,
+        T::class.java
+    ).also { it.addAll(list) }.proxy.typeOf<T>()
+
+inline fun <reified T> simpleProxy(): SimpleProxy<T> =
+    SimpleProxy(T::class.java.classLoader, T::class.java)
 
 inline fun <reified T> SimpleProxy<T>.bindTo(target: (T) -> Unit) {
     proxy.typeOfOrNull<T>()?.also(target)
 }
 
-class SimpleProxy<T>(cls: Class<T>) : InvocationHandler {
+class SimpleProxy<T>(classLoader: ClassLoader, cls: Class<T>) : InvocationHandler {
 
     private val data: ArrayList<T> by lazy { ArrayList() }
 
     val proxy by lazy {
         Proxy.newProxyInstance(
-            ClassLoader.getSystemClassLoader(),
+            classLoader,
             arrayOf(cls),
             this
         )
