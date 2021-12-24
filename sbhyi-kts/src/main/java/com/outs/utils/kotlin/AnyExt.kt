@@ -37,3 +37,7 @@ inline fun <reified T, R : Throwable> T.throwUnless(
     takeIf { predicate(this) } ?: throw asThrowable(this)
 
 val Any.className: String get() = javaClass.simpleName
+
+inline fun <reified T> T?.nullOr(orObj: T?): T? = this ?: orObj
+
+inline fun <reified T> T?.nullOr(orGet: () -> T?): T? = this ?: orGet()

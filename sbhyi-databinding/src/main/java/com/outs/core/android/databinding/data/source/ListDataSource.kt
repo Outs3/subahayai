@@ -5,8 +5,11 @@ import androidx.lifecycle.MutableLiveData
 import com.outs.utils.android.e
 import com.outs.utils.android.postOnNot
 import com.outs.utils.kotlin.emptyAction
+import com.outs.utils.kotlin.finish
 import com.outs.utils.kotlin.launchOnIO
 import com.outs.utils.kotlin.reset
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.Job
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
@@ -17,6 +20,8 @@ import kotlin.coroutines.suspendCoroutine
  * desc:
  */
 abstract class ListDataSource<T> : DataSource<T>() {
+
+    private var loadingJob: Job? = null
 
     //是否初始化（是否已经加载过数据）
     val isInit = MutableLiveData<Boolean>(false)
@@ -45,13 +50,17 @@ abstract class ListDataSource<T> : DataSource<T>() {
     abstract suspend fun requestData(): MutableList<T>
 
     protected fun getList(onComplete: () -> Unit) {
-        launchOnIO {
+        //如果正在请求数据 则返回
+        if (true == loadingJob?.isActive) return
+        loadingJob = launchOnIO {
             isLoading.postOnNot(true)
             try {
                 requestData().let(::loadList)
             } catch (e: Throwable) {
                 if (e is LazyDataSourceException) {
                     //这里说明此DataSource有些懒加载的参数还没有加载结束 等参数加载后再调用refresh重新加载列表
+                } else if (e is CancellationException) {
+                    //这里说明请求被取消了
                 } else {
                     error.postValue(e)
                     e.e()
@@ -73,6 +82,9 @@ abstract class ListDataSource<T> : DataSource<T>() {
     }
 
     open fun refresh(onComplete: () -> Unit = emptyAction) {
+        //取消之前的加载操作
+        loadingJob?.finish()
+        //拉取数据
         getList(onComplete)
     }
 
