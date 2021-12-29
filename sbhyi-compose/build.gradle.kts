@@ -1,0 +1,85 @@
+plugins {
+    id("com.android.library")
+    id("kotlin-android")
+    id("kotlin-parcelize")
+    id("kotlin-kapt")
+    `maven-publish`
+}
+
+android {
+    compileSdk = ConfigData.COMPILE_SDK_VERSION
+
+    defaultConfig {
+        minSdk = ConfigData.MIN_SDK_VERSION
+        targetSdk = ConfigData.TARGET_SDK_VERSION
+
+        vectorDrawables {
+            useSupportLibrary = true
+        }
+    }
+
+    buildTypes {
+        release {
+            isMinifyEnabled = false
+        }
+    }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = "1.8"
+//        useIR = true
+    }
+    buildFeatures {
+        compose = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = Versions.COMPOSE_VERSION
+    }
+    packagingOptions {
+        resources {
+            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+        }
+    }
+}
+
+dependencies {
+    api(project(":${ConfigData.MODULE_ACORE}"))
+
+    api("androidx.compose.ui:ui:${Versions.COMPOSE_VERSION}")
+    api("androidx.compose.material:material:${Versions.COMPOSE_VERSION}")
+    api("androidx.compose.ui:ui-tooling-preview:${Versions.COMPOSE_VERSION}")
+    api("androidx.activity:activity-compose:1.4.0")
+    api("androidx.constraintlayout:constraintlayout-compose:1.0.0-rc01")
+
+    testImplementation("junit:junit:4.13.2")
+    testImplementation("androidx.test:core:1.4.0")
+    testImplementation("org.mockito:mockito-core:3.3.1")
+    androidTestImplementation("androidx.test.ext:junit:1.1.3")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
+    androidTestImplementation("androidx.compose.ui:ui-test-junit4:${Versions.COMPOSE_VERSION}")
+    debugImplementation("androidx.compose.ui:ui-tooling:${Versions.COMPOSE_VERSION}")
+}
+
+group = ConfigData.GROUP_NAME
+version = Versions.SBHYI_VERSION
+
+tasks.register("sourceJar", Jar::class) {
+    from(android.sourceSets["main"].java.srcDirs)
+    archiveClassifier.convention("sources").set("sources")
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            // Creates a Maven publication called "release".
+            create<MavenPublication>("release")
+                .of(
+                    from = components["release"],
+                    artifactId = ConfigData.MODULE_COMPOSE,
+                    artifact = tasks.getByName("sourceJar")
+                )
+        }
+    }
+}

@@ -11,13 +11,13 @@ fun String.throwRuntime(): Unit = throw RuntimeException(this)
 fun tryWithoutThrow(action: () -> Unit) {
     try {
         action()
-    } catch (e: Exception) {
+    } catch (e: Throwable) {
     }
 }
 
 fun <T> tryOr(print: Boolean = false, action: () -> T): T? = try {
     action()
-} catch (e: Exception) {
+} catch (e: Throwable) {
     if (print) {
         e.d()
     }
@@ -26,24 +26,24 @@ fun <T> tryOr(print: Boolean = false, action: () -> T): T? = try {
 
 fun <T> tryOr(action: () -> T, or: T): T = try {
     action()
-} catch (e: Exception) {
+} catch (e: Throwable) {
     or
 }
 
 fun <T> tryOrNull(action: () -> T): T? = try {
     action()
-} catch (e: Exception) {
+} catch (e: Throwable) {
     null
 }
 
-fun <T> tryOr(action: () -> T, or: (Exception) -> T) = try {
+fun <T> tryOr(action: () -> T, or: (Throwable) -> T) = try {
     action()
-} catch (e: Exception) {
+} catch (e: Throwable) {
     or(e)
 }
 
 suspend fun <T> suspendTryOrNull(action: suspend () -> T): T? = try {
     action()
-} catch (e: Exception) {
+} catch (e: Throwable) {
     null
 }
