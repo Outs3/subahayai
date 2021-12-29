@@ -53,6 +53,8 @@ dependencies {
         exclude(group = "org.jetbrains.kotlin", module = "kotlin-stdlib-common")
         exclude(group = "org.jetbrains.kotlin", module = "kotlin-stdlib-jdk7")
         exclude(group = "org.jetbrains.kotlin", module = "kotlin-stdlib-jdk8")
+        exclude(group = "org.jetbrains.kotlinx", module = "kotlinx-coroutines-core")
+        exclude(group = "org.jetbrains.kotlinx", module = "kotlinx-coroutines-android")
     }
     api("org.jetbrains.kotlin:kotlin-android-extensions-runtime:${Versions.COMPOSE_KOTLIN_VERSION}")
     api("org.jetbrains.kotlin:kotlin-parcelize-runtime:${Versions.COMPOSE_KOTLIN_VERSION}")
@@ -61,12 +63,26 @@ dependencies {
     api("org.jetbrains.kotlin:kotlin-stdlib-common:${Versions.COMPOSE_KOTLIN_VERSION}")
     api("org.jetbrains.kotlin:kotlin-stdlib-jdk7:${Versions.COMPOSE_KOTLIN_VERSION}")
     api("org.jetbrains.kotlin:kotlin-stdlib-jdk8:${Versions.COMPOSE_KOTLIN_VERSION}")
+    api("org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.COMPOSE_KOTLIN_COROUTINES_VERSION}")
+    api("org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.COMPOSE_KOTLIN_COROUTINES_VERSION}")
 
+    // Compose UI
     api("androidx.compose.ui:ui:${Versions.COMPOSE_VERSION}")
+    // Tooling support (Previews, etc.)
+    api("androidx.compose.ui:ui-tooling:${Versions.COMPOSE_VERSION}")
+    // Foundation (Border, Background, Box, Image, Scroll, shapes, animations, etc.)
+    api("androidx.compose.foundation:foundation:${Versions.COMPOSE_VERSION}")
+    // Material Design
     api("androidx.compose.material:material:${Versions.COMPOSE_VERSION}")
-    api("androidx.compose.ui:ui-tooling-preview:${Versions.COMPOSE_VERSION}")
+    // Material design icons
+    api("androidx.compose.material:material-icons-core:${Versions.COMPOSE_VERSION}")
+    api("androidx.compose.material:material-icons-extended:${Versions.COMPOSE_VERSION}")
+    // Integration with observables
+    api("androidx.compose.runtime:runtime-livedata:${Versions.COMPOSE_VERSION}")
+    api("androidx.compose.runtime:runtime-rxjava2:${Versions.COMPOSE_VERSION}")
+
     api("androidx.activity:activity-compose:1.4.0")
-    api("androidx.constraintlayout:constraintlayout-compose:1.0.0-rc01")
+    api("androidx.constraintlayout:constraintlayout-compose:1.0.0-rc02")
 
     testImplementation("junit:junit:4.13.2")
     testImplementation("androidx.test:core:1.4.0")
@@ -85,16 +101,16 @@ tasks.register("sourceJar", Jar::class) {
     archiveClassifier.convention("sources").set("sources")
 }
 
-afterEvaluate {
-    publishing {
-        publications {
-            // Creates a Maven publication called "release".
-            create<MavenPublication>("release")
-                .of(
-                    from = components["release"],
-                    artifactId = ConfigData.MODULE_COMPOSE,
-                    artifact = tasks.getByName("sourceJar")
-                )
-        }
-    }
-}
+//afterEvaluate {
+//    publishing {
+//        publications {
+//            // Creates a Maven publication called "release".
+//            create<MavenPublication>("release")
+//                .of(
+//                    from = components["release"],
+//                    artifactId = ConfigData.MODULE_COMPOSE,
+//                    artifact = tasks.getByName("sourceJar")
+//                )
+//        }
+//    }
+//}
