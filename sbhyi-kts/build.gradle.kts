@@ -14,12 +14,12 @@ java {
 
 dependencies {
     //kotlin
-    api("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2")
+    api("org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.KOTLIN_COROUTINES_VERSION}")
     api("org.jetbrains.kotlin:kotlin-reflect:${Versions.KOTLIN_VERSION}")
     //json
-    api("com.google.code.gson:gson:2.8.8")
+    api("com.google.code.gson:gson:2.8.9")
     //OkHttp
-    api("com.squareup.okhttp3:okhttp:4.9.2")
+    api("com.squareup.okhttp3:okhttp:4.9.3")
     //Retrofit
     api("com.squareup.retrofit2:retrofit:2.9.0")
     api("com.squareup.retrofit2:converter-gson:2.9.0")

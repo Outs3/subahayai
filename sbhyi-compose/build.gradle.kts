@@ -45,7 +45,22 @@ android {
 }
 
 dependencies {
-    api(project(":${ConfigData.MODULE_ACORE}"))
+    api(project(":${ConfigData.MODULE_ACORE}")) {
+        exclude(group = "org.jetbrains.kotlin", module = "kotlin-android-extensions-runtime")
+        exclude(group = "org.jetbrains.kotlin", module = "kotlin-parcelize-runtime")
+        exclude(group = "org.jetbrains.kotlin", module = "kotlin-reflect")
+        exclude(group = "org.jetbrains.kotlin", module = "kotlin-stdlib")
+        exclude(group = "org.jetbrains.kotlin", module = "kotlin-stdlib-common")
+        exclude(group = "org.jetbrains.kotlin", module = "kotlin-stdlib-jdk7")
+        exclude(group = "org.jetbrains.kotlin", module = "kotlin-stdlib-jdk8")
+    }
+    api("org.jetbrains.kotlin:kotlin-android-extensions-runtime:${Versions.COMPOSE_KOTLIN_VERSION}")
+    api("org.jetbrains.kotlin:kotlin-parcelize-runtime:${Versions.COMPOSE_KOTLIN_VERSION}")
+    api("org.jetbrains.kotlin:kotlin-reflect:${Versions.COMPOSE_KOTLIN_VERSION}")
+    api("org.jetbrains.kotlin:kotlin-stdlib:${Versions.COMPOSE_KOTLIN_VERSION}")
+    api("org.jetbrains.kotlin:kotlin-stdlib-common:${Versions.COMPOSE_KOTLIN_VERSION}")
+    api("org.jetbrains.kotlin:kotlin-stdlib-jdk7:${Versions.COMPOSE_KOTLIN_VERSION}")
+    api("org.jetbrains.kotlin:kotlin-stdlib-jdk8:${Versions.COMPOSE_KOTLIN_VERSION}")
 
     api("androidx.compose.ui:ui:${Versions.COMPOSE_VERSION}")
     api("androidx.compose.material:material:${Versions.COMPOSE_VERSION}")

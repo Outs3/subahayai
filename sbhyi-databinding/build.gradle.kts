@@ -35,10 +35,10 @@ dependencies {
     api(project(":${ConfigData.MODULE_ACORE}"))
 
     //refresh-layout-view
-    api("com.scwang.smart:refresh-layout-kernel:2.0.3")      //核心必须依赖
-    api("com.scwang.smart:refresh-header-classics:2.0.3")    //经典刷新头
-    api("com.scwang.smart:refresh-header-material:2.0.3")    //谷歌刷新头
-    api("com.scwang.smart:refresh-footer-classics:2.0.3")    //经典加载
+    api("io.github.scwang90:refresh-layout-kernel:2.0.5")      //核心必须依赖
+    api("io.github.scwang90:refresh-header-classics:2.0.5")    //经典刷新头
+    api("io.github.scwang90:refresh-header-material:2.0.5")    //谷歌刷新头
+    api("io.github.scwang90:refresh-footer-classics:2.0.5")    //经典加载
 
     testImplementation("junit:junit:4.13.2")
     testImplementation("androidx.test:core:1.4.0")
