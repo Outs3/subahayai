@@ -1,6 +1,7 @@
 package com.outs.demo_databinding.base
 
 import com.outs.core.android.databinding.data.source.DataSource
+import com.outs.core.android.databinding.data.source.DataSourceFactory
 
 
 /**
@@ -10,5 +11,5 @@ import com.outs.core.android.databinding.data.source.DataSource
  * desc:
  */
 class EmptyListViewModel : ListViewModel<Unit>() {
-    override fun getDataSource(): DataSource<Unit> = DataSource.empty()
+    override fun getDataSource(): DataSource<Unit> = DataSourceFactory.empty()
 }
