@@ -49,7 +49,7 @@ dependencies {
     api("com.makeramen:roundedimageview:2.3.0")
 
     //tencent mmkv
-    api("com.tencent:mmkv-static:1.2.9")
+    api("com.tencent:mmkv:1.2.11")
 
     //饺子播放器
     api("cn.jzvd:jiaozivideoplayer:7.7.0")

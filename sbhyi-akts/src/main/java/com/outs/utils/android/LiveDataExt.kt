@@ -14,9 +14,9 @@ import kotlin.coroutines.CoroutineContext
  * date: 2021/9/27 9:46
  * desc:
  */
-inline fun <reified T> MutableLiveData<T>.getOrDefault(default: T): T = value ?: default
+fun <T> MutableLiveData<T>.getOrDefault(default: T): T = value ?: default
 
-inline fun <reified T> MutableLiveData<T>.getOrDefault(default: () -> T): T = value ?: default()
+fun <T> MutableLiveData<T>.getOrDefault(default: () -> T): T = value ?: default()
 
 inline fun <reified T> LiveData<T>.observeNotNullForever(crossinline block: (T) -> Unit) {
     observeForever { it?.let(block) }
