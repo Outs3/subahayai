@@ -69,14 +69,35 @@ fun ContentResolver.querySms(uri: Uri = Telephony.Sms.CONTENT_URI) = query<Sms>(
 
 fun ContentResolver.queryCallLog(uri: Uri = CallLog.Calls.CONTENT_URI) = query<Call>(uri)
 
-fun ContentResolver.queryContacts(uri: Uri = ContactsContract.Contacts.CONTENT_URI) =
-    query<Contacts>(uri)?.also {
-        it.forEach { contact ->
-            contact.id?.let { id ->
-                contact.phones = queryPhone(contactId = id)?.mapNotNull { it.number }
+fun ContentResolver.queryContacts(
+    uri: Uri = ContactsContract.Contacts.CONTENT_URI,
+    withPhone: Boolean = false
+) =
+    query<Contacts>(uri)
+        ?.also {
+            if (withPhone) {
+                it.onEach { contact ->
+                    contact.phones =
+                        contact.id?.let { id -> queryPhone(contactId = id)?.mapNotNull { it.number } }
+                }
             }
         }
-    }
+
+fun ContentResolver.queryContactPhones(
+    uri: Uri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI
+) = query<ContactPhone>(uri)
+
+fun ContentResolver.queryContactEmails(
+    uri: Uri = ContactsContract.CommonDataKinds.Email.CONTENT_URI
+) = query<ContactEmail>(uri)
+
+fun ContentResolver.queryContactStructuredPostal(
+    uri: Uri = ContactsContract.CommonDataKinds.StructuredPostal.CONTENT_URI
+) = query<ContactStructuredPostal>(uri)
+
+fun ContentResolver.queryContactData(
+    uri: Uri = ContactsContract.Data.CONTENT_URI
+) = query<ContactData>(uri)
 
 fun ContentResolver.queryPhone(
     uri: Uri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
@@ -88,4 +109,4 @@ fun ContentResolver.queryPhone(
     arrayOf(contactId.toString()),
     null
 )
-    ?.use { it.readRows<Phone>() }
+    ?.use { it.readRows<ContactPhone>() }

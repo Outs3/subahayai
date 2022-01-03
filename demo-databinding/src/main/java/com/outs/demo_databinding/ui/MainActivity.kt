@@ -36,7 +36,8 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                     delay(3000)
                 }
             },
-            "readImgUri" to { readImgUri() }
+            "readImgUri" to { readImgUri() },
+            "readContacts" to { mViewModel.readContacts(context) }
         )
     }
 

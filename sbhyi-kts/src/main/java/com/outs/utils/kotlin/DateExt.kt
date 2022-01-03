@@ -68,6 +68,8 @@ fun Long.datetime(): String = this.format("yyyy-MM-dd HH:mm:ss")
 
 fun Long.datetimeWithoutSecond(): String = this.format("yyyy-MM-dd HH:mm")
 
+fun Long.datetimeWithMillis(): String = this.format("yyyy-MM-dd HH:mm:ss SSS")
+
 fun String.format(time: Long) = SimpleDateFormat(this).format(time)
 
 fun Long.format(pattern: String) = SimpleDateFormat(pattern).format(Date(this))

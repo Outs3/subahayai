@@ -8,7 +8,9 @@ import android.provider.ContactsContract
  * date: 2021/6/17 14:17
  * desc:
  */
-data class Phone(
+data class ContactPhone(
+    @Column(name = ContactsContract.CommonDataKinds.Phone.CONTACT_ID)
+    val contactId: Int? = null,
     @Column(name = ContactsContract.CommonDataKinds.Phone.NUMBER)
     val number: String? = null,
 ) : IRow {
