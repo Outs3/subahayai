@@ -11,6 +11,7 @@ import com.outs.core.android.vm.BaseViewModel
 import com.outs.utils.android.*
 import com.outs.utils.android.store.ContactData
 import com.outs.utils.kotlin.emptyToNull
+import com.outs.utils.kotlin.toJson
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlin.system.measureTimeMillis
@@ -23,6 +24,8 @@ import kotlin.system.measureTimeMillis
  */
 class MainViewModel : BaseViewModel() {
 
+    private val DATE_REGEX = "^([1-9]\\d{3}-)(([0]{0,1}[1-9]-)|([1][0-2]-))(([0-3]{0,1}[0-9]))$"
+
     private data class Contact(val id: Int, val name: String?, var phoneNumber: String? = null)
 
     private data class ContactPhone(val contactId: Int, val number: String?)
@@ -34,8 +37,10 @@ class MainViewModel : BaseViewModel() {
         val name: String,
         val phones: List<String>,
         val emails: List<String>,
+        val addr: String? = null,
         val birthday: String? = null,
-        val organTitle: String? = null
+        val organTitle: String? = null,
+        val organName: String? = null,
     )
 
     fun readContacts(context: Context) {
@@ -47,7 +52,8 @@ class MainViewModel : BaseViewModel() {
                 val contentResolver = context.contentResolver
                 measureTimeMillis("组合数据") {
                     val contacts =
-                        measureTimeMillis("SBHYI-基础数据") { contentResolver.queryContacts() }
+//                        measureTimeMillis("SBHYI-基础数据") { contentResolver.queryContacts() }
+                        contentResolver.queryContacts()
                             ?.mapNotNull {
                                 val id = it.id?.toInt()
                                 val name = it.displayName?.emptyToNull()
@@ -55,7 +61,8 @@ class MainViewModel : BaseViewModel() {
                             }
                             ?.also { "contacts: $it".d() }
                     val phones =
-                        measureTimeMillis("SBHYI-电话号码数据") { contentResolver.queryContactPhones() }
+//                        measureTimeMillis("SBHYI-电话号码数据") { contentResolver.queryContactPhones() }
+                        contentResolver.queryContactPhones()
                             ?.mapNotNull {
                                 val id = it.contactId
                                 val number = it.number?.emptyToNull()
@@ -70,7 +77,8 @@ class MainViewModel : BaseViewModel() {
                             }
                             ?.also { "phones: $it".d() }
                     val emails =
-                        measureTimeMillis("SBHYI-邮件地址数据") { contentResolver.queryContactEmails() }
+//                        measureTimeMillis("SBHYI-邮件地址数据") { contentResolver.queryContactEmails() }
+                        contentResolver.queryContactEmails()
                             ?.mapNotNull {
                                 val id = it.contactId
                                 val emailAddress = it.emailAddress?.emptyToNull()
@@ -85,7 +93,8 @@ class MainViewModel : BaseViewModel() {
                             }
                             ?.also { "emails: $it".d() }
                     val postals =
-                        measureTimeMillis("SBHYI-邮寄地址") { contentResolver.queryContactStructuredPostal() }
+//                        measureTimeMillis("SBHYI-邮寄地址") { contentResolver.queryContactStructuredPostal() }
+                        contentResolver.queryContactStructuredPostal()
                             ?.mapNotNull {
                                 val id = it.contactId
                                 val data = it.data?.emptyToNull()
@@ -100,7 +109,8 @@ class MainViewModel : BaseViewModel() {
                             }
                             ?.also { "postals: $it".d() }
                     val extras =
-                        measureTimeMillis("SBHYI-额外数据") { contentResolver.queryContactData() }
+//                        measureTimeMillis("SBHYI-额外数据") { contentResolver.queryContactData() }
+                        contentResolver.queryContactData()
                             ?.mapNotNull {
                                 val id = it.contactId
                                 if (null == id) null else id to it
@@ -121,16 +131,34 @@ class MainViewModel : BaseViewModel() {
                         val emailList = emails?.get(contactId) ?: emptyList()
                         val postalList = postals?.get(contactId) ?: emptyList()
                         val extraList = extras?.get(contactId) ?: emptyList()
+
+                        val address = postalList.joinToString(" AND ")
+                        val organData =
+                            extraList.firstOrNull { ContactsContract.CommonDataKinds.Organization.CONTENT_ITEM_TYPE == it.mimeType }
+                        val organTitle = organData?.organizationTitle
+                        val organName = organData?.organizationData
+                        val birthday = extraList.firstOrNull {
+                            ContactsContract.CommonDataKinds.Event.CONTENT_ITEM_TYPE == it.mimeType
+                                    &&
+                                    ContactsContract.CommonDataKinds.Event.TYPE_BIRTHDAY == it.eventType
+                        }?.eventStartDate
+
                         "$index - $contactId - $name [$phoneList][$emailList][$postalList][$extraList]".d()
-                        ContactPlus(contactId, name, phoneList, emailList)
+                        ContactPlus(
+                            contactId,
+                            name,
+                            phoneList,
+                            emailList,
+                            address,
+                            birthday,
+                            organTitle,
+                            organName
+                        )
                     }
                 }
-
-
-                //同时读取基础与电话太久了 不采用
-//                val contacts2 = measureTimeMillis("同时读取基础数据与电话号码数据") { contentResolver.readContactsBaseAndPhone() }
-                val ret = 1
             }
+            val json = data?.toJson()
+            json?.d()
         }
     }
 

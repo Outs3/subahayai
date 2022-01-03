@@ -18,7 +18,7 @@ data class ContactData(
     @Column(name = ContactsContract.CommonDataKinds.Organization.TITLE)
     val organizationTitle: String? = null,
     @Column(name = ContactsContract.CommonDataKinds.Event.TYPE)
-    val eventType: String? = null,
+    val eventType: Int? = null,
     @Column(name = ContactsContract.CommonDataKinds.Event.START_DATE)
     val eventStartDate: String? = null,
 ) : IRow {
