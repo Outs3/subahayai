@@ -3,10 +3,13 @@ package com.outs.utils.android
 import android.content.Context
 import android.view.*
 import android.widget.CompoundButton
+import android.widget.EditText
+import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.tabs.TabLayout
+import com.outs.utils.kotlin.emptyToNull
 import com.outs.utils.kotlin.getFieldValue
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -18,6 +21,54 @@ import kotlin.math.absoluteValue
  * date: 2021/4/7 15:41
  * desc:
  */
+fun setText(view: TextView?, text: String?) {
+    view?.text = text ?: ""
+}
+
+fun setHint(view: TextView?, text: String?) {
+    view?.hint = text ?: ""
+}
+
+fun getText(edit: EditText?): String? = edit?.text?.toString()
+
+fun getText(edit: EditText?, def: String? = null): String? = edit?.text?.toString() ?: def
+
+fun visibleAndText(view: TextView?, text: String? = null) {
+    if (null != view) {
+        val isTextEmpty = null == text?.emptyToNull()
+        if (isTextEmpty) {
+            view.visibility = View.GONE
+        } else {
+            view.visibility = View.VISIBLE
+            view.text = text
+        }
+    }
+}
+
+fun visibleAndHint(view: TextView?, hint: String? = null) {
+    if (null != view) {
+        val isHintEmpty = null == hint?.emptyToNull()
+        if (isHintEmpty) {
+            view.visibility = View.GONE
+        } else {
+            view.visibility = View.VISIBLE
+            view.hint = hint
+        }
+    }
+}
+
+fun visibleOrNot(v: View?, visible: Boolean) {
+    if (visible) {
+        v?.visible()
+    } else {
+        v?.gone()
+    }
+}
+
+fun gone(vararg v: View?) {
+    v.forEach { it?.gone() }
+}
+
 fun View.visible() {
     visibility = View.VISIBLE
 }

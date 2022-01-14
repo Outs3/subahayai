@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:name="btn_checkbox_checked"
-    android:width="32dp"
-    android:height="32dp"
-    android:tint="@color/orange_ff9c00"
+    android:width="@dimen/dp_12"
+    android:height="@dimen/dp_12"
+    android:tint="?attr/colorPrimary"
     android:viewportWidth="48"
     android:viewportHeight="48">
     <group
