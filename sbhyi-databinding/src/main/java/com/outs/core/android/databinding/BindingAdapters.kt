@@ -1,7 +1,6 @@
 package com.outs.core.android.databinding
 
 import android.content.res.ColorStateList
-import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Typeface
@@ -168,63 +167,6 @@ fun View.visibleOrNot(visible: Boolean) {
 @BindingAdapter("android:visibleOrIn")
 fun View.visibleOrIn(visible: Boolean) {
     visibility = if (visible) View.VISIBLE else View.INVISIBLE
-}
-
-@BindingAdapter("android:imageBmp")
-fun ImageView.imageBmp(bitmap: Bitmap?) {
-    setImageBitmap(bitmap)
-}
-
-@BindingAdapter("android:fitCenter")
-fun ImageView.fit(image: String?) {
-    val tag = getTag(tagGlide)
-    if (tag == null || tag != image)
-        fitCenter(image)
-}
-
-@BindingAdapter("android:image")
-fun ImageView.image(image: String?) {
-    val tag = getTag(tagGlide)
-    if (tag == null || tag != image)
-        loadUrl(image)
-}
-
-@BindingAdapter("android:imageOnNotNull")
-fun ImageView.imageOnNotNull(image: String?) {
-    val tag = getTag(tagGlide)
-    if (null != image?.emptyToNull() && (tag == null || tag != image))
-        loadUrl(image)
-}
-
-@BindingAdapter(value = ["android:imageOnSuccess", "android:imageOnError"], requireAll = false)
-fun ImageView.imageOnSuccess(image: String?, imageOnError: Drawable? = null) {
-    val tag = getTag(tagGlide)
-    if (tag == null || tag != image)
-        loadUrl(image, imageOnError)
-}
-
-@BindingAdapter("android:imageR")
-fun ImageView.imageR(image: Int) {
-    setImageResource(image)
-}
-
-@BindingAdapter("android:imageNoCache")
-fun ImageView.imageNoCache(image: String?) {
-    val tag = getTag(tagGlide)
-    if (tag == null || tag != image)
-        loadUrlSkipMemory(image)
-}
-
-@BindingAdapter("android:urlByGlide")
-fun ImageView.urlByGlide(uri: Uri?) {
-    val tag = getTag(tagGlide)
-    if (tag == null || tag != uri)
-        loadUri(uri)
-}
-
-@BindingAdapter("android:resource")
-fun ImageButton.resource(image: Int) {
-    setImageResource(image)
 }
 
 @BindingAdapter("android:middleLine")
@@ -403,6 +345,53 @@ fun WebView.loadHtml(content: String?) {
     }
 }
 
+@BindingAdapter("android:paddingHorizontalDp")
+fun View.paddingHorizontalDp(padding: Float) {
+    setPadding(padding.toInt(), 0, padding.toInt(), 0)
+}
+
+@BindingAdapter("android:fitCenter")
+fun ImageView.fit(image: String?) {
+    val tag = getTag(tagGlide)
+    if (tag == null || tag != image)
+        fitCenter(image)
+}
+
+@BindingAdapter("android:image")
+fun ImageView.image(image: String?) {
+    val tag = getTag(tagGlide)
+    if (tag == null || tag != image)
+        loadUrl(image)
+}
+
+@BindingAdapter("android:imageOnNotNull")
+fun ImageView.imageOnNotNull(image: String?) {
+    val tag = getTag(tagGlide)
+    if (null != image?.emptyToNull() && (tag == null || tag != image))
+        loadUrl(image)
+}
+
+@BindingAdapter(value = ["android:imageOnSuccess", "android:imageOnError"], requireAll = false)
+fun ImageView.imageOnSuccess(image: String?, imageOnError: Drawable? = null) {
+    val tag = getTag(tagGlide)
+    if (tag == null || tag != image)
+        loadUrl(image, imageOnError)
+}
+
+@BindingAdapter("android:imageNoCache")
+fun ImageView.imageNoCache(image: String?) {
+    val tag = getTag(tagGlide)
+    if (tag == null || tag != image)
+        loadUrlSkipMemory(image)
+}
+
+@BindingAdapter("android:uriByGlide")
+fun ImageView.uriByGlide(uri: Uri?) {
+    val tag = getTag(tagGlide)
+    if (tag == null || tag != uri)
+        loadUri(uri)
+}
+
 @BindingAdapter("android:imageTint")
 fun ImageView.imageTint(color: Any) {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q && color is ColorStateListDrawable) color.colorStateList else when (color) {
@@ -412,9 +401,4 @@ fun ImageView.imageTint(color: Any) {
         else -> null
     }
         ?.let(this::setImageTintList)
-}
-
-@BindingAdapter("android:paddingHorizontalDp")
-fun View.paddingHorizontalDp(padding: Float) {
-    setPadding(padding.toInt(), 0, padding.toInt(), 0)
 }

@@ -1,8 +1,12 @@
 package com.outs.utils.android.glide
 
+import android.content.res.ColorStateList
 import android.graphics.Bitmap
+import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.ColorStateListDrawable
 import android.graphics.drawable.Drawable
 import android.net.Uri
+import android.os.Build
 import android.widget.ImageView
 import androidx.annotation.DrawableRes
 import com.bumptech.glide.Glide
@@ -14,6 +18,7 @@ import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import com.outs.utils.android.R
 import com.outs.utils.android.appInstance
+import com.outs.utils.kotlin.emptyToNull
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
@@ -106,3 +111,42 @@ fun ImageView.imageNoPlace(url: String?) {
     setTag(tagGlide, url)
 }
 
+fun ImageView.image(image: String?) {
+    val tag = getTag(tagGlide)
+    if (tag == null || tag != image)
+        loadUrl(image)
+}
+
+fun ImageView.imageOnNotNull(image: String?) {
+    val tag = getTag(tagGlide)
+    if (null != image?.emptyToNull() && (tag == null || tag != image))
+        loadUrl(image)
+}
+
+fun ImageView.imageOnSuccess(image: String?, imageOnError: Drawable? = null) {
+    val tag = getTag(tagGlide)
+    if (tag == null || tag != image)
+        loadUrl(image, imageOnError)
+}
+
+fun ImageView.imageNoCache(image: String?) {
+    val tag = getTag(tagGlide)
+    if (tag == null || tag != image)
+        loadUrlSkipMemory(image)
+}
+
+fun ImageView.uriByGlide(uri: Uri?) {
+    val tag = getTag(tagGlide)
+    if (tag == null || tag != uri)
+        loadUri(uri)
+}
+
+fun ImageView.imageTint(color: Any) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q && color is ColorStateListDrawable) color.colorStateList else when (color) {
+        is ColorDrawable -> ColorStateList.valueOf(color.color)
+        is Long -> ColorStateList.valueOf(color.toInt())
+        is Int -> ColorStateList.valueOf(color.toInt())
+        else -> null
+    }
+        ?.let(this::setImageTintList)
+}
