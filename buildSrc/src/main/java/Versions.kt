@@ -6,5 +6,5 @@ object Versions {
     const val COMPOSE_KOTLIN_VERSION = "1.6.0"
     const val COMPOSE_KOTLIN_COROUTINES_VERSION = "1.5.2"
 
-    const val SBHYI_VERSION = "0.0.42"
+    const val SBHYI_VERSION = "0.0.43"
 }

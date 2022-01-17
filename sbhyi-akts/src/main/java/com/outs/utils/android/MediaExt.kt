@@ -162,6 +162,20 @@ fun Context.queryAudio(): List<Audio> {
 
 fun Context.queryRingtone(): List<Ringtone> = RingtoneManager(this).cursor.use { it.readRows() }
 
+//this： Uri media
+//fun Uri.getMediaInfo(
+//    context: Context = appInstance,
+//    frameAtTime: Long = 0
+//): MediaInfo = MediaMetadataRetriever().let { retriever ->
+//    retriever.setDataSource(context, this)
+//    val duration = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)
+//        ?.toLongOrNull()
+//        ?: -1
+//    val cover = retriever.getFrameAtTime(frameAtTime)
+//    retriever.release()
+//    MediaInfo(this, duration, cover)
+//}
+
 //this： File path
 fun String.getMediaInfo(
     frameAtTime: Long = 0
@@ -175,6 +189,15 @@ fun String.getMediaInfo(
     MediaInfo(this, duration, cover)
 }
 
+//this： File uri
+fun Uri.frameAtTime(context: Context = appInstance, timeUs: Long = 0): Bitmap? =
+    MediaMetadataRetriever().let { retriever ->
+        retriever.setDataSource(context, this)
+        val cover = retriever.getFrameAtTime(timeUs)
+        retriever.release()
+        cover
+    }
+
 //this： File path
 fun String.frameAtTime(timeUs: Long = 0): Bitmap? =
     MediaMetadataRetriever().let { retriever ->
@@ -183,6 +206,13 @@ fun String.frameAtTime(timeUs: Long = 0): Bitmap? =
         retriever.release()
         cover
     }
+
+//this: File uri
+fun Uri.frameAtTimeAsFile(
+    context: Context,
+    timeUs: Long = 0L
+): File? =
+    tryOrNull { frameAtTime(context, timeUs)?.use { it.compressToTempFile(context) } }
 
 //this: File path
 fun String.frameAtTimeAsFile(
