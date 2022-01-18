@@ -13,9 +13,9 @@ import com.outs.utils.android.newResultLauncher
  */
 class SimpleActivityLauncher(activity: AppCompatActivity) {
 
-    private val resultLauncher = activity.newResultLauncher()
-    private val permissionLauncher = activity.newPermissionLauncher()
-    private val multiplePermissionLauncher = activity.newMultiplePermissionLauncher()
+    val resultLauncher = activity.newResultLauncher()
+    val permissionLauncher = activity.newPermissionLauncher()
+    val multiplePermissionLauncher = activity.newMultiplePermissionLauncher()
 
     fun launch(i: Intent, onActivityResult: ActivityResultCallback<ActivityResult>) {
         resultLauncher.launch(i, onActivityResult)
@@ -42,6 +42,7 @@ class SimpleActivityLauncher(activity: AppCompatActivity) {
 
     suspend fun requestMultiPermission(permissions: Array<String>): Map<String, Boolean> =
         multiplePermissionLauncher.launch(permissions)
+
 
 }
 

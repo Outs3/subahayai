@@ -77,14 +77,13 @@ fun ByteArray.asTempFile(context: Context, name: String? = null, ext: String? = 
 fun Uri.asFile(context: Context): File? {
     if (scheme.isNullOrEmpty())
         return File(toString())
-    val path = path
-        ?: return null
+    val path = path ?: return null
     val file = File(path)
     if (file.canRead())
         return file
-    val data = context.contentResolver.read(this)
-        ?: return null
-    return newFile(context.cacheDir, file.name, data)
+    val openable = context.contentResolver.queryOpenable(this)?.firstOrNull()
+    val data = context.contentResolver.read(this) ?: return null
+    return newFile(context.cacheDir, openable?.displayName ?: file.name, data)
 }
 
 @Deprecated(

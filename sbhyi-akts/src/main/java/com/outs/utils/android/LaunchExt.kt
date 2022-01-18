@@ -2,6 +2,7 @@ package com.outs.utils.android
 
 import android.app.Activity
 import android.content.ContentValues
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -14,6 +15,7 @@ import androidx.core.util.Consumer
 import com.outs.utils.android.launch.ActivityLauncher
 import com.outs.utils.android.launch.ILaunchOwner
 import com.outs.utils.android.launch.TakePictureLauncher
+import java.io.File
 
 /**
  * author: Outs3
@@ -94,11 +96,69 @@ fun ILaunchOwner.pickFile(mimeType: String, onPick: (Uri) -> Unit) {
     }
 }
 
+fun ILaunchOwner.pickAsFile(mimeType: String = "*/*", onPick: (File) -> Unit) {
+    val intent = Intent(Intent.ACTION_GET_CONTENT).apply {
+        type = mimeType
+        addCategory(Intent.CATEGORY_OPENABLE)
+    }
+    startActivityForResult(intent) { result ->
+        result.takeIf { Activity.RESULT_OK == it.resultCode }
+            ?.data
+            ?.data
+            ?.asFile(getActivity())
+            ?.let(onPick)
+    }
+}
+
 fun ILaunchOwner.pickImage(onPick: (Uri) -> Unit) = pickFile("image/*", onPick)
 
 fun ILaunchOwner.pickVideo(onPick: (Uri) -> Unit) = pickFile("video/*", onPick)
 
 fun ILaunchOwner.pickAudio(onPick: (Uri) -> Unit) = pickFile("audio/*", onPick)
+
+fun ActivityLauncher<Intent, ActivityResult>.pickImage(context: Context, onPick: (Uri) -> Unit) =
+    pickFile(context, "image/*", onPick)
+
+fun ActivityLauncher<Intent, ActivityResult>.pickVideo(context: Context, onPick: (Uri) -> Unit) =
+    pickFile(context, "video/*", onPick)
+
+fun ActivityLauncher<Intent, ActivityResult>.pickAudio(context: Context, onPick: (Uri) -> Unit) =
+    pickFile(context, "audio/*", onPick)
+
+fun ActivityLauncher<Intent, ActivityResult>.pickFile(
+    context: Context,
+    mimeType: String = "*/*",
+    onPick: (Uri) -> Unit
+) {
+    val intent = Intent(Intent.ACTION_GET_CONTENT).apply {
+        type = mimeType
+    }
+    if (intent.resolveActivity(context.packageManager) != null) {
+        launch(intent) { result ->
+            if (Activity.RESULT_OK == result.resultCode) {
+                result.data?.data?.let(onPick)
+            }
+        }
+    }
+}
+
+fun ActivityLauncher<Intent, ActivityResult>.pickAsFile(
+    context: Context,
+    mimeType: String = "*/*",
+    onPick: (File) -> Unit
+) {
+    val intent = Intent(Intent.ACTION_GET_CONTENT).apply {
+        type = mimeType
+        addCategory(Intent.CATEGORY_OPENABLE)
+    }
+    launch(intent) { result ->
+        result.takeIf { Activity.RESULT_OK == it.resultCode }
+            ?.data
+            ?.data
+            ?.asFile(context)
+            ?.let(onPick)
+    }
+}
 
 fun AppCompatActivity.newTakePictureLauncher() = TakePictureLauncher(this)
 

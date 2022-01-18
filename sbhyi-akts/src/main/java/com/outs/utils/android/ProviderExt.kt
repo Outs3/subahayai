@@ -69,6 +69,8 @@ fun ContentResolver.querySms(uri: Uri = Telephony.Sms.CONTENT_URI) = query<Sms>(
 
 fun ContentResolver.queryCallLog(uri: Uri = CallLog.Calls.CONTENT_URI) = query<Call>(uri)
 
+fun ContentResolver.queryOpenable(uri: Uri) = query<Openable>(uri)
+
 fun ContentResolver.queryContacts(
     uri: Uri = ContactsContract.Contacts.CONTENT_URI,
     withPhone: Boolean = false
