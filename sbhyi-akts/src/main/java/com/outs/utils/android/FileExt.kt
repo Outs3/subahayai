@@ -11,6 +11,7 @@ import androidx.core.content.FileProvider
 import com.blankj.utilcode.util.FileIOUtils
 import com.outs.utils.android.launch.SimpleActivityLauncher
 import com.outs.utils.android.store.Image
+import com.outs.utils.android.store.Openable
 import com.outs.utils.android.store.readRows
 import java.io.File
 import java.util.*
@@ -81,9 +82,7 @@ fun Uri.asFile(context: Context): File? {
     val file = File(path)
     if (file.canRead())
         return file
-    val openable = context.contentResolver.queryOpenable(this)?.firstOrNull()
-    val data = context.contentResolver.read(this) ?: return null
-    return newFile(context.cacheDir, openable?.displayName ?: file.name, data)
+    return writeToCacheFile(context, openable(context)?.displayName ?: file.name)
 }
 
 @Deprecated(
@@ -98,12 +97,10 @@ fun Uri.asImageFile(context: Context): File? {
     val file = File(path)
     if (file.canRead())
         return file
-    val data = context.contentResolver.read(this)
-        ?: return null
     val image =
         context.contentResolver.query(this, null, null, null, null)?.use { it.readRows<Image>() }
             ?.firstOrNull() ?: return null
-    return newFile(context.cacheDir, image.displayName ?: image.title ?: file.name, data)
+    return writeToCacheFile(context, image.displayName ?: image.title ?: file.name)
 }
 
 fun String.asMimeType(parent: String? = null): String? =
@@ -162,3 +159,12 @@ fun File.rotationTo0(context: Context): File {
         newFile(context.cacheDir, name, out)
     }
 }
+
+fun Uri.openable(context: Context): Openable? =
+    context.contentResolver.queryOpenable(this)?.firstOrNull()
+
+fun Uri.writeToFile(context: Context, file: File): File? =
+    context.contentResolver.openInputStream(this)?.writeToFile(file)
+
+fun Uri.writeToCacheFile(context: Context, name: String): File? =
+    writeToFile(context, File(context.cacheDir, name))

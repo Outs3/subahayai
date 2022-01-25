@@ -3,15 +3,17 @@ package com.outs.demo_databinding.ui
 import android.Manifest
 import android.content.ContentResolver
 import android.content.Context
+import android.database.Cursor
 import android.net.Uri
 import android.provider.ContactsContract
-import androidx.core.database.getIntOrNull
-import androidx.core.database.getStringOrNull
+import androidx.core.database.*
 import com.outs.core.android.vm.BaseViewModel
 import com.outs.utils.android.*
 import com.outs.utils.android.store.ContactData
+import com.outs.utils.android.store.readByType
 import com.outs.utils.kotlin.emptyToNull
 import com.outs.utils.kotlin.toJson
+import com.outs.utils.kotlin.tryOr
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlin.system.measureTimeMillis
@@ -51,78 +53,68 @@ class MainViewModel : BaseViewModel() {
             val data = withContext(Dispatchers.IO) {
                 val contentResolver = context.contentResolver
                 measureTimeMillis("组合数据") {
-                    val contacts =
-//                        measureTimeMillis("SBHYI-基础数据") { contentResolver.queryContacts() }
-                        contentResolver.queryContacts()
-                            ?.mapNotNull {
-                                val id = it.id?.toInt()
-                                val name = it.displayName?.emptyToNull()
-                                if (null == id || null == name) null else id to name
-                            }
-                            ?.also { "contacts: $it".d() }
-                    val phones =
-//                        measureTimeMillis("SBHYI-电话号码数据") { contentResolver.queryContactPhones() }
-                        contentResolver.queryContactPhones()
-                            ?.mapNotNull {
-                                val id = it.contactId
-                                val number = it.number?.emptyToNull()
-                                if (null == id || null == number) null else id to number
-                            }
-                            ?.groupingBy { it.first }
-                            ?.aggregate { key, accumulator: ArrayList<String>?, element, first ->
-                                (accumulator ?: ArrayList())
-                                    .also { list ->
-                                        element.second.also(list::add)
-                                    }
-                            }
-                            ?.also { "phones: $it".d() }
-                    val emails =
-//                        measureTimeMillis("SBHYI-邮件地址数据") { contentResolver.queryContactEmails() }
-                        contentResolver.queryContactEmails()
-                            ?.mapNotNull {
-                                val id = it.contactId
-                                val emailAddress = it.emailAddress?.emptyToNull()
-                                if (null == id || null == emailAddress) null else id to emailAddress
-                            }
-                            ?.groupingBy { it.first }
-                            ?.aggregate { key, accumulator: ArrayList<String>?, element, first ->
-                                (accumulator ?: ArrayList())
-                                    .also { list ->
-                                        element.second.also(list::add)
-                                    }
-                            }
-                            ?.also { "emails: $it".d() }
-                    val postals =
-//                        measureTimeMillis("SBHYI-邮寄地址") { contentResolver.queryContactStructuredPostal() }
-                        contentResolver.queryContactStructuredPostal()
-                            ?.mapNotNull {
-                                val id = it.contactId
-                                val data = it.data?.emptyToNull()
-                                if (null == id || null == data) null else id to data
-                            }
-                            ?.groupingBy { it.first }
-                            ?.aggregate { key, accumulator: ArrayList<String>?, element, first ->
-                                (accumulator ?: ArrayList())
-                                    .also { list ->
-                                        element.second.also(list::add)
-                                    }
-                            }
-                            ?.also { "postals: $it".d() }
-                    val extras =
-//                        measureTimeMillis("SBHYI-额外数据") { contentResolver.queryContactData() }
-                        contentResolver.queryContactData()
-                            ?.mapNotNull {
-                                val id = it.contactId
-                                if (null == id) null else id to it
-                            }
-                            ?.groupingBy { it.first }
-                            ?.aggregate { key, accumulator: ArrayList<ContactData>?, element, first ->
-                                (accumulator ?: ArrayList())
-                                    .also { list ->
-                                        element.second.also(list::add)
-                                    }
-                            }
-                            ?.also { "extras: $it".d() }
+                    val contacts = contentResolver.queryContacts()
+                        ?.mapNotNull {
+                            val id = it.id?.toInt()
+                            val name = it.displayName?.emptyToNull()
+                            if (null == id || null == name) null else id to name
+                        }
+                        ?.also { "contacts: $it".d() }
+                    val phones = contentResolver.queryContactPhones()
+                        ?.mapNotNull {
+                            val id = it.contactId
+                            val number = it.number?.emptyToNull()
+                            if (null == id || null == number) null else id to number
+                        }
+                        ?.groupingBy { it.first }
+                        ?.aggregate { key, accumulator: ArrayList<String>?, element, first ->
+                            (accumulator ?: ArrayList())
+                                .also { list ->
+                                    element.second.also(list::add)
+                                }
+                        }
+                        ?.also { "phones: $it".d() }
+                    val emails = contentResolver.queryContactEmails()
+                        ?.mapNotNull {
+                            val id = it.contactId
+                            val emailAddress = it.emailAddress?.emptyToNull()
+                            if (null == id || null == emailAddress) null else id to emailAddress
+                        }
+                        ?.groupingBy { it.first }
+                        ?.aggregate { key, accumulator: ArrayList<String>?, element, first ->
+                            (accumulator ?: ArrayList())
+                                .also { list ->
+                                    element.second.also(list::add)
+                                }
+                        }
+                        ?.also { "emails: $it".d() }
+                    val postals = contentResolver.queryContactStructuredPostal()
+                        ?.mapNotNull {
+                            val id = it.contactId
+                            val data = it.data?.emptyToNull()
+                            if (null == id || null == data) null else id to data
+                        }
+                        ?.groupingBy { it.first }
+                        ?.aggregate { key, accumulator: ArrayList<String>?, element, first ->
+                            (accumulator ?: ArrayList())
+                                .also { list ->
+                                    element.second.also(list::add)
+                                }
+                        }
+                        ?.also { "postals: $it".d() }
+                    val extras = contentResolver.queryContactData()
+                        ?.mapNotNull {
+                            val id = it.contactId
+                            if (null == id) null else id to it
+                        }
+                        ?.groupingBy { it.first }
+                        ?.aggregate { key, accumulator: ArrayList<ContactData>?, element, first ->
+                            (accumulator ?: ArrayList())
+                                .also { list ->
+                                    element.second.also(list::add)
+                                }
+                        }
+                        ?.also { "extras: $it".d() }
 
                     contacts?.mapIndexed { index, base ->
                         val contactId = base.first
@@ -159,6 +151,60 @@ class MainViewModel : BaseViewModel() {
             }
             val json = data?.toJson()
             json?.d()
+        }
+    }
+
+    data class CursorColumn(
+        val index: Int,
+        val name: String,
+        val type: Int
+    ) {
+        constructor(cursor: Cursor, index: Int) : this(
+            index,
+            cursor.getColumnName(index),
+            cursor.getType(index)
+        )
+
+        fun getOf(cursor: Cursor): Any? {
+            return if (cursor.isNull(index)) null else when (type) {
+                Cursor.FIELD_TYPE_NULL -> null
+                Cursor.FIELD_TYPE_INTEGER -> cursor.getLongOrNull(index)
+                Cursor.FIELD_TYPE_FLOAT -> cursor.getDoubleOrNull(index)
+                Cursor.FIELD_TYPE_STRING -> cursor.getStringOrNull(index)
+                Cursor.FIELD_TYPE_BLOB -> cursor.getBlobOrNull(index)
+                else -> cursor.getStringOrNull(index)
+            }
+        }
+    }
+
+    fun readContactExtra(context: Context) {
+        launchOnUI(true) {
+            withContext(Dispatchers.Main) {
+                topLaunchOwner?.permissionOrThrow(Manifest.permission.READ_CONTACTS)
+            }
+            withContext(Dispatchers.IO) {
+                val contentResolver = context.contentResolver
+                contentResolver.query(ContactsContract.Data.CONTENT_URI, null, null, null, null)
+                    .use {
+                        it?.run {
+                            val ret = ArrayList<Map<String, Any?>>()
+                            if (0 != count && moveToFirst()) {
+                                val columns = 0.until(columnCount).map { CursorColumn(this, it) }
+                                do {
+                                    tryOr {
+                                        val item = columns.map { it.name to it.getOf(this) }.toMap()
+                                        ret.add(item)
+                                    }
+                                } while (moveToNext())
+                            }
+                            ret
+                        }
+                    }
+                    .also {
+                        it
+                        it?.toJson()?.d()
+                    }
+            }
         }
     }
 

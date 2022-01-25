@@ -1,8 +1,10 @@
 package com.outs.utils.android
 
 import androidx.lifecycle.MutableLiveData
+import com.blankj.utilcode.util.FileIOUtils
 import com.outs.utils.kotlin.IGetTotal
 import com.outs.utils.kotlin.copyTo
+import java.io.File
 import java.io.InputStream
 import java.io.OutputStream
 
@@ -18,3 +20,8 @@ fun InputStream.copyTo(
     onGetTotal: IGetTotal? = null,
     onProgress: MutableLiveData<Float>? = null
 ) = copyTo(output, bufferSize, onGetTotal) { onProgress?.postOnNot(it) }
+
+fun InputStream.writeToFile(file: File): File {
+    FileIOUtils.writeFileFromIS(file, this)
+    return file
+}
