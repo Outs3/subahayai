@@ -144,6 +144,25 @@ fun ActivityLauncher<Intent, ActivityResult>.pickFile(
 
 fun ActivityLauncher<Intent, ActivityResult>.pickAsFile(
     context: Context,
+    mimeType: List<String>,
+    onPick: (File) -> Unit
+) {
+    val intent = Intent(Intent.ACTION_GET_CONTENT).apply {
+        type = "*/*"
+        addCategory(Intent.CATEGORY_OPENABLE)
+        putExtra(Intent.EXTRA_MIME_TYPES, mimeType.toTypedArray())
+    }
+    launch(intent) { result ->
+        result.takeIf { Activity.RESULT_OK == it.resultCode }
+            ?.data
+            ?.data
+            ?.asFile(context)
+            ?.let(onPick)
+    }
+}
+
+fun ActivityLauncher<Intent, ActivityResult>.pickAsFile(
+    context: Context,
     mimeType: String = "*/*",
     onPick: (File) -> Unit
 ) {
