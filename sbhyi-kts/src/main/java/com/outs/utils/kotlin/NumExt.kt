@@ -77,11 +77,11 @@ fun Int.divWithRem(other: Int): Int {
 
 fun Int.formatFileLength(): String {
     var length = toFloat()
-    var unit: String = FILE_LENGTH.get(0)
+    var unit: String = FILE_LENGTH[0]
     var i = 1
     while (i < FILE_LENGTH.size && length >= 1024) {
         length /= 1024f
-        unit = FILE_LENGTH.get(i)
+        unit = FILE_LENGTH[i]
         i++
     }
     return String.format("%.2f%s", length, unit)
