@@ -25,4 +25,7 @@ open class LoadingDialog : BaseDialogFragment() {
         root = R.layout.dialog_loading.inflate(context)
     }
 
+    companion object {
+        const val TAG = "LoadingDialog"
+    }
 }

@@ -6,15 +6,12 @@ import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import com.outs.core.android.activity.BaseVMActivity
-import com.outs.core.android.config.FrameworkConfig
 import com.outs.core.android.databinding.R
 import com.outs.core.android.databinding.databinding.ActivityBaseBinding
 import com.outs.core.android.databinding.debug.DebugLogActivity
 import com.outs.core.android.databinding.dialog.BottomSelectDialog
 import com.outs.core.android.vm.BaseViewModel
-import com.outs.utils.android.gone
 import com.outs.utils.android.isDebug
-import com.outs.utils.android.visible
 
 abstract class BaseActivity<VDB : ViewDataBinding, VM : BaseViewModel> : BaseVMActivity<VM>() {
 
@@ -35,21 +32,21 @@ abstract class BaseActivity<VDB : ViewDataBinding, VM : BaseViewModel> : BaseVMA
         }
     }
 
-    override fun showLoading() {
-        if (FrameworkConfig.useLocalLoading) {
-            mBaseBinding.layoutLoading.visible()
-        } else {
-            mLoading.show()
-        }
-    }
-
-    override fun hideLoading() {
-        if (FrameworkConfig.useLocalLoading) {
-            mBaseBinding.layoutLoading.gone()
-        } else {
-            mLoading.hide()
-        }
-    }
+//    override fun showLoading() {
+//        if (FrameworkConfig.useLocalLoading) {
+//            mBaseBinding.layoutLoading.visible()
+//        } else {
+//            mLoading.show()
+//        }
+//    }
+//
+//    override fun hideLoading() {
+//        if (FrameworkConfig.useLocalLoading) {
+//            mBaseBinding.layoutLoading.gone()
+//        } else {
+//            mLoading.hide()
+//        }
+//    }
 
     override fun initView() {
         mBaseBinding = DataBindingUtil.setContentView(this, R.layout.activity_base)

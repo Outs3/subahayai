@@ -1,6 +1,5 @@
 package com.outs.core.android.activity
 
-import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
@@ -10,7 +9,7 @@ import android.view.View
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LifecycleOwner
-import com.outs.core.android.R
+import com.outs.core.android.dialog.LoadingDialog
 import com.outs.utils.android.inject
 import com.outs.utils.android.injectIntent
 import com.outs.utils.android.launch.ILaunchOwner
@@ -24,18 +23,20 @@ import com.outs.utils.android.launch.SimpleActivityLauncher
  */
 abstract class AbsActivity : AppCompatActivity(), ILaunchOwner, View.OnClickListener {
 
+    private val lock = Any()
+
     protected val context: Context = this
     protected val owner: LifecycleOwner = this
 
     protected val mLauncher = SimpleActivityLauncher(this)
 
-    protected val mLoading by lazy {
-        Dialog(context, R.style.dialog_style).apply {
-            setContentView(R.layout.dialog_loading)
-            setCancelable(false)
-            setCanceledOnTouchOutside(false)
-        }
-    }
+//    protected val mLoading by lazy {
+//        Dialog(context, R.style.dialog_style).apply {
+//            setContentView(R.layout.dialog_loading)
+//            setCancelable(false)
+//            setCanceledOnTouchOutside(false)
+//        }
+//    }
 
     protected open val isSecure: Boolean
         get() = false
@@ -106,11 +107,21 @@ abstract class AbsActivity : AppCompatActivity(), ILaunchOwner, View.OnClickList
     override fun getLauncher(): SimpleActivityLauncher = mLauncher
 
     protected open fun showLoading() {
-        mLoading.show()
+//        mLoading.show()
+        synchronized(lock) {
+            val loading = supportFragmentManager.findFragmentByTag(LoadingDialog.TAG)
+            supportFragmentManager.beginTransaction()
+                .add(loading ?: LoadingDialog(), LoadingDialog.TAG).commitAllowingStateLoss()
+        }
     }
 
     protected open fun hideLoading() {
-        mLoading.hide()
+//        mLoading.hide()
+        synchronized(lock) {
+            val loading = supportFragmentManager.findFragmentByTag(LoadingDialog.TAG)
+            loading ?: return
+            supportFragmentManager.beginTransaction().remove(loading).commitAllowingStateLoss()
+        }
     }
 
 }
