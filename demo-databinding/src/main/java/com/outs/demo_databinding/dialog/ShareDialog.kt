@@ -3,9 +3,9 @@ package com.outs.demo_databinding.dialog
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
+import com.outs.core.android.databinding.dialog.BaseDialogFragment
 import com.outs.demo_databinding.R
 import com.outs.demo_databinding.databinding.DialogShareBinding
-import com.outs.core.android.databinding.dialog.BaseDialogFragment
 import com.outs.utils.android.clickOrRepeat
 import com.outs.utils.android.intent.Extra
 import com.outs.utils.kotlin.toDoPage
@@ -19,16 +19,16 @@ import com.outs.utils.kotlin.toDoPage
 class ShareDialog : BaseDialogFragment<DialogShareBinding>() {
 
     @Extra
-    private var title: String = ""
+    var title: String = ""
 
     @Extra
-    private var summary: String = ""
+    var summary: String = ""
 
     @Extra
-    private var iconUrl: String = ""
+    var iconUrl: String = ""
 
     @Extra
-    private var linkUrl: String = ""
+    var linkUrl: String = ""
 
     override val getWidth: Int
         get() = ViewGroup.LayoutParams.MATCH_PARENT

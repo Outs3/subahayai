@@ -4,14 +4,12 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.graphics.BitmapFactory
 import android.net.Uri
+import androidx.core.os.bundleOf
 import com.outs.core.android.databinding.activity.BaseActivity
 import com.outs.core.android.takePhoto
 import com.outs.demo_databinding.R
 import com.outs.demo_databinding.databinding.ActivityMainBinding
-import com.outs.utils.android.asFile
-import com.outs.utils.android.pickVideo
-import com.outs.utils.android.readImageAsFile
-import com.outs.utils.android.viewModel
+import com.outs.utils.android.*
 import kotlinx.coroutines.delay
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
@@ -41,7 +39,23 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
             "readImgUri" to { readImgUri() },
             "readContacts" to { mViewModel.readContacts(context) },
             "readContactExtra" to { mViewModel.readContactExtra(context) },
-            "readBigFileByUri" to { readBigFileByUri() }
+            "readBigFileByUri" to { readBigFileByUri() },
+            "inject(5, null)" to {
+                startActivity<InjectActivity>(
+                    bundleOf(
+                        "iInt" to 5,
+                        "iInteger" to null,
+                    )
+                )
+            },
+            "inject(9, 4)" to {
+                startActivity<InjectActivity>(
+                    bundleOf(
+                        "iInt" to 9,
+                        "iInteger" to 4,
+                    )
+                )
+            }
         )
     }
 

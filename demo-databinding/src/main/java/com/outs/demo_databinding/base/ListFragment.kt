@@ -1,12 +1,9 @@
 package com.outs.demo_databinding.base
 
 import android.content.Context
-import android.view.View
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.outs.demo_databinding.R
-import com.outs.demo_databinding.databinding.FragmentListBinding
 import com.outs.core.android.databinding.data.adapter.SimpleDataAdapter
 import com.outs.core.android.databinding.data.source.DataSource
 import com.outs.core.android.databinding.data.source.ListDataSource
@@ -15,6 +12,8 @@ import com.outs.core.android.databinding.holder.AutoItem
 import com.outs.core.android.databinding.holder.DataBindingViewHolder
 import com.outs.core.android.databinding.holder.OnModelClickListener
 import com.outs.core.android.databinding.visibleOrNot
+import com.outs.demo_databinding.R
+import com.outs.demo_databinding.databinding.FragmentListBinding
 import com.outs.utils.android.intent.Extra
 import com.outs.utils.kotlin.typeOfOrNull
 
@@ -31,13 +30,13 @@ abstract class ListFragment<T : Any, LVM : ListViewModel<T>> :
     var title: String = ""
 
     @Extra
-    private var search: String = ""
+    var search: String = ""
 
     @Extra
-    private var type: String = ""
+    var type: String = ""
 
     @Extra
-    private var sort: String = ""
+    var sort: String = ""
 
     protected open val adapter: SimpleDataAdapter<T> by lazy {
         createAdapter(
