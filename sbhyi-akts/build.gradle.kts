@@ -38,25 +38,25 @@ dependencies {
     api("androidx.core:core-ktx:1.7.0")
     api("androidx.activity:activity-ktx:1.4.0")
     api("androidx.collection:collection-ktx:1.2.0")
-    api("androidx.fragment:fragment-ktx:1.4.0")
-    api("androidx.lifecycle:lifecycle-runtime-ktx:2.4.0")
-    api("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0")
-    api("androidx.lifecycle:lifecycle-livedata-ktx:2.4.0")
-    api("androidx.lifecycle:lifecycle-reactivestreams-ktx:2.4.0")
-    api("androidx.room:room-ktx:2.4.0")
+    api("androidx.fragment:fragment-ktx:1.4.1")
+    api("androidx.lifecycle:lifecycle-runtime-ktx:2.4.1")
+    api("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1")
+    api("androidx.lifecycle:lifecycle-livedata-ktx:2.4.1")
+    api("androidx.lifecycle:lifecycle-reactivestreams-ktx:2.4.1")
+    api("androidx.room:room-ktx:2.4.1")
 
     //view
-    api("androidx.appcompat:appcompat:1.4.0")
+    api("androidx.appcompat:appcompat:1.4.1")
     api("androidx.recyclerview:recyclerview:1.2.1")
-    api("androidx.constraintlayout:constraintlayout:2.1.2")
+    api("androidx.constraintlayout:constraintlayout:2.1.3")
     api("androidx.viewpager2:viewpager2:1.1.0-beta01")
-    api("com.google.android.material:material:1.4.0")
+    api("com.google.android.material:material:1.5.0")
     api("com.google.android.flexbox:flexbox:3.0.0")
 
     //image cache
-    api("com.github.bumptech.glide:glide:4.12.0")
-    kapt("com.github.bumptech.glide:compiler:4.12.0")
-    api("com.github.bumptech.glide:okhttp3-integration:4.11.0")
+    api("com.github.bumptech.glide:glide:4.13.0")
+    kapt("com.github.bumptech.glide:compiler:4.13.0")
+//    api("com.github.bumptech.glide:okhttp3-integration:4.11.0")
 
     //Log
     api("com.orhanobut:logger:2.2.0")
