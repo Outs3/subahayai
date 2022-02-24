@@ -1,6 +1,7 @@
 package com.outs.utils.kotlin
 
 import com.google.gson.GsonBuilder
+import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import com.google.gson.reflect.TypeToken
 
@@ -15,10 +16,23 @@ val globalGson = GsonBuilder().serializeNulls().disableHtmlEscaping().create()
 fun <R> String.asObj(type: Class<R>): R =
     globalGson.fromJson(this, TypeToken.get(type).type)
 
+fun <R> JsonElement.asObj(type: Class<R>): R =
+    globalGson.fromJson(this, TypeToken.get(type).type)
+
 inline fun <reified R> String.asObj(): R =
     globalGson.fromJson(this, object : TypeToken<R>() {}.type)
 
+inline fun <reified R> JsonElement.asObj(): R =
+    globalGson.fromJson(this, object : TypeToken<R>() {}.type)
+
 inline fun <reified R> String.tryAsObj(): R? =
+    try {
+        globalGson.fromJson(this, object : TypeToken<R>() {}.type)
+    } catch (e: Throwable) {
+        null
+    }
+
+inline fun <reified R> JsonElement.tryAsObj(): R? =
     try {
         globalGson.fromJson(this, object : TypeToken<R>() {}.type)
     } catch (e: Throwable) {
