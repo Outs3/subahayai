@@ -2,10 +2,14 @@ package com.outs.demo_databinding.ui
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.AlarmManager
+import android.app.PendingIntent
 import android.content.Context
+import android.content.Intent
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
+import android.telephony.SmsManager
 import android.telephony.SubscriptionManager
 import android.telephony.TelephonyManager
 import androidx.core.os.bundleOf
@@ -17,6 +21,8 @@ import com.outs.utils.android.*
 import com.outs.utils.kotlin.method
 import com.outs.utils.kotlin.typeOfOrNull
 import kotlinx.coroutines.delay
+import java.util.*
+import java.util.concurrent.TimeUnit
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
@@ -65,6 +71,15 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
             },
             "sim card number" to {
                 loadSimCardNumbers()
+            },
+            "send sms" to {
+                sendSMS()
+            },
+            "sendAlarm5s" to {
+                sendAlarm5s()
+            },
+            "sendAlarmRepeat" to {
+                sendAlarmRepeat()
             }
         )
     }
@@ -147,4 +162,62 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
             }
         }
     }
+
+    private fun sendSMS() {
+        fun sendBySMSApp(target: String, msg: String) {
+            val intent = Intent(Intent.ACTION_VIEW).apply {
+                data = Uri.parse("smsto:")
+                type = "vnd.android-dir/mms-sms"
+                putExtra("address", target)
+                putExtra("sms_body", msg)
+            }
+//            if (intent.resolveActivity(packageManager) != null) {
+//                startActivity(intent)
+//            }
+            startActivity(intent)
+        }
+
+        @SuppressLint("NewApi")
+        fun sendBySmsManager(target: String, msg: String) {
+            mViewModel.launchOnUI {
+                permissionOrThrow(Manifest.permission.SEND_SMS)
+                val smsManager = context.takeIf { Build.VERSION.SDK_INT >= Build.VERSION_CODES.M }
+                    ?.getSystemService(SmsManager::class.java)
+                    ?: SmsManager.getDefault()
+                smsManager?.sendTextMessage(target, null, msg, null, null)
+            }
+        }
+
+        val target = "15264794533"
+        val msg = "这是一条编辑好的短信内容"
+        sendBySMSApp(target, msg)
+        //sendBySmsManager(target, msg)
+    }
+
+    private fun sendAlarm5s() {
+        mViewModel.launchOnUI {
+            val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as? AlarmManager
+            val intent = Intent(context, MainActivity::class.java)
+            alarmManager?.set(
+                AlarmManager.RTC_WAKEUP,
+                System.currentTimeMillis() + 5000,
+                PendingIntent.getActivity(context, 0, intent, 0)
+            )
+        }
+    }
+
+    private fun sendAlarmRepeat() {
+        mViewModel.launchOnUI {
+            val intent = Intent(context, MainActivity::class.java)
+            val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as? AlarmManager
+
+            alarmManager?.setInexactRepeating(
+                AlarmManager.RTC_WAKEUP,
+                Calendar.getInstance().timeInMillis + TimeUnit.MINUTES.toMillis(1),
+                AlarmManager.INTERVAL_DAY,
+                PendingIntent.getActivity(context, 0, intent, 0)
+            )
+        }
+    }
+
 }
