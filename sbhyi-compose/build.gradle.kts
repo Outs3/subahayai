@@ -101,16 +101,16 @@ tasks.register("sourceJar", Jar::class) {
     archiveClassifier.convention("sources").set("sources")
 }
 
-//afterEvaluate {
-//    publishing {
-//        publications {
-//            // Creates a Maven publication called "release".
-//            create<MavenPublication>("release")
-//                .of(
-//                    from = components["release"],
-//                    artifactId = ConfigData.MODULE_COMPOSE,
-//                    artifact = tasks.getByName("sourceJar")
-//                )
-//        }
-//    }
-//}
+afterEvaluate {
+    publishing {
+        publications {
+            // Creates a Maven publication called "release".
+            create<MavenPublication>("release")
+                .of(
+                    from = components["release"],
+                    artifactId = ConfigData.MODULE_COMPOSE,
+                    artifact = tasks.getByName("sourceJar")
+                )
+        }
+    }
+}
