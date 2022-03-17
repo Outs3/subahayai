@@ -54,8 +54,8 @@ dependencies {
     api("com.google.android.flexbox:flexbox:3.0.0")
 
     //image cache
-    api("com.github.bumptech.glide:glide:4.13.0")
-    kapt("com.github.bumptech.glide:compiler:4.13.0")
+    api("com.github.bumptech.glide:glide:4.13.1")
+    kapt("com.github.bumptech.glide:compiler:4.13.1")
 //    api("com.github.bumptech.glide:okhttp3-integration:4.11.0")
 
     //Log
