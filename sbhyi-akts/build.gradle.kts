@@ -64,6 +64,10 @@ dependencies {
     //blankj utils
     api("com.blankj:utilcodex:1.31.0")
 
+    //paging3
+    api("androidx.paging:paging-runtime:${Versions.COMPOSE_PAGING_VERSION}")
+    testApi("androidx.paging:paging-common:${Versions.COMPOSE_PAGING_VERSION}")
+
     testImplementation("junit:junit:4.13.2")
     testImplementation("androidx.test:core:1.4.0")
     testImplementation("org.mockito:mockito-core:3.3.1")

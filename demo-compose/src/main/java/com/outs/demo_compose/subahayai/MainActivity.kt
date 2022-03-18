@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -19,6 +20,7 @@ import com.outs.demo_compose.subahayai.compose.CConversation
 import com.outs.demo_compose.subahayai.compose.randomMessage
 import com.outs.demo_compose.subahayai.ui.theme.TComposeTheme
 import com.outs.utils.android.d
+import com.outs.utils.android.startActivity
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,6 +34,13 @@ class MainActivity : ComponentActivity() {
                         (0 until 5).map { randomMessage }
                     )
 //                    AppointPage(title = "预约")
+                    Text(
+                        modifier = Modifier
+                            .clickable {
+                                startActivity<ListComposePage>()
+                            },
+                        text = "ListPage"
+                    )
                 }
             }
         }

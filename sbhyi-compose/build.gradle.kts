@@ -29,7 +29,6 @@ android {
     }
     kotlinOptions {
         jvmTarget = "1.8"
-//        useIR = true
     }
     buildFeatures {
         compose = true
@@ -83,6 +82,11 @@ dependencies {
 
     api("androidx.activity:activity-compose:1.4.0")
     api("androidx.constraintlayout:constraintlayout-compose:1.0.0-rc02")
+
+    api("androidx.paging:paging-compose:1.0.0-alpha14")
+
+    api("com.google.accompanist:accompanist-permissions:${Versions.COMPOSE_ACCOMPANIST_VERSION}")
+    api("com.google.accompanist:accompanist-swiperefresh:${Versions.COMPOSE_ACCOMPANIST_VERSION}")
 
     testImplementation("junit:junit:4.13.2")
     testImplementation("androidx.test:core:1.4.0")
