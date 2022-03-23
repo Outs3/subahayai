@@ -54,18 +54,25 @@ fun <T : Any> SwipeRefreshList(
     lazyColumn: @Composable (content: LazyListScope.() -> Unit) -> Unit = { content ->
         LazyColumn(content = content)
     },
-    moreIndicator: @Composable () -> Unit = { DefaultLoadMoreIndicator() },
+    loadMoreIndicator: @Composable () -> Unit = { DefaultLoadMoreIndicator() },
+    noMoreIndicator: @Composable () -> Unit = {},
     item: @Composable LazyItemScope.(item: T?) -> Unit,
 ) {
     val lazyPagingItems = pager.flow.collectAsLazyPagingItems()
     val isRefreshing = LoadState.Loading == lazyPagingItems.loadState.refresh
-    val loadMore =
+    val isLoadMore =
         LoadState.Loading == lazyPagingItems.loadState.append || LoadState.Loading == lazyPagingItems.loadState.prepend
     swipeRefresh(lazyPagingItems, isRefreshing) {
         lazyColumn {
             items(items = lazyPagingItems, key = key) { item -> item(item) }
-            if (loadMore) {
-                item { moreIndicator() }
+            if (isLoadMore) {
+                item {
+                    loadMoreIndicator()
+                }
+            } else {
+                item {
+                    noMoreIndicator()
+                }
             }
         }
     }
