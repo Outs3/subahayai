@@ -82,6 +82,7 @@ dependencies {
 
     api("androidx.activity:activity-compose:1.4.0")
     api("androidx.constraintlayout:constraintlayout-compose:1.0.0-rc02")
+    api("androidx.navigation:navigation-compose:2.4.1")
 
     api("androidx.paging:paging-compose:1.0.0-alpha14")
 
