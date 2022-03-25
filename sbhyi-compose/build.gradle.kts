@@ -80,14 +80,18 @@ dependencies {
     api("androidx.compose.runtime:runtime-livedata:${Versions.COMPOSE_VERSION}")
     api("androidx.compose.runtime:runtime-rxjava2:${Versions.COMPOSE_VERSION}")
 
+    //jetpack
     api("androidx.activity:activity-compose:1.4.0")
     api("androidx.constraintlayout:constraintlayout-compose:1.0.0-rc02")
     api("androidx.navigation:navigation-compose:2.4.1")
-
     api("androidx.paging:paging-compose:1.0.0-alpha14")
 
+    //compose accompanist
     api("com.google.accompanist:accompanist-permissions:${Versions.COMPOSE_ACCOMPANIST_VERSION}")
     api("com.google.accompanist:accompanist-swiperefresh:${Versions.COMPOSE_ACCOMPANIST_VERSION}")
+
+    //coil
+    api("io.coil-kt:coil-compose:2.0.0-rc02")
 
     testImplementation("junit:junit:4.13.2")
     testImplementation("androidx.test:core:1.4.0")

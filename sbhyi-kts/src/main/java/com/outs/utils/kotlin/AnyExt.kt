@@ -6,6 +6,10 @@ package com.outs.utils.kotlin
  * date: 2021/4/17 9:05
  * desc:
  */
+fun <T> T.runIf(bool: Boolean, block: T.() -> T) = if (bool) run(block) else this
+
+fun <T> T.runUnless(bool: Boolean, block: T.() -> T) = if (bool) this else run(block)
+
 inline fun <reified T> T.let(predicate: Boolean, ret: T): T = if (predicate) ret else this
 
 inline fun <reified T> Any?.typeOf(): T = this as T
