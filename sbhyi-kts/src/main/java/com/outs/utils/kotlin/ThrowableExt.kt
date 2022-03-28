@@ -18,3 +18,5 @@ fun Throwable.stackTraceAsString(): String =
         .also { PrintWriter(it).also(::printStackTrace).close() }
         .also(ByteArrayOutputStream::close)
         .toString()
+
+object NothingException : RuntimeException()

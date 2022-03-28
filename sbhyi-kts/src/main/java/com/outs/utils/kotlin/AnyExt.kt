@@ -45,3 +45,5 @@ val Any.className: String get() = javaClass.simpleName
 inline fun <reified T> T?.nullOr(orObj: T?): T? = this ?: orObj
 
 inline fun <reified T> T?.nullOr(orGet: () -> T?): T? = this ?: orGet()
+
+data class Index<T>(val index: Int, val value: T)
