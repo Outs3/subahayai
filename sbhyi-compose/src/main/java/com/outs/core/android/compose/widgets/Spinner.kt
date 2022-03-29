@@ -5,10 +5,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.DropdownMenu
-import androidx.compose.material.DropdownMenuItem
-import androidx.compose.material.Icon
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.runtime.*
@@ -31,7 +28,7 @@ fun Dropdown(
     contentAlignment: Alignment = Alignment.Center,
     text: String? = null,
     hint: String = "",
-    textColor: Color = Color.Blue,
+    textColor: Color = MaterialTheme.colors.primary,
     hintColor: Color = Gray999,
     content: @Composable BoxScope.() -> Unit = {}
 ) {
@@ -62,6 +59,8 @@ fun Spinner(
     modifier: Modifier = Modifier,
     contentAlignment: Alignment = Alignment.Center,
     opts: Array<String>,
+    textColor: Color = MaterialTheme.colors.primary,
+    hintColor: Color = Gray999,
     current: String? = null,
     onChecked: (Int, String) -> Unit
 ) {
@@ -70,7 +69,9 @@ fun Spinner(
         modifier = modifier.clickable { expanded = !expanded },
         contentAlignment = contentAlignment,
         text = current,
-        hint = opts.firstOrNull() ?: ""
+        hint = opts.firstOrNull() ?: "",
+        textColor = textColor,
+        hintColor = hintColor
     ) {
         DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
             opts.forEachIndexed { index, s ->
@@ -91,6 +92,8 @@ fun <T> Spinner(
     contentAlignment: Alignment = Alignment.Center,
     text: (T?) -> String?,
     opts: List<T>,
+    textColor: Color = MaterialTheme.colors.primary,
+    hintColor: Color = Gray999,
     current: T? = null,
     onChecked: (Int, T) -> Unit
 ) {
@@ -99,7 +102,9 @@ fun <T> Spinner(
         modifier = modifier,
         contentAlignment = contentAlignment,
         text = text(current),
-        hint = text(opts.firstOrNull()) ?: ""
+        hint = text(opts.firstOrNull()) ?: "",
+        textColor = textColor,
+        hintColor = hintColor
     ) {
         DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
             opts.forEachIndexed { index, item ->

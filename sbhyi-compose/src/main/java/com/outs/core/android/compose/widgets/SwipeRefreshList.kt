@@ -41,7 +41,7 @@ fun DefaultLoadMoreIndicator() {
 @Composable
 fun <T : Any> SwipeRefreshList(
     modifier: Modifier = Modifier,
-    pager: Pager<Int, T>,
+    lazyPagingItems: LazyPagingItems<T>,
     key: ((item: T) -> Any)? = null,
     swipeRefresh: @Composable (lazyPagingItems: LazyPagingItems<T>, isRefreshing: Boolean, content: @Composable () -> Unit) -> Unit = { lazyPagingItems, isRefreshing, content ->
         SwipeRefresh(
@@ -58,7 +58,6 @@ fun <T : Any> SwipeRefreshList(
     noMoreIndicator: @Composable () -> Unit = {},
     item: @Composable LazyItemScope.(item: T?) -> Unit,
 ) {
-    val lazyPagingItems = pager.flow.collectAsLazyPagingItems()
     val isRefreshing = LoadState.Loading == lazyPagingItems.loadState.refresh
     val isLoadMore =
         LoadState.Loading == lazyPagingItems.loadState.append || LoadState.Loading == lazyPagingItems.loadState.prepend
@@ -76,4 +75,36 @@ fun <T : Any> SwipeRefreshList(
             }
         }
     }
+}
+
+@Composable
+fun <T : Any> SwipeRefreshList(
+    modifier: Modifier = Modifier,
+    pager: Pager<Int, T>,
+    key: ((item: T) -> Any)? = null,
+    swipeRefresh: @Composable (lazyPagingItems: LazyPagingItems<T>, isRefreshing: Boolean, content: @Composable () -> Unit) -> Unit = { lazyPagingItems, isRefreshing, content ->
+        SwipeRefresh(
+            state = rememberSwipeRefreshState(isRefreshing = isRefreshing),
+            onRefresh = lazyPagingItems::refresh,
+            modifier = modifier,
+            content = content
+        )
+    },
+    lazyColumn: @Composable (content: LazyListScope.() -> Unit) -> Unit = { content ->
+        LazyColumn(content = content)
+    },
+    loadMoreIndicator: @Composable () -> Unit = { DefaultLoadMoreIndicator() },
+    noMoreIndicator: @Composable () -> Unit = {},
+    item: @Composable LazyItemScope.(item: T?) -> Unit,
+) {
+    SwipeRefreshList(
+        modifier,
+        pager.flow.collectAsLazyPagingItems(),
+        key,
+        swipeRefresh,
+        lazyColumn,
+        loadMoreIndicator,
+        noMoreIndicator,
+        item
+    )
 }
