@@ -40,7 +40,7 @@ fun DefaultLoadMoreIndicator() {
 
 @Composable
 fun <T : Any> SwipeRefreshList(
-    modifier: Modifier,
+    modifier: Modifier = Modifier,
     pager: Pager<Int, T>,
     key: ((item: T) -> Any)? = null,
     swipeRefresh: @Composable (lazyPagingItems: LazyPagingItems<T>, isRefreshing: Boolean, content: @Composable () -> Unit) -> Unit = { lazyPagingItems, isRefreshing, content ->
