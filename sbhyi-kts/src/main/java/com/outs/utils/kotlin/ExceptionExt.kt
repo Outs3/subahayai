@@ -47,3 +47,11 @@ suspend fun <T> suspendTryOrNull(action: suspend () -> T): T? = try {
 } catch (e: Throwable) {
     null
 }
+
+suspend fun suspendTry(onCatch: (Throwable) -> Unit = emptyConsumer, action: suspend () -> Unit) {
+    try {
+        action()
+    } catch (e: Throwable) {
+        onCatch(e)
+    }
+}
