@@ -90,6 +90,7 @@ dependencies {
     api("com.google.accompanist:accompanist-permissions:${Versions.COMPOSE_ACCOMPANIST_VERSION}")
     api("com.google.accompanist:accompanist-swiperefresh:${Versions.COMPOSE_ACCOMPANIST_VERSION}")
     api("com.google.accompanist:accompanist-flowlayout:${Versions.COMPOSE_ACCOMPANIST_VERSION}")
+    api("com.google.accompanist:accompanist-webview:${Versions.COMPOSE_ACCOMPANIST_VERSION}")
 
     //coil
     api("io.coil-kt:coil-compose:2.0.0-rc02")
