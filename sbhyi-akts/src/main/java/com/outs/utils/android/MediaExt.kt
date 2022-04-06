@@ -27,7 +27,35 @@ import java.io.File
  */
 const val MIMETYPE_ALL = "*/*"
 
-data class MediaInfo(val uri: String, val duration: Long, val cover: Bitmap?)
+data class PathMediaInfo(
+    /**
+     * 文件路径
+     */
+    val path: String,
+    /**
+     * 媒体时长（ms）
+     */
+    val duration: Long,
+    /**
+     * 媒体缩略图
+     */
+    val cover: Bitmap?
+)
+
+data class UriMediaInfo(
+    /**
+     * 文件Uri
+     */
+    val uri: Uri,
+    /**
+     * 媒体时长（ms）
+     */
+    val duration: Long,
+    /**
+     * 媒体缩略图
+     */
+    val cover: Bitmap?
+)
 
 fun mimeTypeOfExtension(extension: String) =
     MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension)
@@ -162,50 +190,59 @@ fun Context.queryAudio(): List<Audio> {
 
 fun Context.queryRingtone(): List<Ringtone> = RingtoneManager(this).cursor.use { it.readRows() }
 
-//this： Uri media
-//fun Uri.getMediaInfo(
-//    context: Context = appInstance,
-//    frameAtTime: Long = 0
-//): MediaInfo = MediaMetadataRetriever().let { retriever ->
-//    retriever.setDataSource(context, this)
-//    val duration = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)
-//        ?.toLongOrNull()
-//        ?: -1
-//    val cover = retriever.getFrameAtTime(frameAtTime)
-//    retriever.release()
-//    MediaInfo(this, duration, cover)
-//}
+fun <T> MediaMetadataRetriever.use(transform: (MediaMetadataRetriever) -> T): T = try {
+    transform(this)
+} finally {
+    release()
+}
+
+fun <T> Uri.mediaMeta(
+    context: Context,
+    transform: (MediaMetadataRetriever) -> T
+): T = MediaMetadataRetriever()
+    .also { it.setDataSource(context, this) }
+    .use(transform)
+
+fun <T> String.mediaMeta(
+    header: Map<String, String> = emptyMap(),
+    transform: (MediaMetadataRetriever) -> T
+) = MediaMetadataRetriever()
+    .also { it.setDataSource(this, header) }
+    .use(transform)
+
+fun <T> String.mediaMeta(transform: (MediaMetadataRetriever) -> T) = MediaMetadataRetriever()
+    .also { it.setDataSource(this) }
+    .use(transform)
+
+fun MediaMetadataRetriever.duration(): Long =
+    extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)
+        ?.toLongOrNull()
+        ?: -1
 
 //this： File path
 fun String.getMediaInfo(
     frameAtTime: Long = 0
-): MediaInfo = MediaMetadataRetriever().let { retriever ->
-    retriever.setDataSource(this)
-    val duration = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)
-        ?.toLongOrNull()
-        ?: -1
+): PathMediaInfo = mediaMeta { retriever ->
+    val duration = retriever.duration()
     val cover = retriever.getFrameAtTime(frameAtTime)
-    retriever.release()
-    MediaInfo(this, duration, cover)
+    PathMediaInfo(this, duration, cover)
+}
+
+//this： Uri media
+fun Uri.getMediaInfo(
+    context: Context = appInstance,
+    frameAtTime: Long = 0
+): UriMediaInfo = mediaMeta(context) { retriever ->
+    UriMediaInfo(this, retriever.duration(), retriever.getFrameAtTime(frameAtTime))
 }
 
 //this： File uri
 fun Uri.frameAtTime(context: Context = appInstance, timeUs: Long = 0): Bitmap? =
-    MediaMetadataRetriever().let { retriever ->
-        retriever.setDataSource(context, this)
-        val cover = retriever.getFrameAtTime(timeUs)
-        retriever.release()
-        cover
-    }
+    mediaMeta(context) { retriever -> retriever.getFrameAtTime(timeUs) }
 
 //this： File path
 fun String.frameAtTime(timeUs: Long = 0): Bitmap? =
-    MediaMetadataRetriever().let { retriever ->
-        retriever.setDataSource(this)
-        val cover = retriever.getFrameAtTime(timeUs)
-        retriever.release()
-        cover
-    }
+    mediaMeta { retriever -> retriever.getFrameAtTime(timeUs) }
 
 //this: File uri
 fun Uri.frameAtTimeAsFile(
@@ -226,21 +263,10 @@ fun String.frameAtTimeAsFile(
 fun String.getMediaInfoByNet(
     header: Map<String, String> = emptyMap(),
     frameAtTime: Long = 0
-): MediaInfo = MediaMetadataRetriever().let { retriever ->
-    retriever.setDataSource(this, header)
-    val duration = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)
-        ?.toLongOrNull()
-        ?: -1
-    val cover = retriever.getFrameAtTime(frameAtTime)
-    retriever.release()
-    MediaInfo(this, duration, cover)
+): PathMediaInfo = mediaMeta(header) { retriever ->
+    PathMediaInfo(this, retriever.duration(), retriever.getFrameAtTime(frameAtTime))
 }
 
 //this： network url
 fun String.frameAtTimeByNet(header: Map<String, String> = emptyMap(), timeUs: Long = 0): Bitmap? =
-    MediaMetadataRetriever().let { retriever ->
-        retriever.setDataSource(this, header)
-        val cover = retriever.getFrameAtTime(timeUs)
-        retriever.release()
-        cover
-    }
+    mediaMeta(header) { retriever -> retriever.getFrameAtTime(timeUs) }
