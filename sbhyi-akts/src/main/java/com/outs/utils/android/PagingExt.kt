@@ -37,3 +37,4 @@ inline fun <reified T : Any> intPagingSource(crossinline loadDataOrThrow: suspen
     object : IntPagingSource<T>() {
         override suspend fun loadDataOrThrow(pageNum: Int): List<T> = loadDataOrThrow(pageNum)
     }
+
