@@ -1,8 +1,16 @@
 package com.outs.core.android.compose.widgets
 
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.*
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.onSizeChanged
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.items
@@ -25,10 +33,11 @@ fun <T : Any> RefreshList(
     lazyListState: LazyListState = rememberLazyListState(),
     lazyPagingItems: LazyPagingItems<T>,
     isInit: Boolean = false,
+    titleContent: @Composable () -> Unit = {},
     initContent: @Composable () -> Unit = {},
     errorContent: @Composable (Throwable) -> Unit = {},
     emptyContent: @Composable () -> Unit = {},
-    loadMoreIndicator: LazyListScope.() -> Unit = { item { DefaultLoadMoreIndicator() } },
+    loadMoreIndicator: @Composable () -> Unit = { DefaultLoadMoreIndicator() },
     onRefresh: () -> Unit = { lazyPagingItems.refresh() },
     key: ((item: T) -> Any)? = null,
     itemContent: @Composable LazyItemScope.(value: T?) -> Unit
@@ -37,24 +46,51 @@ fun <T : Any> RefreshList(
     val isEmpty = 0 == lazyPagingItems.itemCount
     val isError = lazyPagingItems.loadState.refresh is LoadState.Error
     val isLoadMore = LoadState.Loading == lazyPagingItems.loadState.append
+    val density = LocalDensity.current
+    var totalHeight by remember { mutableStateOf(0) }
+    var titleHeight by remember { mutableStateOf(0) }
+    val titleHeightDp = with(density) { titleHeight.toDp() }
+    val contentHeightDp = with(density) { (totalHeight - titleHeight).toDp() }
     RefreshList(
-        modifier = modifier,
+        modifier = modifier.onSizeChanged { size -> totalHeight = size.height },
         swipeRefreshState = swipeRefreshState,
         lazyListState = lazyListState,
         lazyPagingItems = lazyPagingItems,
         onRefresh = onRefresh,
-        decorationBox = { innerContent ->
+        indicatorPadding = PaddingValues(top = titleHeightDp),
+        decorationInnerBox = { innerContent ->
+            item(contentType = "Title") {
+                Box(modifier = Modifier.onSizeChanged { size -> titleHeight = size.height }) {
+                    titleContent()
+                }
+            }
+            fun itemByTypeFillContent(type: Any? = null, content: @Composable () -> Unit) {
+                item(key = type, contentType = type) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(contentHeightDp)
+                    ) {
+                        content()
+                    }
+                }
+            }
             when {
-                isInit -> initContent()
-                isEmpty -> emptyContent()
-                isError -> errorContent(lazyPagingItems.loadState.refresh.typeOf<LoadState.Error>().error)
-                else -> innerContent()
+                isInit -> itemByTypeFillContent(type = "Init", content = initContent)
+                isEmpty -> itemByTypeFillContent(type = "Empty", content = emptyContent)
+                isError -> itemByTypeFillContent(
+                    type = "Error",
+                    content = { errorContent(lazyPagingItems.loadState.refresh.typeOf<LoadState.Error>().error) })
+                else -> {
+                    innerContent()
+                    if (isLoadMore) {
+                        item(contentType = "LoadMore") {
+                            loadMoreIndicator()
+                        }
+                    }
+                }
             }
-        },
-        decorationInnerBox = {
-            if (isLoadMore) {
-                loadMoreIndicator()
-            }
+
         },
         key = key,
         itemContent = itemContent
@@ -68,24 +104,29 @@ fun <T : Any> RefreshList(
     lazyListState: LazyListState = rememberLazyListState(),
     lazyPagingItems: LazyPagingItems<T>,
     onRefresh: () -> Unit = { lazyPagingItems.refresh() },
+    indicatorAlignment: Alignment = Alignment.TopCenter,
+    indicatorPadding: PaddingValues = PaddingValues(0.dp),
     decorationBox: @Composable (innerContent: @Composable () -> Unit) -> Unit = { innerContent -> innerContent() },
-    decorationInnerBox: LazyListScope.() -> Unit = {},
+    decorationInnerBox: LazyListScope.(innerContent: LazyListScope.() -> Unit) -> Unit = { innerContent -> innerContent() },
     key: ((item: T) -> Any)? = null,
     itemContent: @Composable LazyItemScope.(value: T?) -> Unit,
 ) {
     SwipeRefresh(
         state = swipeRefreshState,
         onRefresh = onRefresh,
-        modifier = modifier
+        modifier = modifier,
+        indicatorAlignment = indicatorAlignment,
+        indicatorPadding = indicatorPadding,
     ) {
         decorationBox {
             LazyColumn(state = lazyListState) {
-                items(
-                    items = lazyPagingItems,
-                    key = key,
-                    itemContent = itemContent
-                )
-                decorationInnerBox()
+                decorationInnerBox {
+                    items(
+                        items = lazyPagingItems,
+                        key = key,
+                        itemContent = itemContent
+                    )
+                }
             }
         }
     }
