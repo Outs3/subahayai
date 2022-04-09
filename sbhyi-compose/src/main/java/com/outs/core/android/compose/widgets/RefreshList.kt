@@ -38,6 +38,7 @@ fun <T : Any> RefreshList(
     errorContent: @Composable (Throwable) -> Unit = {},
     emptyContent: @Composable () -> Unit = {},
     loadMoreIndicator: @Composable () -> Unit = { DefaultLoadMoreIndicator() },
+    listContent: LazyListScope.(innerContent: LazyListScope.() -> Unit) -> Unit = { innerContent -> innerContent() },
     onRefresh: () -> Unit = { lazyPagingItems.refresh() },
     key: ((item: T) -> Any)? = null,
     itemContent: @Composable LazyItemScope.(value: T?) -> Unit
@@ -82,10 +83,12 @@ fun <T : Any> RefreshList(
                     type = "Error",
                     content = { errorContent(lazyPagingItems.loadState.refresh.typeOf<LoadState.Error>().error) })
                 else -> {
-                    innerContent()
-                    if (isLoadMore) {
-                        item(contentType = "LoadMore") {
-                            loadMoreIndicator()
+                    listContent {
+                        innerContent()
+                        if (isLoadMore) {
+                            item(contentType = "LoadMore") {
+                                loadMoreIndicator()
+                            }
                         }
                     }
                 }

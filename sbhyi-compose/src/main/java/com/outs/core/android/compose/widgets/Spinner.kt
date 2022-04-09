@@ -12,6 +12,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.outs.core.android.compose.textUnitDp
 import com.outs.core.android.compose.theme.Gray999
@@ -41,7 +42,8 @@ fun Dropdown(
                 text = text ?: hint,
                 color = if (null == text) hintColor else textColor,
                 fontSize = 16.textUnitDp(),
-                maxLines = 1
+                overflow = TextOverflow.Ellipsis,
+                maxLines = 1,
             )
             Icon(
                 imageVector = Icons.Filled.ArrowDropDown,
