@@ -1,5 +1,6 @@
 package com.outs.core.android.compose.widgets
 
+import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
@@ -65,38 +66,48 @@ fun TitleBar(
 }
 
 @Composable
+fun BackIcon(modifier: Modifier = Modifier, tint: Color = Gray666) {
+    Icon(
+        imageVector = Icons.Filled.ArrowBackIos,
+        contentDescription = "返回",
+        modifier = modifier
+            .padding(10.dp)
+            .size(20.dp),
+        tint = tint
+    )
+}
+
+@Composable
+fun MoreIcon(modifier: Modifier = Modifier, tint: Color = Gray666) {
+    Icon(
+        imageVector = Icons.Filled.MoreHoriz,
+        contentDescription = "更多",
+        modifier = modifier
+            .padding(10.dp)
+            .size(20.dp),
+        tint = tint
+    )
+}
+
+@Composable
 fun TitleBar(
     title: String,
     withBack: Boolean = true,
     withMore: Boolean = false,
-    onBack: () -> Unit = {},
+    onBack: () -> Unit = LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher?.let { it::onBackPressed }
+        ?: {},
     onMore: () -> Unit = {}
 ) {
     TitleBar(
         title = title,
         contentLeft = {
             if (withBack) {
-                Icon(
-                    imageVector = Icons.Filled.ArrowBackIos,
-                    contentDescription = "返回",
-                    modifier = Modifier
-                        .clickable(onClick = onBack)
-                        .padding(10.dp)
-                        .size(20.dp),
-                    tint = Gray666
-                )
+                BackIcon(modifier = Modifier.clickable(onClick = onBack))
             }
         },
         contentRight = {
             if (withMore) {
-                Icon(
-                    imageVector = Icons.Filled.MoreHoriz,
-                    contentDescription = "更多菜单",
-                    modifier = Modifier
-                        .clickable(onClick = onMore)
-                        .padding(10.dp)
-                        .size(20.dp)
-                )
+                MoreIcon(Modifier.clickable(onClick = onMore))
             }
         }
     )

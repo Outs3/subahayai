@@ -2,6 +2,7 @@ package com.outs.core.android.compose
 
 import android.os.Bundle
 import android.view.View
+import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxSize
@@ -19,10 +20,14 @@ import com.outs.core.android.compose.widgets.TitleBar
  * date: 2022/3/28 18:25
  * desc:
  */
+/**
+ * @see LocalFragmentManager
+ * @see ProvideCompositions
+ */
 @Composable
 fun FragmentOf(
     modifier: Modifier = Modifier,
-    fm: FragmentManager,
+    fm: FragmentManager = LocalFragmentManager.current,
     fragmentClass: Class<out Fragment>,
     args: Bundle? = null
 ) {
@@ -52,18 +57,50 @@ fun FragmentOf(
     )
 }
 
+/**
+ * @see LocalFragmentManager
+ * @see ProvideCompositions
+ */
 @Composable
 fun TitleAndFragment(
     modifier: Modifier = Modifier,
     title: String,
     titleLeft: @Composable RowScope.() -> Unit = {},
     titleRight: @Composable RowScope.() -> Unit = {},
-    fm: FragmentManager,
+    fm: FragmentManager = LocalFragmentManager.current,
     fragmentClass: Class<out Fragment>,
     args: Bundle? = null
 ) {
     Column(modifier = modifier) {
         TitleBar(title, contentLeft = titleLeft, contentRight = titleRight)
+        FragmentOf(
+            modifier = Modifier.fillMaxSize(),
+            fm = fm,
+            fragmentClass = fragmentClass,
+            args = args
+        )
+    }
+}
+
+/**
+ * @see LocalFragmentManager
+ * @see ProvideCompositions
+ */
+@Composable
+fun TitleAndFragment(
+    modifier: Modifier = Modifier,
+    title: String,
+    withBack: Boolean = true,
+    withMore: Boolean = false,
+    onBack: () -> Unit = LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher?.let { it::onBackPressed }
+        ?: {},
+    onMore: () -> Unit = {},
+    fm: FragmentManager = LocalFragmentManager.current,
+    fragmentClass: Class<out Fragment>,
+    args: Bundle? = null
+) {
+    Column(modifier = modifier) {
+        TitleBar(title, withBack, withMore, onBack, onMore)
         FragmentOf(
             modifier = Modifier.fillMaxSize(),
             fm = fm,
