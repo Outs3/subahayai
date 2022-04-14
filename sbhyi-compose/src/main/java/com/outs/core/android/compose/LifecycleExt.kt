@@ -13,11 +13,14 @@ import androidx.lifecycle.LifecycleOwner
  * desc:
  */
 @Composable
-fun OnLifecycleEvent(onEvent: (owner: LifecycleOwner, event: Lifecycle.Event) -> Unit) {
+fun OnLifecycleEvent(
+    key: Any? = null,
+    onEvent: (owner: LifecycleOwner, event: Lifecycle.Event) -> Unit
+) {
     val eventHandler = rememberUpdatedState(newValue = onEvent)
     val lifecycleOwner = rememberUpdatedState(newValue = LocalLifecycleOwner.current)
 
-    DisposableEffect(key1 = lifecycleOwner.value, effect = {
+    DisposableEffect(key1 = key, key2 = lifecycleOwner.value, effect = {
         val lifecycle = lifecycleOwner.value.lifecycle
         val observer = LifecycleEventObserver { owner, event ->
             eventHandler.value(owner, event)
@@ -30,8 +33,11 @@ fun OnLifecycleEvent(onEvent: (owner: LifecycleOwner, event: Lifecycle.Event) ->
 }
 
 @Composable
-fun OnLifecycleResume(action: () -> Unit) {
-    OnLifecycleEvent(onEvent = { owner, event ->
+fun OnLifecycleResume(
+    key: Any? = null,
+    action: () -> Unit
+) {
+    OnLifecycleEvent(key = key, onEvent = { owner, event ->
         if (event == Lifecycle.Event.ON_RESUME) {
             action()
         }
@@ -39,9 +45,9 @@ fun OnLifecycleResume(action: () -> Unit) {
 }
 
 @Composable
-fun isOnFront(): MutableState<Boolean> {
+fun isOnFront(key: Any? = null): MutableState<Boolean> {
     val isOnFront = remember { mutableStateOf(false) }
-    OnLifecycleEvent(onEvent = { owner, event ->
+    OnLifecycleEvent(key = key, onEvent = { owner, event ->
         when (event) {
             Lifecycle.Event.ON_RESUME -> isOnFront.value = true
             else -> isOnFront.value = false
