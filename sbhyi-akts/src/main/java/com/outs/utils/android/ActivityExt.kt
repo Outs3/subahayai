@@ -32,16 +32,26 @@ val topAppCompatActivity: AppCompatActivity?
 val topLaunchOwner: ILaunchOwner?
     get() = ActivityUtils.getTopActivity()?.typeOfOrNull()
 
-inline fun <reified T> Context.newIntent(
+fun <T> Context.newIntent(
+    cls: Class<T>,
     extras: Bundle? = null,
     withFlags: Int? = null,
     block: Intent.() -> Unit = {}
 ): Intent =
-    Intent(this, T::class.java).apply {
+    Intent(this, cls).apply {
         extras?.let(this::putExtras)
         withFlags?.let(this::addFlags)
         block()
     }
+
+inline fun <reified T> Context.newIntent(
+    extras: Bundle? = null,
+    withFlags: Int? = null,
+    noinline block: Intent.() -> Unit = {}
+): Intent = newIntent(T::class.java, extras, withFlags, block)
+
+inline fun <reified T> Context.newIntent(vararg pairs: Pair<String, Any?>): Intent =
+    newIntent<T>(extras = bundleOf(*pairs))
 
 val ActivityResult.isSuccess get() = Activity.RESULT_OK == resultCode
 
@@ -56,7 +66,7 @@ fun Activity.finishOk(extra: Bundle? = null) {
     finishOk(extra?.let { Intent().putExtras(extra) })
 }
 
-fun Activity.finishOk(pair: Pair<String, Any>) {
+fun Activity.finishOk(pair: Pair<String, Any?>) {
     finishOk(bundleOf(pair))
 }
 
@@ -65,7 +75,7 @@ fun Activity.finishResult(result: Int, extra: Bundle? = null) {
     finish()
 }
 
-fun Activity.finishResult(result: Int, pair: Pair<String, Any>) {
+fun Activity.finishResult(result: Int, pair: Pair<String, Any?>) {
     finishResult(result, bundleOf(pair))
 }
 
@@ -73,7 +83,7 @@ fun ComponentActivity.regReceiver(receiver: BroadcastReceiver, intentFilter: Int
     lifecycle.regReceiver(this, receiver, intentFilter)
 }
 
-inline fun <reified T : Activity> Fragment.startActivity(vararg data: Pair<String, Any>) {
+inline fun <reified T : Activity> Fragment.startActivity(vararg data: Pair<String, Any?>) {
     activity?.startActivity<T>(*data)
 }
 
@@ -84,7 +94,7 @@ inline fun <reified T : Activity> Fragment.startActivity(
     activity?.startActivity<T>(extras, withFlags)
 }
 
-inline fun <reified T : Activity> Context.startActivity(vararg data: Pair<String, Any>) =
+inline fun <reified T : Activity> Context.startActivity(vararg data: Pair<String, Any?>) =
     startActivity<T>(bundleOf(*data))
 
 inline fun <reified T : Activity> Context.startActivity(
