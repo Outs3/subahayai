@@ -36,14 +36,14 @@ dependencies {
 
     //ktx
     api("androidx.core:core-ktx:1.7.0")
-    api("androidx.activity:activity-ktx:1.4.0")
     api("androidx.collection:collection-ktx:1.2.0")
-    api("androidx.fragment:fragment-ktx:1.4.1")
-    api("androidx.lifecycle:lifecycle-runtime-ktx:2.4.1")
-    api("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1")
-    api("androidx.lifecycle:lifecycle-livedata-ktx:2.4.1")
-    api("androidx.lifecycle:lifecycle-reactivestreams-ktx:2.4.1")
-    api("androidx.room:room-ktx:2.4.1")
+    api("androidx.activity:activity-ktx:1.5.0-alpha05")
+    api("androidx.fragment:fragment-ktx:1.5.0-alpha05")
+    api("androidx.lifecycle:lifecycle-runtime-ktx:2.5.0-alpha06")
+    api("androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.0-alpha06")
+    api("androidx.lifecycle:lifecycle-livedata-ktx:2.5.0-alpha06")
+    api("androidx.lifecycle:lifecycle-reactivestreams-ktx:2.5.0-alpha06")
+    api("androidx.room:room-ktx:2.4.2")
 
     //view
     api("androidx.appcompat:appcompat:1.4.1")

@@ -2,7 +2,7 @@ package com.outs.utils.android
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelStoreOwner
+import androidx.lifecycle.viewmodel.ViewModelInitializer
 
 /**
  * author: Outs3
@@ -10,19 +10,31 @@ import androidx.lifecycle.ViewModelStoreOwner
  * date: 2021/5/6 16:55
  * desc:
  */
-inline fun <reified VM : ViewModel> ViewModelStoreOwner.viewModel() =
-    ViewModelProvider(this)[VM::class.java]
+inline fun <reified VM : ViewModel> viewModel() =
+    viewModel(VM::class.java)
 
-inline fun <reified VM : ViewModel> ViewModelStoreOwner.viewModel(vararg args: Any) =
-    ViewModelProvider(
-        this,
-        ArgsFactory(args.map { it.javaClass }.toTypedArray(), *args)
-    )[VM::class.java]
+inline fun <reified VM : ViewModel> viewModel(vararg args: Any) =
+    viewModel(VM::class.java, *args)
 
-class ArgsFactory(
-    private val classes: Array<Class<*>>,
-    private vararg val args: Any
-) : ViewModelProvider.Factory {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T =
-        modelClass.getConstructor(*classes).newInstance(*args)
-}
+fun <VM : ViewModel> viewModel(viewModelClass: Class<VM>, vararg args: Any) =
+    createViewModel(viewModelClass, args.map { it.javaClass }.toTypedArray(), *args)
+        .create(viewModelClass)
+
+fun <VM : ViewModel> viewModel(
+    viewModelClass: Class<VM>,
+    classes: Array<Class<*>>,
+    args: Array<Any?>
+) = createViewModel(viewModelClass, classes, args)
+    .create(viewModelClass)
+
+fun <VM : ViewModel> createViewModel(
+    viewModelClass: Class<VM>,
+    classes: Array<Class<*>>,
+    vararg args: Any
+) = ViewModelProvider.Factory.from(
+    ViewModelInitializer(
+        viewModelClass
+    ) {
+        viewModelClass.getConstructor(*classes).newInstance(*args)
+    }
+)
