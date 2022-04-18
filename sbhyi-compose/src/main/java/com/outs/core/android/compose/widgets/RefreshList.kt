@@ -1,15 +1,13 @@
 package com.outs.core.android.compose.widgets
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
@@ -40,6 +38,8 @@ fun <T : Any> RefreshList(
     loadMoreIndicator: @Composable () -> Unit = { DefaultLoadMoreIndicator() },
     listContent: LazyListScope.(innerContent: LazyListScope.() -> Unit) -> Unit = { innerContent -> innerContent() },
     onRefresh: () -> Unit = { lazyPagingItems.refresh() },
+    indicatorPadding: PaddingValues = PaddingValues(),
+    fixIndicatorTitlePadding: Boolean = true,
     key: ((item: T) -> Any)? = null,
     itemContent: @Composable LazyItemScope.(value: T?) -> Unit
 ) {
@@ -58,7 +58,12 @@ fun <T : Any> RefreshList(
         lazyListState = lazyListState,
         lazyPagingItems = lazyPagingItems,
         onRefresh = onRefresh,
-        indicatorPadding = PaddingValues(top = titleHeightDp),
+        indicatorPadding = if (!fixIndicatorTitlePadding) indicatorPadding else PaddingValues(
+            top = indicatorPadding.calculateTopPadding() + titleHeightDp,
+            bottom = indicatorPadding.calculateBottomPadding(),
+            start = indicatorPadding.calculateStartPadding(LayoutDirection.Ltr),
+            end = indicatorPadding.calculateEndPadding(LayoutDirection.Ltr)
+        ),
         decorationInnerBox = { innerContent ->
             item(contentType = "Title") {
                 Box(modifier = Modifier.onSizeChanged { size -> titleHeight = size.height }) {
