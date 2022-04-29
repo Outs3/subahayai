@@ -24,6 +24,10 @@ import com.outs.utils.kotlin.typeOf
  * date: 2022/4/8 17:39
  * desc:
  */
+fun LazyPagingItems<*>.isError() = loadState.refresh is LoadState.Error
+fun LazyPagingItems<*>.isEmpty() = 0 == itemCount
+fun LazyPagingItems<*>.isLoadMore() = LoadState.Loading == loadState.append
+
 @Composable
 fun <T : Any> RefreshList(
     modifier: Modifier = Modifier,
@@ -43,10 +47,6 @@ fun <T : Any> RefreshList(
     key: ((item: T) -> Any)? = null,
     itemContent: @Composable LazyItemScope.(value: T?) -> Unit
 ) {
-    lazyPagingItems.loadState
-    val isEmpty = 0 == lazyPagingItems.itemCount
-    val isError = lazyPagingItems.loadState.refresh is LoadState.Error
-    val isLoadMore = LoadState.Loading == lazyPagingItems.loadState.append
     val density = LocalDensity.current
     var totalHeight by remember { mutableStateOf(0) }
     var titleHeight by remember { mutableStateOf(0) }
@@ -83,14 +83,17 @@ fun <T : Any> RefreshList(
             }
             when {
                 isInit -> itemByTypeFillContent(type = "Init", content = initContent)
-                isEmpty -> itemByTypeFillContent(type = "Empty", content = emptyContent)
-                isError -> itemByTypeFillContent(
+                lazyPagingItems.isEmpty() -> itemByTypeFillContent(
+                    type = "Empty",
+                    content = emptyContent
+                )
+                lazyPagingItems.isError() -> itemByTypeFillContent(
                     type = "Error",
                     content = { errorContent(lazyPagingItems.loadState.refresh.typeOf<LoadState.Error>().error) })
                 else -> {
                     listContent {
                         innerContent()
-                        if (isLoadMore) {
+                        if (lazyPagingItems.isLoadMore()) {
                             item(contentType = "LoadMore") {
                                 loadMoreIndicator()
                             }
