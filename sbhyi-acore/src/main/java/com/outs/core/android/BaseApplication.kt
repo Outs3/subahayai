@@ -8,7 +8,6 @@ import com.orhanobut.logger.Logger
 import com.orhanobut.logger.PrettyFormatStrategy
 import com.outs.utils.android.e
 import com.outs.utils.android.isDebug
-import com.outs.utils.android.toast
 import com.outs.utils.kotlin.ILogger
 import com.outs.utils.kotlin.setLogger
 
@@ -43,7 +42,6 @@ open class BaseApplication : MultiDexApplication() {
             }
 
             override fun e(tag: String?, msg: String) {
-                msg.toast()
                 Logger.log(Logger.ERROR, tag, msg, null)
             }
 
