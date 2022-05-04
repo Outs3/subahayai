@@ -94,7 +94,7 @@ dependencies {
     api("com.google.accompanist:accompanist-webview:${Versions.COMPOSE_ACCOMPANIST_VERSION}")
 
     //coil
-    api("io.coil-kt:coil-compose:2.0.0-rc02")
+    api("io.coil-kt:coil-compose:2.0.0-rc03")
 
     testImplementation("junit:junit:4.13.2")
     testImplementation("androidx.test:core:1.4.0")

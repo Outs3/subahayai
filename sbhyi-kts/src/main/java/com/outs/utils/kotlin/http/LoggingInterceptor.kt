@@ -25,6 +25,8 @@ object LoggingInterceptor : Interceptor {
 
     private const val bodyCount = 1024L * 1024
 
+    private var contentMaxLength = 0x4000L
+
     @Throws(IOException::class)
     override fun intercept(chain: Interceptor.Chain): Response {
         val request: Request = chain.request()
@@ -100,7 +102,7 @@ object LoggingInterceptor : Interceptor {
                 if (mediaType.isText()) {
                     builder.append("requestBody's content  = ").append(bodyToString())
                         .append(BR)
-                } else if (requestBody.contentLength() < 0x1000) {
+                } else if (requestBody.contentLength() < contentMaxLength) {
                     val buffer = Buffer()
                     requestBody.writeTo(buffer)
                     if (buffer.isPlaintext()) {
@@ -112,7 +114,7 @@ object LoggingInterceptor : Interceptor {
                     val buffer = Buffer()
                     requestBody.writeTo(buffer)
                     builder.append("requestBody's content  = ")
-                        .append(buffer.readString(0x1000, charset ?: UTF8))
+                        .append(buffer.readString(contentMaxLength, charset ?: UTF8))
                         .append(BR)
                 }
             }
@@ -133,7 +135,8 @@ object LoggingInterceptor : Interceptor {
         try {
             val body = peekBody(bodyCount)
             val bodyText =
-                body.string().let { if (it.length < 0x1000) it else it.substring(0 until 0x1000) }
+                body.string()
+                    .let { if (it.length < contentMaxLength) it else it.substring(0 until contentMaxLength.toInt()) }
             builder.append("body = ")
                 .append(bodyText)
                 .append(BR)
@@ -141,6 +144,10 @@ object LoggingInterceptor : Interceptor {
             e.d()
         }
         return builder.toString()
+    }
+
+    fun setContentMaxLength(contentMaxLength: Long) {
+        this.contentMaxLength = contentMaxLength
     }
 
 }
