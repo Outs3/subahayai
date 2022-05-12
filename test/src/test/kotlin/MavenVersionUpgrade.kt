@@ -125,7 +125,7 @@ class MavenVersionUpgradeTest {
     api("com.google.android.flexbox:flexbox:3.0.0")
 
     //image cache
-    api("com.github.bumptech.glide:glide:4.13.1")
+    api("com.github.bumptech.glide:glide:4.13.2")
     kapt("com.github.bumptech.glide:compiler:4.13.1")
 //    api("com.github.bumptech.glide:okhttp3-integration:4.11.0")
 

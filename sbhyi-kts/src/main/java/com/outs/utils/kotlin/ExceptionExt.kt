@@ -55,3 +55,20 @@ suspend fun suspendTry(onCatch: (Throwable) -> Unit = emptyConsumer, action: sus
         onCatch(e)
     }
 }
+
+class DelegateException(message: String? = null, cause: Throwable) :
+    RuntimeException(message, cause) {
+
+    val errMsg = message
+
+    val delegate = cause
+
+    override val message: String?
+        get() = errMsg ?: super.message
+
+    override fun printStackTrace() {
+        super.printStackTrace()
+        delegate.printStackTrace()
+    }
+
+}

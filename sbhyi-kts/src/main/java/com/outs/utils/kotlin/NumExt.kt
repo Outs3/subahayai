@@ -2,6 +2,7 @@ package com.outs.utils.kotlin
 
 import java.math.RoundingMode
 import java.text.DecimalFormat
+import java.text.NumberFormat
 import kotlin.math.max
 import kotlin.math.min
 
@@ -51,6 +52,18 @@ fun String.safeDouble(def: Double = 0.0): Double = try {
     def
 }
 
+val decimalFormat: DecimalFormat by lazy {
+    NumberFormat.getInstance()
+        .typeOf<DecimalFormat>()
+        .apply {
+            isGroupingUsed = false
+            roundingMode = RoundingMode.DOWN
+            minimumIntegerDigits = 1
+            minimumFractionDigits = 0
+            maximumFractionDigits = 2
+        }
+}
+
 val FILE_LENGTH = arrayOf("B", "KB", "MB", "GB", "TB")
 
 fun Double.formatOne(): String = DecimalFormat("#.#").format(this)
@@ -58,7 +71,7 @@ fun Double.formatOne(): String = DecimalFormat("#.#").format(this)
 /**
  * 保留小数点后两位
  */
-fun Double.format(): String = DecimalFormat("#.##").format(this)
+fun Double.format(): String = let(decimalFormat::format)
 
 fun Float.format(): String = toDouble().format()
 

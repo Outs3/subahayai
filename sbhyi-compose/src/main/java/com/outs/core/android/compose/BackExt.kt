@@ -1,10 +1,14 @@
 package com.outs.core.android.compose
 
 import androidx.activity.OnBackPressedCallback
+import androidx.activity.OnBackPressedDispatcher
 import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
+import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.remember
+import androidx.lifecycle.Lifecycle
+import com.outs.utils.android.doOnDestroy
 
 /**
  * author: Outs3
@@ -38,3 +42,26 @@ fun OnBack(key: Any? = Unit, onBack: () -> Unit) {
 fun defaultBackAction(): () -> Unit =
     LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher?.let { it::onBackPressed }
         ?: {}
+
+fun AppCompatActivity.onBackPressed(
+    enabled: Boolean = true,
+    action: () -> Unit
+): OnBackPressedCallback = onBackPressed(object : OnBackPressedCallback(enabled) {
+    override fun handleOnBackPressed() {
+        action()
+    }
+})
+
+fun AppCompatActivity.onBackPressed(callback: OnBackPressedCallback): OnBackPressedCallback =
+    onBackPressedDispatcher.onBackPressed(lifecycle, callback)
+
+fun OnBackPressedDispatcher.onBackPressed(
+    lifecycle: Lifecycle,
+    callback: OnBackPressedCallback
+): OnBackPressedCallback {
+    addCallback(callback)
+    lifecycle.doOnDestroy {
+        callback.remove()
+    }
+    return callback
+}

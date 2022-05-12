@@ -34,15 +34,16 @@ dependencies {
     //kotlin
     api("org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.KOTLIN_COROUTINES_VERSION}")
 
+    val lifecycleKtxVersion = "2.5.0-alpha06"
     //ktx
     api("androidx.core:core-ktx:1.7.0")
     api("androidx.collection:collection-ktx:1.2.0")
     api("androidx.activity:activity-ktx:1.5.0-alpha05")
     api("androidx.fragment:fragment-ktx:1.5.0-alpha05")
-    api("androidx.lifecycle:lifecycle-runtime-ktx:2.5.0-alpha06")
-    api("androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.0-alpha06")
-    api("androidx.lifecycle:lifecycle-livedata-ktx:2.5.0-alpha06")
-    api("androidx.lifecycle:lifecycle-reactivestreams-ktx:2.5.0-alpha06")
+    api("androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleKtxVersion")
+    api("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleKtxVersion")
+    api("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleKtxVersion")
+    api("androidx.lifecycle:lifecycle-reactivestreams-ktx:$lifecycleKtxVersion")
     api("androidx.room:room-ktx:2.4.2")
 
     //view
@@ -54,8 +55,8 @@ dependencies {
     api("com.google.android.flexbox:flexbox:3.0.0")
 
     //image cache
-    api("com.github.bumptech.glide:glide:4.13.1")
-    kapt("com.github.bumptech.glide:compiler:4.13.1")
+    api("com.github.bumptech.glide:glide:4.13.2")
+    kapt("com.github.bumptech.glide:compiler:4.13.2")
 //    api("com.github.bumptech.glide:okhttp3-integration:4.11.0")
 
     //Log
