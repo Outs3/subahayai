@@ -41,6 +41,7 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+    namespace = "com.outs.core.android.compose"
 }
 
 dependencies {

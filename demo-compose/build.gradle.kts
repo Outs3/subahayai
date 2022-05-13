@@ -36,6 +36,7 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = Versions.COMPOSE_VERSION
     }
+    namespace = "com.outs.demo_compose"
 }
 
 dependencies {

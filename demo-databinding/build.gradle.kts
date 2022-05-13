@@ -31,6 +31,7 @@ android {
     buildFeatures {
         dataBinding = true
     }
+    namespace = "com.outs.demo_databinding"
 }
 
 dependencies {
