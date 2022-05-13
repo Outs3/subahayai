@@ -50,7 +50,7 @@ dependencies {
     api("com.makeramen:roundedimageview:2.3.0")
 
     //tencent mmkv
-    api("com.tencent:mmkv:1.2.11")
+    api("com.tencent:mmkv:1.2.12")
 
     //饺子播放器
     api("cn.jzvd:jiaozivideoplayer:7.7.0")
@@ -59,7 +59,7 @@ dependencies {
     api("com.youth.banner:banner:2.1.0")
 
     //rich text
-    api("com.zzhoujay.richtext:richtext:2.4.7")
+    api("com.zzhoujay.richtext:richtext:3.0.5")
 
     //qrcode
     api("com.github.jenly1314:zxing-lite:2.1.1")
