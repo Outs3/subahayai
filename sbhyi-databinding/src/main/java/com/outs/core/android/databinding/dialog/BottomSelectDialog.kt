@@ -8,7 +8,6 @@ import com.blankj.utilcode.util.SizeUtils
 import com.outs.core.android.databinding.R
 import com.outs.core.android.databinding.databinding.DialogBottomSelectBinding
 import com.outs.utils.android.attrColor
-import java.util.*
 
 /**
  * author: Outs3
@@ -38,7 +37,7 @@ class BottomSelectDialog : BaseDialogFragment<DialogBottomSelectBinding>() {
             onCancel.onCancel(this)
         }
         val context = requireContext()
-        val colorPrimary = context.attrColor(R.attr.colorPrimary)
+        val colorPrimary = context.attrColor(androidx.appcompat.R.attr.colorPrimary)
         contents
             .mapIndexed { index, s ->
                 AppCompatTextView(context).apply {

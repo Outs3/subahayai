@@ -39,7 +39,7 @@ dependencies {
     //ktx
     api("androidx.core:core-ktx:1.7.0")
     api("androidx.collection:collection-ktx:1.2.0")
-    api("androidx.activity:activity-ktx:1.5.0-alpha05")
+    api("androidx.activity:activity-ktx:1.6.0-alpha03")
     api("androidx.fragment:fragment-ktx:1.5.0-alpha05")
     api("androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleKtxVersion")
     api("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleKtxVersion")

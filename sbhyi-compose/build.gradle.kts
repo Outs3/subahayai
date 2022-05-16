@@ -7,6 +7,7 @@ plugins {
 }
 
 android {
+    namespace = "com.outs.core.android.compose"
     compileSdk = ConfigData.COMPILE_SDK_VERSION
 
     defaultConfig {
@@ -41,7 +42,6 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
-    namespace = "com.outs.core.android.compose"
 }
 
 dependencies {
@@ -75,6 +75,7 @@ dependencies {
     api("androidx.compose.foundation:foundation:${Versions.COMPOSE_VERSION}")
     // Material Design
     api("androidx.compose.material:material:${Versions.COMPOSE_VERSION}")
+    //api("androidx.compose.material3:material3:1.0.0-alpha08")
     // Material design icons
     api("androidx.compose.material:material-icons-core:${Versions.COMPOSE_VERSION}")
     api("androidx.compose.material:material-icons-extended:${Versions.COMPOSE_VERSION}")
@@ -84,7 +85,7 @@ dependencies {
 
     //jetpack
     api("androidx.activity:activity-compose:1.4.0")
-    api("androidx.constraintlayout:constraintlayout-compose:1.0.0-rc02")
+    api("androidx.constraintlayout:constraintlayout-compose:1.0.0")
     api("androidx.navigation:navigation-compose:2.4.1")
     api("androidx.paging:paging-compose:1.0.0-alpha14")
 
@@ -104,6 +105,7 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
     androidTestImplementation("androidx.compose.ui:ui-test-junit4:${Versions.COMPOSE_VERSION}")
     debugImplementation("androidx.compose.ui:ui-tooling:${Versions.COMPOSE_VERSION}")
+    debugImplementation("androidx.compose.ui:ui-test-manifest:${Versions.COMPOSE_VERSION}")
 }
 
 group = ConfigData.GROUP_NAME

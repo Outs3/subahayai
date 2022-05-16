@@ -13,8 +13,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.outs.core.android.compose.textUnitDp
 import com.outs.core.android.compose.theme.Gray999
 
 /**
@@ -23,6 +23,12 @@ import com.outs.core.android.compose.theme.Gray999
  * date: 2022/3/28 18:27
  * desc:
  */
+@Preview
+@Composable
+private fun PreviewDropdown() {
+    Dropdown(text = null, hint = "全部")
+}
+
 @Composable
 fun Dropdown(
     modifier: Modifier = Modifier,
@@ -37,11 +43,10 @@ fun Dropdown(
         modifier = modifier.padding(5.dp),
         contentAlignment = contentAlignment
     ) {
-        Row {
+        Row(verticalAlignment = Alignment.CenterVertically) {
             Text(
                 text = text ?: hint,
                 color = if (null == text) hintColor else textColor,
-                fontSize = 16.textUnitDp(),
                 overflow = TextOverflow.Ellipsis,
                 maxLines = 1,
             )
@@ -54,6 +59,15 @@ fun Dropdown(
         }
         content()
     }
+}
+
+@Preview
+@Composable
+private fun PreviewSpinner() {
+    Spinner(
+        opts = arrayOf("红色", "黄色", "蓝色"),
+        onChecked = { i, s -> }
+    )
 }
 
 @Composable
