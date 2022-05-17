@@ -74,8 +74,8 @@ dependencies {
     // Foundation (Border, Background, Box, Image, Scroll, shapes, animations, etc.)
     api("androidx.compose.foundation:foundation:${Versions.COMPOSE_VERSION}")
     // Material Design
-    api("androidx.compose.material:material:${Versions.COMPOSE_VERSION}")
-    //api("androidx.compose.material3:material3:1.0.0-alpha08")
+    //api("androidx.compose.material:material:${Versions.COMPOSE_VERSION}")
+    api("androidx.compose.material3:material3:1.0.0-alpha08")
     // Material design icons
     api("androidx.compose.material:material-icons-core:${Versions.COMPOSE_VERSION}")
     api("androidx.compose.material:material-icons-extended:${Versions.COMPOSE_VERSION}")

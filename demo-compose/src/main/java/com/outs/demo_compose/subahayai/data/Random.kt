@@ -1,7 +1,6 @@
 package com.outs.demo_compose.subahayai.data
 
 import androidx.annotation.DrawableRes
-import com.outs.demo_compose.R
 import kotlin.random.Random
 
 /**
@@ -12,7 +11,7 @@ import kotlin.random.Random
  */
 val randomBoolean: Boolean get() = Random.nextBoolean()
 
-val randomIcon: Int @DrawableRes get() = R.drawable.loading
+val randomIcon: Int @DrawableRes get() = com.outs.core.android.R.drawable.loading
 
 val randomLong: Long get() = Random.nextLong()
 

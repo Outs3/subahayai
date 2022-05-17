@@ -5,9 +5,9 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -35,7 +35,7 @@ fun Dropdown(
     contentAlignment: Alignment = Alignment.Center,
     text: String? = null,
     hint: String = "",
-    textColor: Color = MaterialTheme.colors.primary,
+    textColor: Color = MaterialTheme.colorScheme.primary,
     hintColor: Color = Gray999,
     content: @Composable BoxScope.() -> Unit = {}
 ) {
@@ -75,7 +75,7 @@ fun Spinner(
     modifier: Modifier = Modifier,
     contentAlignment: Alignment = Alignment.Center,
     opts: Array<String>,
-    textColor: Color = MaterialTheme.colors.primary,
+    textColor: Color = MaterialTheme.colorScheme.primary,
     hintColor: Color = Gray999,
     current: String? = null,
     onChecked: (Int, String) -> Unit
@@ -91,12 +91,10 @@ fun Spinner(
     ) {
         DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
             opts.forEachIndexed { index, s ->
-                DropdownMenuItem(onClick = {
+                DropdownMenuItem(text = { Text(text = s) }, onClick = {
                     expanded = false
                     onChecked(index, s)
-                }) {
-                    Text(text = s)
-                }
+                })
             }
         }
     }
@@ -108,7 +106,7 @@ fun <T> Spinner(
     contentAlignment: Alignment = Alignment.Center,
     text: (T?) -> String?,
     opts: List<T>,
-    textColor: Color = MaterialTheme.colors.primary,
+    textColor: Color = MaterialTheme.colorScheme.primary,
     hintColor: Color = Gray999,
     current: T? = null,
     onChecked: (Int, T) -> Unit
@@ -124,9 +122,10 @@ fun <T> Spinner(
     ) {
         DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
             opts.forEachIndexed { index, item ->
-                DropdownMenuItem(onClick = { onChecked(index, item) }) {
-                    Text(text = text(item) ?: "")
-                }
+                DropdownMenuItem(
+                    text = { Text(text = text(item) ?: "") },
+                    onClick = { onChecked(index, item) }
+                )
             }
         }
     }

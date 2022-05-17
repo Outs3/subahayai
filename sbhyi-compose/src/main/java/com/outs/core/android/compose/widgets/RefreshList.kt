@@ -2,8 +2,8 @@ package com.outs.core.android.compose.widgets
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.*
-import androidx.compose.material.Icon
-import androidx.compose.material.Text
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Description
 import androidx.compose.runtime.*
@@ -23,7 +23,6 @@ import com.google.accompanist.swiperefresh.SwipeRefreshState
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.outs.core.android.compose.DefaultLoadMoreIndicator
 import com.outs.core.android.compose.textUnitDp
-import com.outs.core.android.compose.theme.Gray666
 import com.outs.core.android.compose.theme.Gray999
 import com.outs.utils.kotlin.typeOf
 

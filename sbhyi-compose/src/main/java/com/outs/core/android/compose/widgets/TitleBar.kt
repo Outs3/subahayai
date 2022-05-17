@@ -3,12 +3,13 @@ package com.outs.core.android.compose.widgets
 import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Icon
-import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBackIos
 import androidx.compose.material.icons.filled.MoreHoriz
+import androidx.compose.material3.Icon
+import androidx.compose.material3.SmallTopAppBar
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -33,36 +34,39 @@ fun TitleBar(
     contentLeft: @Composable RowScope.() -> Unit = {},
     contentRight: @Composable RowScope.() -> Unit = {},
 ) {
-    TopAppBar(
-        backgroundColor = Color.White
-    ) {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .defaultMinSize(minHeight = 42.dp)
-        ) {
-            Row(
+    SmallTopAppBar(
+        title = {
+            Box(
                 modifier = Modifier
-                    .align(Alignment.CenterStart)
-                    .padding(horizontal = 10.dp),
-                content = contentLeft
-            )
-            Text(
-                text = title,
-                modifier = Modifier.align(Alignment.Center),
-                color = Gray333,
-                fontSize = fontSize,
-                fontWeight = FontWeight.Bold,
-                maxLines = 1
-            )
-            Row(
-                modifier = Modifier
-                    .align(Alignment.CenterEnd)
-                    .padding(horizontal = 10.dp),
-                content = contentRight
-            )
-        }
-    }
+                    .fillMaxWidth()
+                    .defaultMinSize(minHeight = 42.dp)
+            ) {
+                Row(
+                    modifier = Modifier
+                        .align(Alignment.CenterStart)
+                        .padding(horizontal = 10.dp),
+                    content = contentLeft
+                )
+                Text(
+                    text = title,
+                    modifier = Modifier.align(Alignment.Center),
+                    color = Gray333,
+                    fontSize = fontSize,
+                    fontWeight = FontWeight.Bold,
+                    maxLines = 1
+                )
+                Row(
+                    modifier = Modifier
+                        .align(Alignment.CenterEnd)
+                        .padding(horizontal = 10.dp),
+                    content = contentRight
+                )
+            }
+        },
+        colors = TopAppBarDefaults.smallTopAppBarColors(
+            containerColor = Color.White
+        )
+    )
 }
 
 @Composable

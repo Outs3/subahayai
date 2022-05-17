@@ -2,8 +2,8 @@ package com.yibai.tuoke.compose.widgets
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -32,7 +32,7 @@ fun DefaultLabel(
     valueClickable: Boolean = false,
     titleColor: Color = Gray666,
     titleFontSize: TextUnit = 16.sp,
-    textColor: Color = if (valueClickable) MaterialTheme.colors.primary else Gray333,
+    textColor: Color = if (valueClickable) MaterialTheme.colorScheme.primary else Gray333,
     textFontSize: TextUnit = titleFontSize,
     onValueClick: () -> Unit = {}
 ) {

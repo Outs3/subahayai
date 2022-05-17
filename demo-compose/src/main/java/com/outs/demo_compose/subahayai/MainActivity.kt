@@ -8,7 +8,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.*
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
@@ -29,7 +29,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             TComposeTheme {
                 // A surface container using the 'background' color from the theme
-                Surface(color = MaterialTheme.colors.background) {
+                Surface(color = MaterialTheme.colorScheme.background) {
                     CConversation(
                         (0 until 5).map { randomMessage }
                     )
@@ -48,11 +48,12 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AppointPage(title: String, subTitle: String? = null, menus: List<String>? = null) {
     Scaffold(
         topBar = {
-            TopAppBar(
+            SmallTopAppBar(
                 navigationIcon = {
                     Image(
                         modifier = Modifier
@@ -60,20 +61,20 @@ fun AppointPage(title: String, subTitle: String? = null, menus: List<String>? = 
                             .padding(vertical = 10.dp, horizontal = 15.dp),
                         painter = painterResource(com.outs.demo_compose.R.drawable.icon_back),
                         contentDescription = "back button",
-                        colorFilter = ColorFilter.tint(MaterialTheme.colors.onPrimary)
+                        colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onPrimary)
                     )
                 },
                 title = {
                     Column {
-                        Text(text = title, color = MaterialTheme.colors.onPrimary)
+                        Text(text = title, color = MaterialTheme.colorScheme.onPrimary)
                         subTitle?.let {
-                            Text(text = subTitle, color = MaterialTheme.colors.secondary)
+                            Text(text = subTitle, color = MaterialTheme.colorScheme.secondary)
                         }
                     }
                 }
             )
         },
-        drawerContent = {
+        snackbarHost = {
             Text(text = "Menu 1")
             Text(text = "Menu 2")
         },
