@@ -3,19 +3,14 @@ package com.outs.demo_compose.subahayai
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
+import com.outs.core.android.compose.widgets.TitleBar
 import com.outs.demo_compose.subahayai.compose.CConversation
 import com.outs.demo_compose.subahayai.compose.randomMessage
 import com.outs.demo_compose.subahayai.ui.theme.TComposeTheme
@@ -30,17 +25,24 @@ class MainActivity : ComponentActivity() {
             TComposeTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(color = MaterialTheme.colorScheme.background) {
-                    CConversation(
-                        (0 until 5).map { randomMessage }
-                    )
+                    Column {
+                        var show by remember { mutableStateOf(false) }
+                        Button(onClick = { show = !show }) {
+                            Text(text = "切换")
+                        }
+                        Text(text = "标题内容", modifier = Modifier.align(Alignment.CenterHorizontally))
+                        if (show)
+                            TitleBar(title = "标题内容", withBack = true, withMore = false)
+                        CConversation((0 until 5).map { randomMessage })
 //                    AppointPage(title = "预约")
-                    Text(
-                        modifier = Modifier
-                            .clickable {
-                                startActivity<ListComposePage>()
-                            },
-                        text = "ListPage"
-                    )
+                        Text(
+                            modifier = Modifier
+                                .clickable {
+                                    startActivity<ListComposePage>()
+                                },
+                            text = "ListPage"
+                        )
+                    }
                 }
             }
         }
@@ -51,44 +53,45 @@ class MainActivity : ComponentActivity() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AppointPage(title: String, subTitle: String? = null, menus: List<String>? = null) {
-    Scaffold(
-        topBar = {
-            SmallTopAppBar(
-                navigationIcon = {
-                    Image(
-                        modifier = Modifier
-                            .size(width = 40.dp, height = 38.dp)
-                            .padding(vertical = 10.dp, horizontal = 15.dp),
-                        painter = painterResource(com.outs.demo_compose.R.drawable.icon_back),
-                        contentDescription = "back button",
-                        colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onPrimary)
-                    )
-                },
-                title = {
-                    Column {
-                        Text(text = title, color = MaterialTheme.colorScheme.onPrimary)
-                        subTitle?.let {
-                            Text(text = subTitle, color = MaterialTheme.colorScheme.secondary)
-                        }
-                    }
-                }
-            )
-        },
-        snackbarHost = {
-            Text(text = "Menu 1")
-            Text(text = "Menu 2")
-        },
-        content = {
-            Column {
-                repeat(50) {
-                    Text(
-                        text = "暂无数据",
-                        textAlign = TextAlign.Center
-                    )
-                }
-            }
-        }
-    )
+//    Scaffold(
+//        topBar = {
+//            TitleBar(title = title, withBack = true, withMore = true)
+////            SmallTopAppBar(
+////                navigationIcon = {
+////                    Image(
+////                        modifier = Modifier
+////                            .size(width = 40.dp, height = 38.dp)
+////                            .padding(vertical = 10.dp, horizontal = 15.dp),
+////                        painter = painterResource(com.outs.demo_compose.R.drawable.icon_back),
+////                        contentDescription = "back button",
+////                        colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onPrimary)
+////                    )
+////                },
+////                title = {
+////                    Column {
+////                        Text(text = title, color = MaterialTheme.colorScheme.onPrimary)
+////                        subTitle?.let {
+////                            Text(text = subTitle, color = MaterialTheme.colorScheme.secondary)
+////                        }
+////                    }
+////                }
+////            )
+//        },
+//        snackbarHost = {
+//            Text(text = "Menu 1")
+//            Text(text = "Menu 2")
+//        },
+//        content = {
+//            Column {
+//                repeat(50) {
+//                    Text(
+//                        text = "暂无数据",
+//                        textAlign = TextAlign.Center
+//                    )
+//                }
+//            }
+//        }
+//    )
 
 }
 

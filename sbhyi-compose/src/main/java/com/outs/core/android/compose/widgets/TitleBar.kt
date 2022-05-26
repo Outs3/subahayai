@@ -6,8 +6,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBackIos
 import androidx.compose.material.icons.filled.MoreHoriz
+import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.Icon
-import androidx.compose.material3.SmallTopAppBar
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
@@ -15,6 +15,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -27,6 +29,36 @@ import com.outs.core.android.compose.theme.Gray666
  * date: 2022/3/28 17:30
  * desc:
  */
+@Preview(widthDp = 375, heightDp = 675)
+@Composable
+private fun TitleBarPreview() {
+    TitleBar(title = "我是标题", withBack = true)
+}
+
+@Composable
+fun TitleBar(
+    title: String,
+    withBack: Boolean = true,
+    withMore: Boolean = false,
+    onBack: () -> Unit = LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher?.let { it::onBackPressed }
+        ?: {},
+    onMore: () -> Unit = {}
+) {
+    TitleBar(
+        title = title,
+        contentLeft = {
+            if (withBack) {
+                BackIcon(modifier = Modifier.clickable(onClick = onBack))
+            }
+        },
+        contentRight = {
+            if (withMore) {
+                MoreIcon(Modifier.clickable(onClick = onMore))
+            }
+        }
+    )
+}
+
 @Composable
 fun TitleBar(
     title: String,
@@ -34,35 +66,27 @@ fun TitleBar(
     contentLeft: @Composable RowScope.() -> Unit = {},
     contentRight: @Composable RowScope.() -> Unit = {},
 ) {
-    SmallTopAppBar(
+    CenterAlignedTopAppBar(
         title = {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .defaultMinSize(minHeight = 42.dp)
-            ) {
-                Row(
-                    modifier = Modifier
-                        .align(Alignment.CenterStart)
-                        .padding(horizontal = 10.dp),
-                    content = contentLeft
-                )
+            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                 Text(
                     text = title,
-                    modifier = Modifier.align(Alignment.Center),
                     color = Gray333,
                     fontSize = fontSize,
                     fontWeight = FontWeight.Bold,
-                    maxLines = 1
-                )
-                Row(
-                    modifier = Modifier
-                        .align(Alignment.CenterEnd)
-                        .padding(horizontal = 10.dp),
-                    content = contentRight
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
                 )
             }
         },
+        modifier = Modifier.defaultMinSize(minHeight = 42.dp),
+        navigationIcon = {
+            Row(
+                modifier = Modifier.padding(horizontal = 10.dp),
+                content = contentLeft
+            )
+        },
+        actions = contentRight,
         colors = TopAppBarDefaults.smallTopAppBarColors(
             containerColor = Color.White
         )
@@ -90,29 +114,5 @@ fun MoreIcon(modifier: Modifier = Modifier, tint: Color = Gray666) {
             .padding(10.dp)
             .size(20.dp),
         tint = tint
-    )
-}
-
-@Composable
-fun TitleBar(
-    title: String,
-    withBack: Boolean = true,
-    withMore: Boolean = false,
-    onBack: () -> Unit = LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher?.let { it::onBackPressed }
-        ?: {},
-    onMore: () -> Unit = {}
-) {
-    TitleBar(
-        title = title,
-        contentLeft = {
-            if (withBack) {
-                BackIcon(modifier = Modifier.clickable(onClick = onBack))
-            }
-        },
-        contentRight = {
-            if (withMore) {
-                MoreIcon(Modifier.clickable(onClick = onMore))
-            }
-        }
     )
 }
