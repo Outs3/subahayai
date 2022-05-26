@@ -1,7 +1,6 @@
 package com.outs.demo_databinding.base
 
 import android.view.View
-import com.outs.demo_databinding.R
 import com.outs.utils.android.viewModel
 
 /**
@@ -13,7 +12,7 @@ import com.outs.utils.android.viewModel
 class EmptyListFragment : ListFragment<Unit, EmptyListViewModel>() {
 
     override val getItemLayoutId: Int
-        get() = R.layout.empty_view
+        get() = com.outs.core.android.databinding.R.layout.empty_view
 
     override val getViewModel: EmptyListViewModel
         get() = viewModel()

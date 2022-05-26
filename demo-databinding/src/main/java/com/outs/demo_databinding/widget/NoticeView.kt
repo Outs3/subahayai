@@ -51,7 +51,7 @@ class NoticeView(context: Context, attrs: AttributeSet?) : ViewFlipper(context, 
 //                paint.strokeWidth = strokeWidth?.toFloat() ?: 10f
                 ellipsize = TextUtils.TruncateAt.END
                 gravity = Gravity.CENTER_VERTICAL
-                setTextColor(color ?: ContextCompat.getColor(context, R.color.black_333))
+                setTextColor(color ?: ContextCompat.getColor(context, com.outs.core.android.R.color.black_333))
                 onClick?.let(::setOnClickListener)
                 layoutParams = LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT,

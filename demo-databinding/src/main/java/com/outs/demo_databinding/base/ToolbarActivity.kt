@@ -6,10 +6,10 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.databinding.ViewDataBinding
-import com.outs.demo_databinding.R
-import com.outs.demo_databinding.databinding.IncludeToolbarBinding
 import com.outs.core.android.databinding.activity.BaseActivity
 import com.outs.core.android.vm.BaseViewModel
+import com.outs.demo_databinding.R
+import com.outs.demo_databinding.databinding.IncludeToolbarBinding
 
 /**
  * author: Outs3
@@ -59,7 +59,12 @@ abstract class ToolbarActivity<VDB : ViewDataBinding, VM : BaseViewModel> :
                 mToolbarBinding.imageBack.imageTintList = ColorStateList.valueOf(Color.WHITE)
             } else {
                 mToolbarBinding.imageMenuShare.imageTintList =
-                    ColorStateList.valueOf(ContextCompat.getColor(context, R.color.black_333))
+                    ColorStateList.valueOf(
+                        ContextCompat.getColor(
+                            context,
+                            com.outs.core.android.R.color.black_333
+                        )
+                    )
             }
         }
         if (setSupportActionBar) {

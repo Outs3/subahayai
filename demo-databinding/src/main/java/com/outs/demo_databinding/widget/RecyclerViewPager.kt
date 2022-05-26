@@ -10,12 +10,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
-import com.outs.demo_databinding.R
 import com.outs.core.android.databinding.adapter.BaseViewHolder
 import com.outs.core.android.databinding.adapter.CommonAdapter
 import com.outs.core.android.databinding.data.adapter.SingleChoiceDataAdapter
 import com.outs.core.android.databinding.holder.DataBindingViewHolder
-import com.outs.demo_databinding.widget.IndicatorView
 import com.outs.utils.android.removeParent
 import com.outs.utils.kotlin.reset
 import com.outs.utils.kotlin.typeOfOrNull
@@ -190,7 +188,7 @@ abstract class RecyclerViewPager<T : Any, VDB : ViewDataBinding, VH : DataBindin
         private val itemAdapter by lazy { ItemAdapter() }
 
         override val getLayoutId: Int
-            get() = R.layout.item_recycler_view
+            get() = com.outs.core.android.databinding.R.layout.item_recycler_view
 
         override fun setViews() {
             super.setViews()

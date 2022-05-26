@@ -47,8 +47,18 @@ open class CityPicker(context: Context, onCitySelect: (String) -> Unit) {
                     }
                 }
             }
-            .setTextColorCenter(ContextCompat.getColor(context, R.color.lime_17a953))
-            .setTextColorOut(ContextCompat.getColor(context, R.color.black_999))
+            .setTextColorCenter(
+                ContextCompat.getColor(
+                    context,
+                    com.outs.core.android.R.color.lime_17a953
+                )
+            )
+            .setTextColorOut(
+                ContextCompat.getColor(
+                    context,
+                    com.outs.core.android.R.color.black_999
+                )
+            )
             .setItemVisibleCount(5)
             .setContentTextSize(16)
             .isDialog(true)
