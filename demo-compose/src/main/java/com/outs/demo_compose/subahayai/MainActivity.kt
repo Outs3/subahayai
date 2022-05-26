@@ -5,11 +5,14 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import com.outs.core.android.compose.widgets.BackIcon
 import com.outs.core.android.compose.widgets.TitleBar
 import com.outs.demo_compose.subahayai.compose.CConversation
 import com.outs.demo_compose.subahayai.compose.randomMessage
@@ -33,6 +36,25 @@ class MainActivity : ComponentActivity() {
                         Text(text = "标题内容", modifier = Modifier.align(Alignment.CenterHorizontally))
                         if (show)
                             TitleBar(title = "标题内容", withBack = true, withMore = false)
+                        TitleBar(
+                            title = "标题内容",
+                            contentLeft = {
+                                BackIcon()
+                            },
+                            contentRight = {
+                                Text(
+                                    text = "完成",
+                                    modifier = Modifier
+                                        .clickable(onClick = {})
+                                        .padding(horizontal = 10.dp, vertical = 5.dp)
+                                )
+                                Text(
+                                    text = "删除", modifier = Modifier
+                                        .clickable(onClick = {})
+                                        .padding(horizontal = 10.dp, vertical = 5.dp)
+                                )
+                            }
+                        )
                         CConversation((0 until 5).map { randomMessage })
 //                    AppointPage(title = "预约")
                         Text(

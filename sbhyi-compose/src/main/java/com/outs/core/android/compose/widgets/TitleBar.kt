@@ -82,11 +82,20 @@ fun TitleBar(
         modifier = Modifier.defaultMinSize(minHeight = 42.dp),
         navigationIcon = {
             Row(
-                modifier = Modifier.padding(horizontal = 10.dp),
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .padding(start = 10.dp),
+                verticalAlignment = Alignment.CenterVertically,
                 content = contentLeft
             )
         },
-        actions = contentRight,
+        actions = {
+            Row(
+                modifier = Modifier.fillMaxHeight(),
+                verticalAlignment = Alignment.CenterVertically,
+                content = contentRight
+            )
+        },
         colors = TopAppBarDefaults.smallTopAppBarColors(
             containerColor = Color.White
         )
