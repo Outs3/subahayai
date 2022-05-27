@@ -1,4 +1,4 @@
-package com.yibai.tuoke.compose.widgets
+package com.outs.core.android.compose.widgets
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*

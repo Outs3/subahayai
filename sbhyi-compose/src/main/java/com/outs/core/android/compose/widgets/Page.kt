@@ -1,4 +1,4 @@
-package com.yibai.tuoke.compose.widgets
+package com.outs.core.android.compose.widgets
 
 import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
 import androidx.compose.foundation.background
@@ -9,8 +9,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.outs.core.android.compose.theme.GrayF7
-import com.outs.core.android.compose.widgets.BackIcon
-import com.outs.core.android.compose.widgets.TitleBar
 
 /**
  * author: Outs3
