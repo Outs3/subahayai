@@ -6,6 +6,7 @@ plugins {
 }
 
 android {
+    namespace = "com.outs.demo_databinding"
     compileSdk = ConfigData.COMPILE_SDK_VERSION
 
     defaultConfig {
@@ -22,23 +23,22 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "11"
     }
     buildFeatures {
         dataBinding = true
     }
-    namespace = "com.outs.demo_databinding"
 }
 
 dependencies {
     implementation(project(":${ConfigData.MODULE_DBIND}"))
 
     //paging
-    api("androidx.paging:paging-runtime-ktx:3.0.1")
+    api("androidx.paging:paging-runtime-ktx:3.1.1")
 
     //timber
     api("com.jakewharton.timber:timber:5.0.1")
@@ -72,7 +72,7 @@ dependencies {
     api("androidx.camera:camera-core:${camerax_version}")
     api("androidx.camera:camera-camera2:${camerax_version}")
     api("androidx.camera:camera-lifecycle:${camerax_version}")
-    api("androidx.camera:camera-view:1.0.0-alpha30")
-    api("androidx.camera:camera-extensions:1.0.0-alpha30")
+    api("androidx.camera:camera-view:1.1.0-beta02")
+    api("androidx.camera:camera-extensions:1.1.0-beta02")
 
 }
