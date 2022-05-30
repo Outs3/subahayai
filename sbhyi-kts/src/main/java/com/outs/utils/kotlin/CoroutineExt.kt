@@ -11,7 +11,7 @@ import kotlin.coroutines.resumeWithException
  * date: 2021/4/8 15:25
  * desc:
  */
-suspend inline fun <T, R> T.suspendLet(block: suspend (T) -> R): R = block(this)
+inline fun <T, R> T.suspendLet(block: (T) -> R): R = block(this)
 
 fun <T> Continuation<T>.resumeOrException(ret: T?) {
     ret?.also { resume(it) } ?: resumeWithException(RuntimeException("Error: resume obj is empty!"))

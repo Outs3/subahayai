@@ -8,7 +8,7 @@ package com.outs.utils.kotlin
  */
 fun emptyFunc() {}
 
-fun <T> emptyFunc(t: T) {}
+fun <T> emptyFunc(ignore: T) {}
 
 val emptyAction: () -> Unit = ::emptyFunc
 

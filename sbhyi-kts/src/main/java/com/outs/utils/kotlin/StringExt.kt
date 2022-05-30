@@ -65,7 +65,7 @@ fun String.groupByIndex(
 }
 
 fun String.formatBankCardNum(): String =
-    groupByIndex(4) { groupIndex, groupCount, memberIndex, char -> if (0 != groupIndex && groupCount - 1 != groupIndex) "*" else char.toString() }
+    groupByIndex(4) { groupIndex, groupCount, _, char -> if (0 != groupIndex && groupCount - 1 != groupIndex) "*" else char.toString() }
 
 @Suppress("NewApi")
 fun ByteArray.encodeByBase64(): String = let(Base64.getEncoder()::encodeToString)
