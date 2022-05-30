@@ -53,21 +53,21 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
 }
 
-//tasks.register("sourceJar", Jar::class) {
-//    from(android.sourceSets["main"].java.srcDirs)
-//    archiveClassifier.convention("sources").set("sources")
-//}
+tasks.register("sourceJar", Jar::class) {
+    from(android.sourceSets["main"].java.srcDirs)
+    archiveClassifier.convention("sources").set("sources")
+}
 
-//afterEvaluate {
-//    publishing {
-//        publications {
-//            // Creates a Maven publication called "release".
-//            create<MavenPublication>("release")
-//                .of(
-//                    from = components["release"],
-//                    artifactId = ConfigData.MODULE_ACORE,
-//                    artifact = tasks.getByName("sourceJar")
-//                )
-//        }
-//    }
-//}
+afterEvaluate {
+    publishing {
+        publications {
+            // Creates a Maven publication called "release".
+            create<MavenPublication>("release")
+                .of(
+                    from = components["release"],
+                    artifactId = ConfigData.MODULE_ACORE,
+                    artifact = tasks.getByName("sourceJar")
+                )
+        }
+    }
+}
