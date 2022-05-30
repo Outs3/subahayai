@@ -43,10 +43,15 @@ android {
         }
     }
     publishing {
-        singleVariant("release") {
+        multipleVariants(ConfigData.MODULE_COMPOSE) {
+            includeBuildTypeValues("release")
             withSourcesJar()
             withJavadocJar()
         }
+//        singleVariant("release") {
+//            withSourcesJar()
+//            withJavadocJar()
+//        }
     }
 }
 

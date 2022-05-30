@@ -28,10 +28,15 @@ android {
         jvmTarget = "11"
     }
     publishing {
-        singleVariant("release") {
+        multipleVariants(ConfigData.MODULE_AKTS) {
+            includeBuildTypeValues("release")
             withSourcesJar()
             withJavadocJar()
         }
+//        singleVariant("release") {
+//            withSourcesJar()
+//            withJavadocJar()
+//        }
     }
 }
 

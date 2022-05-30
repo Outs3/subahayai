@@ -31,10 +31,15 @@ android {
         dataBinding = true
     }
     publishing {
-        singleVariant("release") {
+        multipleVariants(ConfigData.MODULE_DBIND) {
+            includeBuildTypeValues("release")
             withSourcesJar()
             withJavadocJar()
         }
+//        singleVariant("release") {
+//            withSourcesJar()
+//            withJavadocJar()
+//        }
     }
 }
 
