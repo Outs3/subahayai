@@ -42,6 +42,12 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+    publishing {
+        singleVariant("release") {
+            withSourcesJar()
+            withJavadocJar()
+        }
+    }
 }
 
 dependencies {
@@ -87,24 +93,21 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-test-manifest:${Versions.COMPOSE_VERSION}")
 }
 
-group = ConfigData.GROUP_NAME
-version = Versions.SBHYI_VERSION
+//tasks.register("sourceJar", Jar::class) {
+//    from(android.sourceSets["main"].java.srcDirs)
+//    archiveClassifier.convention("sources").set("sources")
+//}
 
-tasks.register("sourceJar", Jar::class) {
-    from(android.sourceSets["main"].java.srcDirs)
-    archiveClassifier.convention("sources").set("sources")
-}
-
-afterEvaluate {
-    publishing {
-        publications {
-            // Creates a Maven publication called "release".
-            create<MavenPublication>("release")
-                .of(
-                    from = components["release"],
-                    artifactId = ConfigData.MODULE_COMPOSE,
-                    artifact = tasks.getByName("sourceJar")
-                )
-        }
-    }
-}
+//afterEvaluate {
+//    publishing {
+//        publications {
+//            // Creates a Maven publication called "release".
+//            create<MavenPublication>("release")
+//                .of(
+//                    from = components["release"],
+//                    artifactId = ConfigData.MODULE_COMPOSE,
+//                    artifact = tasks.getByName("sourceJar")
+//                )
+//        }
+//    }
+//}

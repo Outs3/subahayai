@@ -29,9 +29,6 @@ dependencies {
     api("com.squareup.retrofit2:converter-gson:2.9.0")
 }
 
-group = ConfigData.GROUP_NAME
-version = Versions.SBHYI_VERSION
-
 afterEvaluate {
     publishing {
         publications {

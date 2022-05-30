@@ -5,6 +5,13 @@ plugins {
     id("org.jetbrains.kotlin.jvm") version Versions.KOTLIN_VERSION apply false
 }
 
+allprojects {
+    if (name.startsWith("sbhyi")) {
+        group = ConfigData.GROUP_NAME
+        version = Versions.SBHYI_VERSION
+    }
+}
+
 tasks.register("clean", Delete::class) {
     delete(rootProject.buildDir)
 }
