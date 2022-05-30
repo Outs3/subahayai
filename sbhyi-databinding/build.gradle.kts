@@ -30,17 +30,17 @@ android {
     buildFeatures {
         dataBinding = true
     }
-    publishing {
-        multipleVariants(ConfigData.MODULE_DBIND) {
-            includeBuildTypeValues("release")
-            withSourcesJar()
-            withJavadocJar()
-        }
+//    publishing {
+//        multipleVariants(ConfigData.MODULE_DBIND) {
+//            includeBuildTypeValues("release")
+//            withSourcesJar()
+//            withJavadocJar()
+//        }
 //        singleVariant("release") {
 //            withSourcesJar()
 //            withJavadocJar()
 //        }
-    }
+//    }
 }
 
 dependencies {

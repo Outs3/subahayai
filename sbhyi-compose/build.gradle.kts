@@ -42,17 +42,17 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
-    publishing {
-        multipleVariants(ConfigData.MODULE_COMPOSE) {
-            includeBuildTypeValues("release")
-            withSourcesJar()
-            withJavadocJar()
-        }
+//    publishing {
+//        multipleVariants(ConfigData.MODULE_COMPOSE) {
+//            includeBuildTypeValues("release")
+//            withSourcesJar()
+//            withJavadocJar()
+//        }
 //        singleVariant("release") {
 //            withSourcesJar()
 //            withJavadocJar()
 //        }
-    }
+//    }
 }
 
 dependencies {

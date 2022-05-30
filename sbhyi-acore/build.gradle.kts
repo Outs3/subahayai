@@ -27,17 +27,17 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
-    publishing {
-        multipleVariants(ConfigData.MODULE_ACORE) {
-            includeBuildTypeValues("release")
-            withSourcesJar()
-            withJavadocJar()
-        }
+//    publishing {
+//        multipleVariants(ConfigData.MODULE_ACORE) {
+//            includeBuildTypeValues("release")
+//            withSourcesJar()
+//            withJavadocJar()
+//        }
 //        singleVariant("release") {
 //            withSourcesJar()
 //            withJavadocJar()
 //        }
-    }
+//    }
 }
 
 dependencies {

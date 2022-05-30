@@ -13,6 +13,33 @@ allprojects {
     }
 }
 
+//afterEvaluate {
+//    subprojects {
+//        println("[LogByOu][subprojects]${this@subprojects.name}")
+//        if (name.startsWith("sbhyi")) {
+//            publishing {
+//                publications {
+//                    components.forEach {
+//                        println("[LogByOu][components] $name:${it.name}")
+//                    }
+//                    try {
+//                        val from = components["release"]
+//                        create<MavenPublication>("release")
+//                            .of(
+//                                from = from,
+//                                artifactId = name,
+//                                artifact = tasks.getByName("sourceJar")
+//                            )
+//                    } catch (e: Throwable) {
+//                        val from = components["java"]
+//                        create<MavenPublication>("release").of(from, artifactId = name)
+//                    }
+//                }
+//            }
+//        }
+//    }
+//}
+
 tasks.register("clean", Delete::class) {
     delete(rootProject.buildDir)
 }
