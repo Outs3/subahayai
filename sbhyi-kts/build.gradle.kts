@@ -29,12 +29,13 @@ dependencies {
     api("com.squareup.retrofit2:converter-gson:2.9.0")
 }
 
-afterEvaluate {
-    publishing {
-        publications {
-            // Creates a Maven publication called "release".
-            create<MavenPublication>("release")
-                .of(components["java"], artifactId = ConfigData.MODULE_KTS)
+publishing {
+    publications {
+        register<MavenPublication>("release") {
+            applyArtifact(artifactId = ConfigData.MODULE_KTS)
+            afterEvaluate {
+                from(components["java"])
+            }
         }
     }
 }

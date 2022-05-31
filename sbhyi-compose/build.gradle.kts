@@ -42,17 +42,17 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
-//    publishing {
+    publishing {
 //        multipleVariants(ConfigData.MODULE_COMPOSE) {
 //            includeBuildTypeValues("release")
 //            withSourcesJar()
 //            withJavadocJar()
 //        }
-//        singleVariant("release") {
-//            withSourcesJar()
-//            withJavadocJar()
-//        }
-//    }
+        singleVariant("release") {
+            withSourcesJar()
+            withJavadocJar()
+        }
+    }
 }
 
 dependencies {
@@ -103,16 +103,16 @@ tasks.register("sourceJar", Jar::class) {
     archiveClassifier.convention("sources").set("sources")
 }
 
-afterEvaluate {
-    publishing {
-        publications {
-            // Creates a Maven publication called "release".
-            create<MavenPublication>("release")
-                .of(
-                    from = components["release"],
-                    artifactId = ConfigData.MODULE_COMPOSE,
-                    artifact = tasks.getByName("sourceJar")
-                )
+publishing {
+    publications {
+        register<MavenPublication>("release") {
+            applyArtifact(
+                artifactId = ConfigData.MODULE_COMPOSE,
+                artifact = tasks.getByName("sourceJar")
+            )
+            afterEvaluate {
+                from(components["release"])
+            }
         }
     }
 }

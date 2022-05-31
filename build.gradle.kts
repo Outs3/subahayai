@@ -3,7 +3,7 @@ plugins {
     id("com.android.library") version "7.4.0-alpha02" apply false
     id("org.jetbrains.kotlin.android") version Versions.KOTLIN_VERSION apply false
     id("org.jetbrains.kotlin.jvm") version Versions.KOTLIN_VERSION apply false
-    `maven-publish`
+    //`maven-publish`
 }
 
 allprojects {

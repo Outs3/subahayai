@@ -20,3 +20,15 @@ fun MavenPublication.of(
     this.artifactId = artifactId
     this.version = version
 }
+
+fun MavenPublication.applyArtifact(
+    groupId: String = ConfigData.GROUP_NAME,
+    artifactId: String,
+    version: String = Versions.SBHYI_VERSION,
+    artifact: Any? = null
+) = apply {
+    this.groupId = groupId
+    this.artifactId = artifactId
+    this.version = version
+    artifact?.let(::artifact)
+}
