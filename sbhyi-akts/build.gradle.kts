@@ -46,12 +46,12 @@ dependencies {
     //kotlin
     api("org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.KOTLIN_COROUTINES_VERSION}")
 
-    val lifecycleKtxVersion = "2.5.0-alpha06"
+    val lifecycleKtxVersion = "2.5.0-rc02"
     //ktx
-    api("androidx.core:core-ktx:1.7.0")
+    api("androidx.core:core-ktx:1.8.0")
     api("androidx.collection:collection-ktx:1.2.0")
     api("androidx.activity:activity-ktx:1.5.0-rc01")
-    api("androidx.fragment:fragment-ktx:1.5.0-alpha05")
+    api("androidx.fragment:fragment-ktx:1.5.0-rc01")
     api("androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleKtxVersion")
     api("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleKtxVersion")
     api("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleKtxVersion")
@@ -59,11 +59,11 @@ dependencies {
     api("androidx.room:room-ktx:2.4.2")
 
     //view
-    api("androidx.appcompat:appcompat:1.4.1")
+    api("androidx.appcompat:appcompat:1.4.2")
     api("androidx.recyclerview:recyclerview:1.2.1")
-    api("androidx.constraintlayout:constraintlayout:2.1.3")
+    api("androidx.constraintlayout:constraintlayout:2.1.4")
     api("androidx.viewpager2:viewpager2:1.1.0-beta01")
-    api("com.google.android.material:material:1.5.0")
+    api("com.google.android.material:material:1.6.1")
     api("com.google.android.flexbox:flexbox:3.0.0")
 
     //image cache
