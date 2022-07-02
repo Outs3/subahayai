@@ -86,11 +86,11 @@ dependencies {
     api("com.google.accompanist:accompanist-webview:${Versions.COMPOSE_ACCOMPANIST_VERSION}")
 
     //coil
-    api("io.coil-kt:coil-compose:2.0.0-rc03")
+    api("io.coil-kt:coil-compose:2.1.0")
 
     testImplementation("junit:junit:4.13.2")
     testImplementation("androidx.test:core:1.4.0")
-    testImplementation("org.mockito:mockito-core:3.3.1")
+    testImplementation("org.mockito:mockito-core:4.6.1")
     androidTestImplementation("androidx.test.ext:junit:1.1.3")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
     androidTestImplementation("androidx.compose.ui:ui-test-junit4:${Versions.COMPOSE_VERSION}")
@@ -108,7 +108,7 @@ publishing {
         register<MavenPublication>("release") {
             applyArtifact(
                 artifactId = ConfigData.MODULE_COMPOSE,
-                artifact = tasks.getByName("sourceJar")
+//                artifact = tasks.getByName("sourceJar")
             )
             afterEvaluate {
                 from(components["release"])

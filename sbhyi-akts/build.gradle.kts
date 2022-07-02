@@ -83,7 +83,7 @@ dependencies {
 
     testImplementation("junit:junit:4.13.2")
     testImplementation("androidx.test:core:1.4.0")
-    testImplementation("org.mockito:mockito-core:3.3.1")
+    testImplementation("org.mockito:mockito-core:4.6.1")
     androidTestImplementation("androidx.test.ext:junit:1.1.3")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
 }
@@ -98,7 +98,7 @@ publishing {
         register<MavenPublication>("release") {
             applyArtifact(
                 artifactId = ConfigData.MODULE_AKTS,
-                artifact = tasks.getByName("sourceJar")
+//                artifact = tasks.getByName("sourceJar")
             )
             afterEvaluate {
                 from(components["release"])

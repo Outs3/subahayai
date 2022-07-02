@@ -50,7 +50,7 @@ dependencies {
     api("com.makeramen:roundedimageview:2.3.0")
 
     //tencent mmkv
-    api("com.tencent:mmkv:1.2.12")
+    api("com.tencent:mmkv:1.2.13")
 
     //饺子播放器
     api("cn.jzvd:jiaozivideoplayer:7.7.0")
@@ -62,13 +62,13 @@ dependencies {
     api("com.zzhoujay.richtext:richtext:3.0.5")
 
     //qrcode
-    api("com.github.jenly1314:zxing-lite:2.1.1")
+    api("com.github.jenly1314:zxing-lite:2.2.1")
 
     //日期选择器
     api("com.contrarywind:Android-PickerView:4.1.9")
 
     //camera
-    val camerax_version = "1.1.0-alpha10"
+    val camerax_version = "1.1.0-beta02"
     api("androidx.camera:camera-core:${camerax_version}")
     api("androidx.camera:camera-camera2:${camerax_version}")
     api("androidx.camera:camera-lifecycle:${camerax_version}")
