@@ -177,13 +177,14 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
             startActivity(intent)
         }
 
-        @SuppressLint("NewApi")
         fun sendBySmsManager(target: String, msg: String) {
             mViewModel.launchOnUI {
                 permissionOrThrow(Manifest.permission.SEND_SMS)
-                val smsManager = context.takeIf { Build.VERSION.SDK_INT >= Build.VERSION_CODES.M }
-                    ?.getSystemService(SmsManager::class.java)
-                    ?: SmsManager.getDefault()
+                val smsManager = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    context.getSystemService(SmsManager::class.java)
+                } else {
+                    SmsManager.getDefault()
+                }
                 smsManager?.sendTextMessage(target, null, msg, null, null)
             }
         }

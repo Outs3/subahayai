@@ -121,45 +121,47 @@ fun <T : View> T.oneceDownUpTouch(onDownUp: (down: MotionEvent, up: MotionEvent)
     }
 }
 
-fun View.onClickPlus(
-    duration: Long = 300,
-    onClick: View.OnClickListener? = null,
-    onLongClick: View.OnClickListener? = null,
-    onLongClickUp: (() -> Unit)? = null
-) {
-    var isLongClick = false
-    if (null != onLongClick) {
-        setOnLongClickListener {
-            onLongClick.onClick(it)
-            false
-        }
-    }
-    val detector = GestureDetector(context, object : GestureDetector.SimpleOnGestureListener() {
-        override fun onDown(e: MotionEvent?): Boolean {
-            isLongClick = false
-            return true
-        }
-
-        override fun onLongPress(e: MotionEvent?) {
-            isLongClick = true
-        }
-
-    })
-    setOnTouchListener { v, event ->
-        detector.onTouchEvent(event)
-        when (event.action) {
-            MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
-                if (isLongClick) {
-                    onLongClickUp?.invoke()
-                } else if (null != onClick) {
-                    v.clickOrRepeat(duration)?.let(onClick::onClick)
-                    v.performClick()
-                }
-            }
-        }
-        false
-    }
-}
+//fun View.onClickPlus(
+//    duration: Long = 300,
+//    onClick: View.OnClickListener? = null,
+//    onLongClick: View.OnClickListener? = null,
+//    onLongClickUp: (() -> Unit)? = null
+//) {
+//    var isLongClick = false
+//    if (null != onLongClick) {
+//        setOnLongClickListener {
+//            onLongClick.onClick(it)
+//            false
+//        }
+//    }
+//    val detector = GestureDetector(context, object : GestureDetector.SimpleOnGestureListener() {
+//
+//        override fun onDown(e: MotionEvent?): Boolean {
+//            isLongClick = false
+//            return true
+//        }
+//
+//        override fun onLongPress(e: MotionEvent?) {
+//            super.onLongPress(e)
+//            isLongClick = true
+//        }
+//
+//    })
+//    setOnTouchListener { v, event ->
+//        detector.onTouchEvent(event)
+//        when (event.action) {
+//            MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
+//                if (isLongClick) {
+//                    onLongClickUp?.invoke()
+//                } else if (null != onClick) {
+//                    v.clickOrRepeat(duration)?.let(onClick::onClick)
+//                    v.performClick()
+//                }
+//            }
+//        }
+//        false
+//    }
+//}
 
 /***
  * 是否右滑手势
