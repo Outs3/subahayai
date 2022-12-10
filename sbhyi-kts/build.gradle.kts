@@ -21,7 +21,7 @@ dependencies {
     api("org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.KOTLIN_COROUTINES_VERSION}")
     api("org.jetbrains.kotlin:kotlin-reflect:${Versions.KOTLIN_VERSION}")
     //json
-    api("com.google.code.gson:gson:2.9.0")
+    api("com.google.code.gson:gson:2.10")
     //OkHttp
     api("com.squareup.okhttp3:okhttp:4.9.3")
     //Retrofit
