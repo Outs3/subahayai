@@ -2,7 +2,6 @@ plugins {
     id("com.android.application")
     id("kotlin-android")
     id("kotlin-parcelize")
-    id("kotlin-kapt")
 }
 
 android {
@@ -17,17 +16,14 @@ android {
         versionName = "1.0"
     }
 
+    compileOptions {
+        sourceCompatibility = compatibilityVersion
+        targetCompatibility = compatibilityVersion
+    }
     buildTypes {
         release {
             isMinifyEnabled = false
         }
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
-    }
-    kotlinOptions {
-        jvmTarget = "11"
     }
     buildFeatures {
         dataBinding = true
@@ -62,17 +58,17 @@ dependencies {
     api("com.zzhoujay.richtext:richtext:3.0.5")
 
     //qrcode
-    api("com.github.jenly1314:zxing-lite:2.2.1")
+    api("com.github.jenly1314:zxing-lite:2.3.1")
 
     //日期选择器
     api("com.contrarywind:Android-PickerView:4.1.9")
 
     //camera
-    val camerax_version = "1.1.0-beta02"
+    val camerax_version = "1.2.1"
     api("androidx.camera:camera-core:${camerax_version}")
     api("androidx.camera:camera-camera2:${camerax_version}")
     api("androidx.camera:camera-lifecycle:${camerax_version}")
-    api("androidx.camera:camera-view:1.1.0-beta02")
+    api("androidx.camera:camera-view:1.2.1")
     api("androidx.camera:camera-extensions:1.1.0-beta02")
 
 }

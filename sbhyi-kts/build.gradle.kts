@@ -4,14 +4,8 @@ plugins {
     `maven-publish`
 }
 
-tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-    kotlinOptions.jvmTarget = "11"
-}
-
 java {
-    sourceCompatibility = JavaVersion.VERSION_11
-    targetCompatibility = JavaVersion.VERSION_11
-
+    compatibility()
     withJavadocJar()
     withSourcesJar()
 }
@@ -23,7 +17,7 @@ dependencies {
     //json
     api("com.google.code.gson:gson:2.10")
     //OkHttp
-    api("com.squareup.okhttp3:okhttp:4.9.3")
+    api("com.squareup.okhttp3:okhttp:4.10.0")
     //Retrofit
     api("com.squareup.retrofit2:retrofit:2.9.0")
     api("com.squareup.retrofit2:converter-gson:2.9.0")

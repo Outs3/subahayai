@@ -19,17 +19,14 @@ android {
         }
     }
 
+    compileOptions {
+        sourceCompatibility = compatibilityVersion
+        targetCompatibility = compatibilityVersion
+    }
     buildTypes {
         release {
             isMinifyEnabled = false
         }
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
-    }
-    kotlinOptions {
-        jvmTarget = "11"
     }
     buildFeatures {
         compose = true
@@ -43,8 +40,8 @@ dependencies {
     implementation(project(":${ConfigData.MODULE_COMPOSE}"))
 
     testImplementation("junit:junit:4.+")
-    androidTestImplementation("androidx.test.ext:junit:1.1.3")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.1.1")
-    debugImplementation("androidx.compose.ui:ui-tooling:1.1.1")
+    androidTestImplementation("androidx.test.ext:junit:1.1.5")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.0")
+    androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.4.0")
+    debugImplementation("androidx.compose.ui:ui-tooling:1.4.1")
 }

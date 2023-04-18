@@ -1,3 +1,5 @@
+import org.gradle.api.JavaVersion
+
 object ConfigData {
     const val COMPILE_SDK_VERSION = 33
     const val BUILD_TOOLS_VERSION = "33.0.1"

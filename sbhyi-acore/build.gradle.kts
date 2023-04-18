@@ -2,7 +2,6 @@ plugins {
     id("com.android.library")
     id("kotlin-android")
     id("kotlin-parcelize")
-    id("kotlin-kapt")
     `maven-publish`
 }
 
@@ -12,20 +11,18 @@ android {
 
     defaultConfig {
         minSdk = ConfigData.MIN_SDK_VERSION
-        targetSdk = ConfigData.TARGET_SDK_VERSION
+//        targetSdk = ConfigData.TARGET_SDK_VERSION
+
     }
 
+    compileOptions {
+        sourceCompatibility = compatibilityVersion
+        targetCompatibility = compatibilityVersion
+    }
     buildTypes {
         release {
             isMinifyEnabled = false
         }
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
-    }
-    kotlinOptions {
-        jvmTarget = "11"
     }
     publishing {
 //        multipleVariants(ConfigData.MODULE_ACORE) {
@@ -33,10 +30,10 @@ android {
 //            withSourcesJar()
 //            withJavadocJar()
 //        }
-        singleVariant("release") {
-            withSourcesJar()
-            withJavadocJar()
-        }
+//        singleVariant("release") {
+//            withSourcesJar()
+//            withJavadocJar()
+//        }
     }
 }
 
@@ -47,10 +44,10 @@ dependencies {
     api("androidx.multidex:multidex:2.0.1")
 
     testImplementation("junit:junit:4.13.2")
-    testImplementation("androidx.test:core:1.4.0")
+    testImplementation("androidx.test:core:1.5.0")
     testImplementation("org.mockito:mockito-core:4.6.1")
-    androidTestImplementation("androidx.test.ext:junit:1.1.3")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
+    androidTestImplementation("androidx.test.ext:junit:1.1.5")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.0")
 }
 
 tasks.register("sourceJar", Jar::class) {
