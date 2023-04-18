@@ -18,21 +18,21 @@ allprojects {
 #### 2.在 模块级 build.gradle 中添加具体依赖
 ```
 //如果使用DataBinding  
-implementation 'com.github.Outs3.subahayai:sbhyi-databinding:0.0.82'
+implementation 'com.github.Outs3.subahayai:sbhyi-databinding:0.0.90'
   
 //如果使用Jetpack Compose  
-implementation 'com.github.Outs3.subahayai:sbhyi-compose:0.0.82'
+implementation 'com.github.Outs3.subahayai:sbhyi-compose:0.0.90'
   
 //如果仅使用扩展工具  
-implementation 'com.github.Outs3.subahayai:sbhyi-kts:0.0.82'
-implementation 'com.github.Outs3.subahayai:sbhyi-akts:0.0.82'
+implementation 'com.github.Outs3.subahayai:sbhyi-kts:0.0.90'
+implementation 'com.github.Outs3.subahayai:sbhyi-akts:0.0.90'
   
 //所有可依赖项（databinding、compose已经依赖了kts、akts、acore，不需要重复依赖）  
-implementation 'com.github.Outs3.subahayai:sbhyi-kts:0.0.82'			//Kotlin Extension
-implementation 'com.github.Outs3.subahayai:sbhyi-akts:0.0.82'			//Android Kotlin Extension
-implementation 'com.github.Outs3.subahayai:sbhyi-acore:0.0.82'			//Android Framework Core
-implementation 'com.github.Outs3.subahayai:sbhyi-databinding:0.0.82'		//Android DataBinding Framework
-implementation 'com.github.Outs3.subahayai:sbhyi-compose:0.0.82'			//Android Compose Framework
+implementation 'com.github.Outs3.subahayai:sbhyi-kts:0.0.90'			//Kotlin Extension
+implementation 'com.github.Outs3.subahayai:sbhyi-akts:0.0.90'			//Android Kotlin Extension
+implementation 'com.github.Outs3.subahayai:sbhyi-acore:0.0.90'			//Android Framework Core
+implementation 'com.github.Outs3.subahayai:sbhyi-databinding:0.0.90'		//Android DataBinding Framework
+implementation 'com.github.Outs3.subahayai:sbhyi-compose:0.0.90'			//Android Compose Framework
 ```
 
 ## 鸣谢
