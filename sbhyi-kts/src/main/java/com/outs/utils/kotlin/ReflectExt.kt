@@ -3,6 +3,8 @@ package com.outs.utils.kotlin
 import java.lang.ref.WeakReference
 import java.lang.reflect.Field
 import java.lang.reflect.Method
+import kotlin.reflect.KClass
+import kotlin.reflect.KType
 
 /**
  * author: Outs3
@@ -113,6 +115,17 @@ fun <T : Any, R> T.callMethod(name: String, isAccessible: Boolean = true, vararg
         this,
         *args
     ) as R?
+
+fun KType.of(value: String?) = when (this) {
+    Long::class -> value?.toLongOrNull() ?: 0L
+    Double::class -> value?.toDoubleOrNull() ?: 0.0
+    else -> value
+}
+
+fun <T : Any> newInstanceByReflect(cls: KClass<T>, args: Map<String, String?>): T? =
+    cls.constructors.firstOrNull()?.let { constructor ->
+        constructor.callBy(constructor.parameters.associateWith { param -> param.type.of(args[param.name]) })
+    }
 
 fun Any.injectReflect() {
     this.fields { field -> null != field.getAnnotation(FieldName::class.java) }

@@ -1,7 +1,9 @@
 package com.outs.utils.kotlin
 
+import java.io.BufferedReader
 import java.io.ByteArrayOutputStream
 import java.io.InputStream
+import java.io.InputStreamReader
 import java.io.OutputStream
 
 /**
@@ -25,6 +27,19 @@ fun InputStream.toByteArray(): ByteArray? {
     }
     return null
 }
+
+fun InputStream.readAllLines(autoClose: Boolean = true): List<String> {
+    val inr = InputStreamReader(this, Charsets.UTF_8)
+    val br = BufferedReader(inr)
+    val lines = br.readLines()
+    br.close()
+    inr.close()
+    if (autoClose) close()
+    return lines
+}
+
+fun readResourceAsLines(cls: Class<Any> = Any::class.java, name: String): List<String>? =
+    cls.getResourceAsStream(name)?.readAllLines()
 
 fun InputStream.copyTo(
     output: OutputStream,
