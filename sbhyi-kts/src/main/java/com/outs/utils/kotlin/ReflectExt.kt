@@ -117,8 +117,12 @@ fun <T : Any, R> T.callMethod(name: String, isAccessible: Boolean = true, vararg
     ) as R?
 
 fun KType.of(value: String?) = when (this) {
-    Long::class -> value?.toLongOrNull() ?: 0L
-    Double::class -> value?.toDoubleOrNull() ?: 0.0
+    Int::class.java -> value?.toIntOrNull() ?: 0
+    Long::class.java -> value?.toLongOrNull() ?: 0L
+    Float::class.java -> value?.toFloatOrNull() ?: 0f
+    Double::class.java -> value?.toDoubleOrNull() ?: 0.0
+    Boolean::class.java -> value.toBoolean()
+    String::class.java -> value
     else -> value
 }
 
