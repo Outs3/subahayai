@@ -7,5 +7,5 @@ object Versions {
     const val COMPOSE_PAGING_VERSION = "3.1.1"
     const val COMPOSE_ACCOMPANIST_VERSION = "0.28.0"
 
-    const val SBHYI_VERSION = "0.0.87"
+    const val SBHYI_VERSION = "0.0.88"
 }
