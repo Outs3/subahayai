@@ -5,6 +5,7 @@ import java.lang.reflect.Field
 import java.lang.reflect.Method
 import kotlin.reflect.KClass
 import kotlin.reflect.KType
+import kotlin.reflect.jvm.javaType
 
 /**
  * author: Outs3
@@ -116,7 +117,7 @@ fun <T : Any, R> T.callMethod(name: String, isAccessible: Boolean = true, vararg
         *args
     ) as R?
 
-fun KType.of(value: String?) = when (this) {
+fun KType.of(value: String?) = when (this.javaType) {
     Int::class.java -> value?.toIntOrNull() ?: 0
     Long::class.java -> value?.toLongOrNull() ?: 0L
     Float::class.java -> value?.toFloatOrNull() ?: 0f

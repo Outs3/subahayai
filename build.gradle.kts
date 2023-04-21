@@ -1,6 +1,6 @@
 plugins {
-    id("com.android.application") version "8.1.0-alpha11" apply false
-    id("com.android.library") version "8.1.0-alpha11" apply false
+    id("com.android.application") version "8.1.0-beta01" apply false
+    id("com.android.library") version "8.1.0-beta01" apply false
     id("org.jetbrains.kotlin.android") version Versions.KOTLIN_VERSION apply false
     id("org.jetbrains.kotlin.jvm") version Versions.KOTLIN_VERSION apply false
     id("com.google.devtools.ksp") version "1.8.10-1.0.9" apply false
