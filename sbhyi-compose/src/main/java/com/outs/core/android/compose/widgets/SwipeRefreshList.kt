@@ -1,4 +1,4 @@
-package com.outs.core.android.compose
+package com.outs.core.android.compose.widgets
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -6,6 +6,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyItemScope
 import androidx.compose.foundation.lazy.LazyListScope
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.pullrefresh.pullRefresh
+import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -16,8 +19,6 @@ import androidx.paging.Pager
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
-import com.google.accompanist.swiperefresh.SwipeRefresh
-import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 
 /**
  * author: Outs3
@@ -38,18 +39,20 @@ fun DefaultLoadMoreIndicator() {
     }
 }
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun <T : Any> SwipeRefreshList(
     modifier: Modifier = Modifier,
     lazyPagingItems: LazyPagingItems<T>,
     key: ((item: T) -> Any)? = null,
-    swipeRefresh: @Composable (lazyPagingItems: LazyPagingItems<T>, isRefreshing: Boolean, content: @Composable () -> Unit) -> Unit = { lazyPagingItems, isRefreshing, content ->
-        SwipeRefresh(
-            state = rememberSwipeRefreshState(isRefreshing = isRefreshing),
-            onRefresh = lazyPagingItems::refresh,
-            modifier = modifier,
-            content = content
+    swipeRefresh: @Composable (lazyPagingItems: LazyPagingItems<T>, isRefreshing: Boolean, content: @Composable () -> Unit) -> Unit = { lazyItems, isRefreshing, content ->
+        val refreshState = rememberPullRefreshState(
+            refreshing = isRefreshing,
+            onRefresh = lazyItems::refresh
         )
+        Box(modifier = modifier.pullRefresh(state = refreshState)) {
+            content()
+        }
     },
     lazyColumn: @Composable (content: LazyListScope.() -> Unit) -> Unit = { content ->
         LazyColumn(content = content)
@@ -77,18 +80,20 @@ fun <T : Any> SwipeRefreshList(
     }
 }
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun <T : Any> SwipeRefreshList(
     modifier: Modifier = Modifier,
     pager: Pager<Int, T>,
     key: ((item: T) -> Any)? = null,
     swipeRefresh: @Composable (lazyPagingItems: LazyPagingItems<T>, isRefreshing: Boolean, content: @Composable () -> Unit) -> Unit = { lazyPagingItems, isRefreshing, content ->
-        SwipeRefresh(
-            state = rememberSwipeRefreshState(isRefreshing = isRefreshing),
-            onRefresh = lazyPagingItems::refresh,
-            modifier = modifier,
-            content = content
+        val refreshState = rememberPullRefreshState(
+            refreshing = isRefreshing,
+            onRefresh = lazyPagingItems::refresh
         )
+        Box(modifier = modifier.pullRefresh(state = refreshState)) {
+            content()
+        }
     },
     lazyColumn: @Composable (content: LazyListScope.() -> Unit) -> Unit = { content ->
         LazyColumn(content = content)

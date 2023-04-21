@@ -21,7 +21,6 @@ import androidx.paging.compose.items
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.SwipeRefreshState
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
-import com.outs.core.android.compose.DefaultLoadMoreIndicator
 import com.outs.core.android.compose.textUnitDp
 import com.outs.core.android.compose.theme.Gray999
 import com.outs.utils.kotlin.typeOf

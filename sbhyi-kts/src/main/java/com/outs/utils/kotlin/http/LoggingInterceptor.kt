@@ -18,11 +18,6 @@ object LoggingInterceptor : Interceptor {
     // 换行符
     private val BR = System.getProperty("line.separator")
 
-    // 空格
-    private const val SPACE = "\t"
-
-    private val UTF8 = Charset.forName("UTF-8")
-
     private const val bodyCount = 1024L * 1024
 
     private var contentMaxLength = 0x4000L
@@ -35,12 +30,6 @@ object LoggingInterceptor : Interceptor {
         response.convToString().d(tag = "Http")
         return response
     }
-
-    private fun MediaType.isText(): Boolean = "text" == type ||
-            "json" == subtype ||
-            "xml" == subtype ||
-            "html" == subtype ||
-            "webviewhtml" == subtype
 
     private fun Headers.convToString(): String {
         val builder = StringBuilder(javaClass.simpleName)
@@ -95,7 +84,7 @@ object LoggingInterceptor : Interceptor {
                 if (mediaType == null) {
                     return builder.toString()
                 } else {
-                    charset = mediaType.charset(UTF8)
+                    charset = mediaType.charset(Charsets.UTF_8)
                     builder.append("requestBody's contentType  = ").append(mediaType.toString())
                         .append(BR)
                 }
@@ -107,14 +96,14 @@ object LoggingInterceptor : Interceptor {
                     requestBody.writeTo(buffer)
                     if (buffer.isPlaintext()) {
                         builder.append("requestBody's content  = ")
-                            .append(buffer.readString(charset ?: UTF8))
+                            .append(buffer.readString(charset ?: Charsets.UTF_8))
                             .append(BR)
                     }
                 } else {
                     val buffer = Buffer()
                     requestBody.writeTo(buffer)
                     builder.append("requestBody's content  = ")
-                        .append(buffer.readString(contentMaxLength, charset ?: UTF8))
+                        .append(buffer.readString(contentMaxLength, charset ?: Charsets.UTF_8))
                         .append(BR)
                 }
             }

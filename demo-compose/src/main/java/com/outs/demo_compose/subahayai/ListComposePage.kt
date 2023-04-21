@@ -21,7 +21,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
-import com.outs.core.android.compose.SwipeRefreshList
+import com.outs.core.android.compose.widgets.SwipeRefreshList
 import com.outs.demo_compose.subahayai.ui.theme.TComposeTheme
 import com.outs.utils.android.IntPagingSource
 import com.outs.utils.android.d
