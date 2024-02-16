@@ -1,6 +1,6 @@
 plugins {
-    id("com.android.library")
-    id("kotlin-android")
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.jetbrains.kotlin.android)
     id("kotlin-parcelize")
     `maven-publish`
 }
@@ -33,11 +33,6 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = Versions.COMPOSE_VERSION
     }
-    packagingOptions {
-        resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
-        }
-    }
     publishing {
 //        multipleVariants(ConfigData.MODULE_COMPOSE) {
 //            includeBuildTypeValues("release")
@@ -52,46 +47,47 @@ android {
 }
 
 dependencies {
+    // Import the Compose BOM
+    implementation(platform(libs.androidx.compose.bom))
+
     api(project(":${ConfigData.MODULE_ACORE}"))
     // Compose UI
-    api("androidx.compose.ui:ui-tooling:1.4.1")
-    // Tooling support (Previews, etc.)
-    api("androidx.compose.ui:ui-tooling:1.4.1")
+    api(libs.androidx.compose.ui.tooling)
     // Foundation (Border, Background, Box, Image, Scroll, shapes, animations, etc.)
-    api("androidx.compose.foundation:foundation:1.4.1")
+    api(libs.androidx.compose.foundation)
     // Material Design
-    api("androidx.compose.material:material:1.4.1")
-    api("androidx.compose.material3:material3:1.0.0-alpha12")
+    api(libs.androidx.material)
+    api(libs.material3)
     // Material design icons
-    api("androidx.compose.material:material-icons-core:1.4.1")
-    api("androidx.compose.material:material-icons-extended:1.4.1")
+    api(libs.androidx.material.icons.core)
+    api(libs.androidx.material.icons.extended)
     // Integration with observables
-    api("androidx.compose.runtime:runtime-livedata:1.4.1")
-    api("androidx.compose.runtime:runtime-rxjava2:1.4.1")
+    api(libs.androidx.runtime.livedata)
+    api(libs.androidx.runtime.rxjava2)
 
     //jetpack
-    api("androidx.activity:activity-compose:1.7.0")
-    api("androidx.constraintlayout:constraintlayout-compose:1.0.0")
-    api("androidx.navigation:navigation-compose:2.4.1")
-    api("androidx.paging:paging-compose:1.0.0-alpha14")
+    api(libs.androidx.activity.compose)
+    api(libs.androidx.constraintlayout.compose)
+    api(libs.androidx.navigation.compose)
+    api(libs.androidx.paging.compose)
 
     //compose accompanist
-    api("com.google.accompanist:accompanist-permissions:${Versions.COMPOSE_ACCOMPANIST_VERSION}")
-    api("com.google.accompanist:accompanist-swiperefresh:${Versions.COMPOSE_ACCOMPANIST_VERSION}")
-    api("com.google.accompanist:accompanist-flowlayout:${Versions.COMPOSE_ACCOMPANIST_VERSION}")
-    api("com.google.accompanist:accompanist-webview:${Versions.COMPOSE_ACCOMPANIST_VERSION}")
+    api(libs.accompanist.permissions)
+    api(libs.accompanist.swiperefresh)
+    api(libs.accompanist.flowlayout)
+    api(libs.accompanist.webview)
 
     //coil
-    api("io.coil-kt:coil-compose:2.2.2")
+    api(libs.coil.compose)
 
-    testImplementation("junit:junit:4.13.2")
-    testImplementation("androidx.test:core:1.5.0")
-    testImplementation("org.mockito:mockito-core:4.6.1")
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.0")
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.4.1")
-    debugImplementation("androidx.compose.ui:ui-tooling:1.4.1")
-    debugImplementation("androidx.compose.ui:ui-test-manifest:1.4.1")
+    testImplementation(libs.junit)
+    testImplementation(libs.androidx.core)
+    testImplementation(libs.mockito.core)
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.espresso.core)
+    androidTestImplementation(libs.androidx.ui.test.junit4)
+    debugImplementation(libs.androidx.ui.tooling)
+    debugImplementation(libs.androidx.ui.test.manifest)
 }
 
 tasks.register("sourceJar", Jar::class) {

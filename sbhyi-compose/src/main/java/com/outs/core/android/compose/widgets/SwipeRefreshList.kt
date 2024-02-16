@@ -18,7 +18,7 @@ import androidx.paging.LoadState
 import androidx.paging.Pager
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import androidx.paging.compose.items
+//import androidx.paging.compose.items
 
 /**
  * author: Outs3
@@ -39,77 +39,77 @@ fun DefaultLoadMoreIndicator() {
     }
 }
 
-@OptIn(ExperimentalMaterialApi::class)
-@Composable
-fun <T : Any> SwipeRefreshList(
-    modifier: Modifier = Modifier,
-    lazyPagingItems: LazyPagingItems<T>,
-    key: ((item: T) -> Any)? = null,
-    swipeRefresh: @Composable (lazyPagingItems: LazyPagingItems<T>, isRefreshing: Boolean, content: @Composable () -> Unit) -> Unit = { lazyItems, isRefreshing, content ->
-        val refreshState = rememberPullRefreshState(
-            refreshing = isRefreshing,
-            onRefresh = lazyItems::refresh
-        )
-        Box(modifier = modifier.pullRefresh(state = refreshState)) {
-            content()
-        }
-    },
-    lazyColumn: @Composable (content: LazyListScope.() -> Unit) -> Unit = { content ->
-        LazyColumn(content = content)
-    },
-    loadMoreIndicator: @Composable () -> Unit = { DefaultLoadMoreIndicator() },
-    noMoreIndicator: @Composable () -> Unit = {},
-    item: @Composable LazyItemScope.(item: T?) -> Unit,
-) {
-    val isRefreshing = LoadState.Loading == lazyPagingItems.loadState.refresh
-    val isLoadMore =
-        LoadState.Loading == lazyPagingItems.loadState.append || LoadState.Loading == lazyPagingItems.loadState.prepend
-    swipeRefresh(lazyPagingItems, isRefreshing) {
-        lazyColumn {
-            items(items = lazyPagingItems, key = key) { item -> item(item) }
-            if (isLoadMore) {
-                item {
-                    loadMoreIndicator()
-                }
-            } else {
-                item {
-                    noMoreIndicator()
-                }
-            }
-        }
-    }
-}
+//@OptIn(ExperimentalMaterialApi::class)
+//@Composable
+//fun <T : Any> SwipeRefreshList(
+//    modifier: Modifier = Modifier,
+//    lazyPagingItems: LazyPagingItems<T>,
+//    key: ((item: T) -> Any)? = null,
+//    swipeRefresh: @Composable (lazyPagingItems: LazyPagingItems<T>, isRefreshing: Boolean, content: @Composable () -> Unit) -> Unit = { lazyItems, isRefreshing, content ->
+//        val refreshState = rememberPullRefreshState(
+//            refreshing = isRefreshing,
+//            onRefresh = lazyItems::refresh
+//        )
+//        Box(modifier = modifier.pullRefresh(state = refreshState)) {
+//            content()
+//        }
+//    },
+//    lazyColumn: @Composable (content: LazyListScope.() -> Unit) -> Unit = { content ->
+//        LazyColumn(content = content)
+//    },
+//    loadMoreIndicator: @Composable () -> Unit = { DefaultLoadMoreIndicator() },
+//    noMoreIndicator: @Composable () -> Unit = {},
+//    item: @Composable LazyItemScope.(item: T?) -> Unit,
+//) {
+//    val isRefreshing = LoadState.Loading == lazyPagingItems.loadState.refresh
+//    val isLoadMore =
+//        LoadState.Loading == lazyPagingItems.loadState.append || LoadState.Loading == lazyPagingItems.loadState.prepend
+//    swipeRefresh(lazyPagingItems, isRefreshing) {
+//        lazyColumn {
+//            items(count = lazyPagingItems.itemCount, key = { index -> lazyPagingItems.get(index)?.let { key(it) }}) { index -> item(lazyPagingItems.get(index)) }
+//            if (isLoadMore) {
+//                item {
+//                    loadMoreIndicator()
+//                }
+//            } else {
+//                item {
+//                    noMoreIndicator()
+//                }
+//            }
+//        }
+//    }
+//}
 
-@OptIn(ExperimentalMaterialApi::class)
-@Composable
-fun <T : Any> SwipeRefreshList(
-    modifier: Modifier = Modifier,
-    pager: Pager<Int, T>,
-    key: ((item: T) -> Any)? = null,
-    swipeRefresh: @Composable (lazyPagingItems: LazyPagingItems<T>, isRefreshing: Boolean, content: @Composable () -> Unit) -> Unit = { lazyPagingItems, isRefreshing, content ->
-        val refreshState = rememberPullRefreshState(
-            refreshing = isRefreshing,
-            onRefresh = lazyPagingItems::refresh
-        )
-        Box(modifier = modifier.pullRefresh(state = refreshState)) {
-            content()
-        }
-    },
-    lazyColumn: @Composable (content: LazyListScope.() -> Unit) -> Unit = { content ->
-        LazyColumn(content = content)
-    },
-    loadMoreIndicator: @Composable () -> Unit = { DefaultLoadMoreIndicator() },
-    noMoreIndicator: @Composable () -> Unit = {},
-    item: @Composable LazyItemScope.(item: T?) -> Unit,
-) {
-    SwipeRefreshList(
-        modifier,
-        pager.flow.collectAsLazyPagingItems(),
-        key,
-        swipeRefresh,
-        lazyColumn,
-        loadMoreIndicator,
-        noMoreIndicator,
-        item
-    )
-}
+//@OptIn(ExperimentalMaterialApi::class)
+//@Composable
+//fun <T : Any> SwipeRefreshList(
+//    modifier: Modifier = Modifier,
+//    pager: Pager<Int, T>,
+//    key: ((item: T) -> Any)? = null,
+//    swipeRefresh: @Composable (lazyPagingItems: LazyPagingItems<T>, isRefreshing: Boolean, content: @Composable () -> Unit) -> Unit = { lazyPagingItems, isRefreshing, content ->
+//        val refreshState = rememberPullRefreshState(
+//            refreshing = isRefreshing,
+//            onRefresh = lazyPagingItems::refresh
+//        )
+//        Box(modifier = modifier.pullRefresh(state = refreshState)) {
+//            content()
+//        }
+//    },
+//    lazyColumn: @Composable (content: LazyListScope.() -> Unit) -> Unit = { content ->
+//        LazyColumn(content = content)
+//    },
+//    loadMoreIndicator: @Composable () -> Unit = { DefaultLoadMoreIndicator() },
+//    noMoreIndicator: @Composable () -> Unit = {},
+//    item: @Composable LazyItemScope.(item: T?) -> Unit,
+//) {
+//    SwipeRefreshList(
+//        modifier,
+//        pager.flow.collectAsLazyPagingItems(),
+//        key,
+//        swipeRefresh,
+//        lazyColumn,
+//        loadMoreIndicator,
+//        noMoreIndicator,
+//        item
+//    )
+//}

@@ -44,16 +44,16 @@ dependencies {
     api(project(":${ConfigData.MODULE_ACORE}"))
 
     //refresh-layout-view
-    api("io.github.scwang90:refresh-layout-kernel:2.0.5")      //核心必须依赖
-    api("io.github.scwang90:refresh-header-classics:2.0.5")    //经典刷新头
-    api("io.github.scwang90:refresh-header-material:2.0.5")    //谷歌刷新头
-    api("io.github.scwang90:refresh-footer-classics:2.0.5")    //经典加载
+    api(libs.refresh.layout.kernel)      //核心必须依赖
+    api(libs.refresh.header.classics)    //经典刷新头
+    api(libs.refresh.header.material)    //谷歌刷新头
+    api(libs.refresh.footer.classics)    //经典加载
 
-    testImplementation("junit:junit:4.13.2")
-    testImplementation("androidx.test:core:1.5.0")
-    testImplementation("org.mockito:mockito-core:4.6.1")
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.0")
+    testImplementation(libs.junit)
+    testImplementation(libs.androidx.core)
+    testImplementation(libs.mockito.core)
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.espresso.core)
 }
 
 tasks.register("sourceJar", Jar::class) {

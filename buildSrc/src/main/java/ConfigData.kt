@@ -1,7 +1,7 @@
 import org.gradle.api.JavaVersion
 
 object ConfigData {
-    const val COMPILE_SDK_VERSION = 33
+    const val COMPILE_SDK_VERSION = 34
     const val BUILD_TOOLS_VERSION = "33.0.1"
     const val applicationId = "com.outs.subahayai"
     const val MIN_SDK_VERSION = 21

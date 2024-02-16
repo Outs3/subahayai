@@ -1,8 +1,9 @@
 plugins {
-    id("com.android.library")
-    id("kotlin-android")
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.jetbrains.kotlin.android)
+//    alias(libs.plugins.jetbrains.kotlin.parcelize)
     id("kotlin-parcelize")
-    id("com.google.devtools.ksp")
+    alias(libs.plugins.google.devtools.ksp)
     `maven-publish`
 }
 
@@ -41,48 +42,49 @@ dependencies {
     api(project(":${ConfigData.MODULE_KTS}"))
 
     //kotlin
-    api("org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.KOTLIN_COROUTINES_VERSION}")
+    api(libs.jetbrains.kotlinx.coroutines.android)
 
-    val lifecycleKtxVersion = "2.6.1"
     //ktx
-    api("androidx.core:core-ktx:1.9.0")
-    api("androidx.collection:collection-ktx:1.2.0")
-    api("androidx.activity:activity-ktx:1.7.0")
-    api("androidx.fragment:fragment-ktx:1.5.5")
-    api("androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleKtxVersion")
-    api("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleKtxVersion")
-    api("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleKtxVersion")
-    api("androidx.lifecycle:lifecycle-reactivestreams-ktx:$lifecycleKtxVersion")
-    api("androidx.room:room-ktx:2.4.3")
+    api(libs.androidx.core.ktx)
+    api(libs.androidx.collection.ktx)
+    api(libs.androidx.activity.ktx)
+    api(libs.androidx.fragment.ktx)
+    api(libs.androidx.lifecycle.runtime.ktx)
+    api(libs.androidx.lifecycle.viewmodel.ktx)
+    api(libs.androidx.lifecycle.livedata.ktx)
+    api(libs.androidx.lifecycle.reactivestreams.ktx)
+    api(libs.androidx.room.ktx)
 
     //view
-    api("androidx.appcompat:appcompat:1.5.1")
-    api("androidx.recyclerview:recyclerview:1.2.1")
-    api("androidx.constraintlayout:constraintlayout:2.1.4")
-    api("androidx.viewpager2:viewpager2:1.1.0-beta01")
-    api("com.google.android.material:material:1.7.0")
-    api("com.google.android.flexbox:flexbox:3.0.0")
+    api(libs.androidx.appcompat)
+    api(libs.androidx.recyclerview)
+    api(libs.androidx.constraintlayout)
+    api(libs.androidx.viewpager2)
+    api(libs.google.android.material)
+    api(libs.google.android.flexbox)
 
     //image cache
-    api("com.github.bumptech.glide:glide:4.14.2")
-    ksp("com.github.bumptech.glide:ksp:4.14.2")
+    api(libs.github.bumptech.glide)
+    ksp(libs.github.bumptech.glide.ksp)
 //    api("com.github.bumptech.glide:okhttp3-integration:4.11.0")
 
     //Log
-    api("com.orhanobut:logger:2.2.0")
+    api(libs.orhanobut.logger)
 
     //blankj utils
-    api("com.blankj:utilcodex:1.31.0")
+    api(libs.blankj.utilcodex)
 
     //paging3
-    api("androidx.paging:paging-runtime-ktx:${Versions.COMPOSE_PAGING_VERSION}")
-    testApi("androidx.paging:paging-common-ktx:${Versions.COMPOSE_PAGING_VERSION}")
+    api(libs.androidx.paging.runtime)
+    testApi(libs.androidx.paging.common)
 
-    testImplementation("junit:junit:4.13.2")
-    testImplementation("androidx.test:core:1.5.0")
-    testImplementation("org.mockito:mockito-core:4.6.1")
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.0")
+    testImplementation(libs.junit)
+    testImplementation(libs.androidx.core)
+
+    testImplementation(libs.androidx.core)
+    testImplementation(libs.mockito.core)
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.espresso.core)
 }
 
 tasks.register("sourceJar", Jar::class) {

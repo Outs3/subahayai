@@ -12,15 +12,15 @@ java {
 
 dependencies {
     //kotlin
-    api("org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.KOTLIN_COROUTINES_VERSION}")
-    api("org.jetbrains.kotlin:kotlin-reflect:${Versions.KOTLIN_VERSION}")
+    api(libs.jetbrains.kotlinx.coroutines.core)
+    api(libs.jetbrains.kotlin.reflect)
     //json
-    api("com.google.code.gson:gson:2.10")
+    api(libs.google.code.gson)
     //OkHttp
-    api("com.squareup.okhttp3:okhttp:4.10.0")
+    api(libs.squareup.okhttp3.okhttp)
     //Retrofit
-    api("com.squareup.retrofit2:retrofit:2.9.0")
-    api("com.squareup.retrofit2:converter-gson:2.9.0")
+    api(libs.squareup.retrofit2.retrofit)
+    api(libs.squareup.retrofit2.converter.gson)
 }
 
 publishing {

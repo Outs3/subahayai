@@ -31,17 +31,17 @@ android {
     buildFeatures {
         compose = true
     }
-    composeOptions {
-        kotlinCompilerExtensionVersion = Versions.COMPOSE_VERSION
-    }
+//    composeOptions {
+//        kotlinCompilerExtensionVersion = Versions.COMPOSE_VERSION
+//    }
 }
 
 dependencies {
     implementation(project(":${ConfigData.MODULE_COMPOSE}"))
 
-    testImplementation("junit:junit:4.+")
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.0")
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.4.0")
-    debugImplementation("androidx.compose.ui:ui-tooling:1.4.1")
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.espresso.core)
+    androidTestImplementation(libs.ui.test.junit4)
+    debugImplementation(libs.ui.tooling)
 }

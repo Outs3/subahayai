@@ -1,6 +1,10 @@
 package com.outs.core.android.compose.widgets
 
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.interaction.InteractionSource
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsFocusedAsState
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.text.KeyboardActions
@@ -9,6 +13,7 @@ import androidx.compose.material3.TextFieldColors
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.text.TextLayoutResult
 import androidx.compose.ui.text.TextStyle
@@ -40,7 +45,7 @@ fun LineTextField(
     visualTransformation: VisualTransformation = VisualTransformation.None,
     onTextLayout: (TextLayoutResult) -> Unit = {},
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
-    colors: TextFieldColors = TextFieldDefaults.textFieldColors(
+    colors: TextFieldColors = TextFieldDefaults.colors(
         unfocusedIndicatorColor = GrayE6
     )
 ) {
@@ -87,11 +92,38 @@ fun LineTextField(
     visualTransformation: VisualTransformation = VisualTransformation.None,
     onTextLayout: (TextLayoutResult) -> Unit = {},
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
-    colors: TextFieldColors = TextFieldDefaults.textFieldColors(
+    colors: TextFieldColors = TextFieldDefaults.colors(
         unfocusedIndicatorColor = GrayE6
     ),
 ) {
+    @Composable
+    fun TextFieldColors.indicatorColor(
+        enabled: Boolean,
+        isError: Boolean,
+        interactionSource: InteractionSource
+    ): State<Color> {
+        val focused by interactionSource.collectIsFocusedAsState()
+
+        val targetValue = when {
+            !enabled -> disabledIndicatorColor
+            isError -> errorIndicatorColor
+            focused -> focusedIndicatorColor
+            else -> unfocusedIndicatorColor
+        }
+        return if (enabled) {
+            animateColorAsState(targetValue, tween(durationMillis = 150))
+        } else {
+            rememberUpdatedState(targetValue)
+        }
+    }
+
+    @Composable
+    fun TextFieldColors.cursorColor(isError: Boolean): State<Color> {
+        return rememberUpdatedState(if (isError) errorCursorColor else cursorColor)
+    }
+
     val indicatorWidth = 1.dp
+
     val indicatorColor = colors.indicatorColor(
         enabled = enabled,
         isError = false,
