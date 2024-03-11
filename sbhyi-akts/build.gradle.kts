@@ -13,7 +13,6 @@ android {
 
     defaultConfig {
         minSdk = ConfigData.MIN_SDK_VERSION
-//        targetSdk = ConfigData.TARGET_SDK_VERSION
     }
 
     compileOptions {
@@ -24,17 +23,6 @@ android {
         release {
             isMinifyEnabled = false
         }
-    }
-    publishing {
-//        multipleVariants(ConfigData.MODULE_AKTS) {
-//            includeBuildTypeValues("release")
-//            withSourcesJar()
-//            withJavadocJar()
-//        }
-//        singleVariant("release") {
-//            withSourcesJar()
-//            withJavadocJar()
-//        }
     }
 }
 
@@ -95,10 +83,7 @@ tasks.register("sourceJar", Jar::class) {
 publishing {
     publications {
         register<MavenPublication>("release") {
-            applyArtifact(
-                artifactId = ConfigData.MODULE_AKTS,
-//                artifact = tasks.getByName("sourceJar")
-            )
+            applyArtifact(artifactId = ConfigData.MODULE_AKTS)
             afterEvaluate {
                 from(components["release"])
             }

@@ -11,7 +11,6 @@ android {
 
     defaultConfig {
         minSdk = ConfigData.MIN_SDK_VERSION
-//        targetSdk = ConfigData.TARGET_SDK_VERSION
 
         vectorDrawables {
             useSupportLibrary = true
@@ -32,17 +31,6 @@ android {
     }
     composeOptions {
         kotlinCompilerExtensionVersion = Versions.COMPOSE_VERSION
-    }
-    publishing {
-//        multipleVariants(ConfigData.MODULE_COMPOSE) {
-//            includeBuildTypeValues("release")
-//            withSourcesJar()
-//            withJavadocJar()
-//        }
-//        singleVariant("release") {
-//            withSourcesJar()
-//            withJavadocJar()
-//        }
     }
 }
 
@@ -98,10 +86,7 @@ tasks.register("sourceJar", Jar::class) {
 publishing {
     publications {
         register<MavenPublication>("release") {
-            applyArtifact(
-                artifactId = ConfigData.MODULE_COMPOSE,
-//                artifact = tasks.getByName("sourceJar")
-            )
+            applyArtifact(artifactId = ConfigData.MODULE_COMPOSE)
             afterEvaluate {
                 from(components["release"])
             }

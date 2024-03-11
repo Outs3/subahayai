@@ -3,5 +3,5 @@ object Versions {
     const val COMPOSE_VERSION = "1.5.9"
 
     //Nothing
-    const val SBHYI_VERSION = "0.0.93"
+    const val SBHYI_VERSION = "0.0.94"
 }
