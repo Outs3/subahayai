@@ -19,10 +19,7 @@ allprojects {
 ```
 //如果使用Jetpack Compose  
 implementation 'com.github.Outs3.subahayai:sbhyi-compose:0.0.94'
-  
-//如果使用DataBinding（已废弃）  
-implementation 'com.github.Outs3.subahayai:sbhyi-databinding:0.0.94'
-  
+
 //如果仅使用扩展工具  
 implementation 'com.github.Outs3.subahayai:sbhyi-kts:0.0.94'
 implementation 'com.github.Outs3.subahayai:sbhyi-akts:0.0.94'

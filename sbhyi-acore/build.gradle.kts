@@ -11,7 +11,6 @@ android {
 
     defaultConfig {
         minSdk = ConfigData.MIN_SDK_VERSION
-
     }
 
     compileOptions {
