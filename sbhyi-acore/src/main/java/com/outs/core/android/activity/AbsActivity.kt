@@ -66,9 +66,9 @@ abstract class AbsActivity : AppCompatActivity(), ILaunchOwner, View.OnClickList
         initView()
     }
 
-    override fun onNewIntent(intent: Intent?) {
+    override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
-        intent?.extras?.let(::inject)
+        intent.extras?.let(::inject)
     }
 
     protected abstract fun initView()
