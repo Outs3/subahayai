@@ -14,6 +14,7 @@ private inline fun <reified T : Any> proxyOfOne(one: T): T = ProxyOne(T::class.j
 
 class ProxyOne<T : Any>(interfaceCls: Class<T>, val one: T) : InvocationHandler {
 
+    @Suppress("UNCHECKED_CAST")
     val proxy: T = Proxy.newProxyInstance(
         one.javaClass.classLoader,
         arrayOf(interfaceCls),
@@ -67,6 +68,7 @@ class SimpleProxy<T>(classLoader: ClassLoader, cls: Class<T>) : InvocationHandle
 
     fun remove(item: T) = data.remove(item)
 
+    @Suppress("UNCHECKED_CAST")
     fun bind(bindTo: (T) -> Unit) {
         bindTo(proxy as T)
     }

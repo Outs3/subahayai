@@ -1,9 +1,9 @@
 [versions]
-agp = "8.4.1"
+agp = "8.3.1"
 coilCompose = "2.6.0"
 core = "1.5.0"
 kotlin = "2.0.0"
-kotlinKsp = "1.9.22-1.0.17"
+kotlinKsp = "2.0.0-1.0.21"
 kotlinCoroutines = "1.8.1"
 
 constrainLayoutCompose = "1.0.1"

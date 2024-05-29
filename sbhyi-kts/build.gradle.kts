@@ -1,5 +1,5 @@
 plugins {
-    id("kotlin")
+    alias(libs.plugins.jetbrains.kotlin.jvm)
     `java-library`
     `maven-publish`
 }

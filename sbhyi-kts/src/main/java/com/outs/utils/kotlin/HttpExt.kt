@@ -8,6 +8,7 @@ import okhttp3.*
 import java.io.IOException
 import java.net.HttpURLConnection
 import java.net.MalformedURLException
+import java.net.URI
 import java.net.URL
 import java.security.SecureRandom
 import java.security.cert.CertificateException
@@ -27,7 +28,7 @@ import kotlin.coroutines.suspendCoroutine
  */
 fun String.readUrl(): ByteArray? {
     try {
-        val url = URL(this)
+        val url = URI.create(this).toURL()
         val httpConnection: HttpURLConnection = url.openConnection() as HttpURLConnection
         val responseCode: Int = httpConnection.responseCode
         if (responseCode == HttpURLConnection.HTTP_OK) {
@@ -44,7 +45,7 @@ fun String.readUrl(): ByteArray? {
 suspend fun String.suspendReadUrl(): ByteArray = withContext(Dispatchers.IO) {
     suspendCoroutine { continuation ->
         try {
-            val url = URL(this@suspendReadUrl)
+            val url = URI.create(this@suspendReadUrl).toURL()
             val httpConnection: HttpURLConnection = url.openConnection() as HttpURLConnection
             val responseCode: Int = httpConnection.responseCode
             if (responseCode != HttpURLConnection.HTTP_OK) {

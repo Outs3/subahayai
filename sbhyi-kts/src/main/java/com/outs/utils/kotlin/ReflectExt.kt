@@ -31,6 +31,7 @@ class FieldRef<T>(val field: Field, val target: WeakReference<Any>) : Ref<T> {
 
     constructor(field: Field, target: Any) : this(field, WeakReference(target))
 
+    @Suppress("UNCHECKED_CAST")
     override fun get(): T? = tryOrNull { field.get(target.get()) as T? }
 
     override fun set(value: T?) {
@@ -62,7 +63,7 @@ fun Any.field(name: String, isAccessible: Boolean = true): Field? =
 
 fun Class<*>.field(name: String, isAccessible: Boolean = true): Field? =
     field(name)?.apply {
-        if (!this.isAccessible && isAccessible) this.isAccessible = true
+        if (isAccessible) this.isAccessible = true
     }
 
 fun Class<*>.field(name: String): Field? =
@@ -81,7 +82,7 @@ fun Class<*>.method(
     vararg argTypes: Class<*>
 ): Method? =
     method(name, *argTypes)?.apply {
-        if (!this.isAccessible && isAccessible) this.isAccessible = true
+        if (isAccessible) this.isAccessible = true
     }
 
 fun Class<*>.method(name: String, vararg argTypes: Class<*>): Method? =
@@ -108,9 +109,11 @@ inline fun <reified R> Any.func(
         *args
     ) as R?
 
+@Suppress("UNCHECKED_CAST")
 fun <T : Any, R> T.getFieldValue(name: String, isAccessible: Boolean = true): R? =
     field(name, isAccessible)?.get(this) as R?
 
+@Suppress("UNCHECKED_CAST")
 fun <T : Any, R> T.callMethod(name: String, isAccessible: Boolean = true, vararg args: Any): R? =
     method(name, isAccessible, *args.map { it.javaClass }.toTypedArray())?.invoke(
         this,
